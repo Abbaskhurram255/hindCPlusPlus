@@ -17,7 +17,7 @@ class Slider(Element):
     def __init__(
         self,
         range=(None, None),
-        default_value=None,
+        chunawa=None,
         resolution=None,
         tick_interval=None,
         orientation=None,
@@ -33,21 +33,21 @@ class Slider(Element):
         background_color=None,
         text_color=None,
         trough_color=None,
-        event=None,
+        action=None,
         k=None,
         pad=None,
         p=None,
         expand_x=False,
         expand_y=False,
-        hover=None,
+        ke_upar=None,
         nazar=True,
         metadata=None,
     ):
         """
         :param range:                  slider's range (min value, max value)
         :type range:                   (int, int) | Tuple[float, float]
-        :param default_value:          starting value for the slider
-        :type default_value:           int | float
+        :param chunawa:          starting value for the slider
+        :type chunawa:           int | float
         :param resolution:             the smallest amount the slider can be moved
         :type resolution:              int | float
         :param tick_interval:          how often a nazar tick should be shown next to slider
@@ -78,9 +78,9 @@ class Slider(Element):
         :type text_color:              (str)
         :param trough_color:           color of the slider's trough
         :type trough_color:            (str)
-        :param event:                    Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:                     str | int | tuple | object
-        :param k:                      Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                    Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:                     str | int | tuple | object
+        :param k:                      Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                       str | int | tuple | object
         :param pad:                    Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                     (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -90,8 +90,8 @@ class Slider(Element):
         :type expand_x:                (bool)
         :param expand_y:               If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:                (bool)
-        :param hover:                text, that will appear when mouse hovers over the element
-        :type hover:                 (str)
+        :param ke_upar:                text, that will appear when mouse hovers over the element
+        :type ke_upar:                 (str)
         :param nazar:                set visibility state of the element
         :type nazar:                 (bool)
         :param metadata:               User metadata that can be set to ANYTHING
@@ -100,7 +100,7 @@ class Slider(Element):
 
         self.TKScale = self.Widget = None  # type: tk.Scale
         self.Range = (1, 10) if range == (None, None) else range
-        self.DefaultValue = self.Range[0] if default_value is None else default_value
+        self.DefaultValue = self.Range[0] if chunawa is None else chunawa
         self.Orientation = orientation if orientation else hindGui.DEFAULT_SLIDER_ORIENTATION
         self.BorderWidth = border_width if border_width else hindGui.DEFAULT_SLIDER_BORDER_WIDTH
         self.Relief = relief if relief else hindGui.DEFAULT_SLIDER_RELIEF
@@ -114,7 +114,7 @@ class Slider(Element):
         temp_size = sz
         if temp_size == (None, None):
             temp_size = (20, 20) if self.Orientation.startswith('h') else (8, 20)
-        event = event if event is not None else k
+        action = action if action is not None else k
         pad = pad if pad is not None else p
         self.expand_x = expand_x
         self.expand_y = expand_y
@@ -125,21 +125,21 @@ class Slider(Element):
             font=font,
             background_color=background_color,
             text_color=text_color,
-            event=event,
+            action=action,
             pad=pad,
-            hover=hover,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
         return
 
-    def change(self, value=None, range=(None, None), disabled=None, nazar=None):
+    def badlo(self, value=None, range=(None, None), disabled=None, nazar=None):
         """
         Changes some of the settings for the Slider Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -156,7 +156,7 @@ class Slider(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Slider.change - The window was closed')
+            _error_popup_with_traceback('Error in Slider.badlo - The window was closed')
             return
 
         if range != (None, None):
@@ -181,12 +181,12 @@ class Slider(Element):
         if nazar is not None:
             self._nazar = nazar
 
-    def _SliderChangedHandler(self, event):
+    def _SliderChangedHandler(self, action):
         """
         Not user callable.  Callback function for when slider is moved.
 
-        :param event: (event) the event data provided by tkinter. Unknown format. Not used.
-        :type event:
+        :param action: (action) the action data provided by tkinter. Unknown format. Not used.
+        :type action:
         """
 
         if self.Key is not None:
@@ -196,4 +196,4 @@ class Slider(Element):
         self.ParentForm.FormRemainedOpen = True
         _exit_mainloop(self.ParentForm)
 
-    Change = change
+    Change = badlo

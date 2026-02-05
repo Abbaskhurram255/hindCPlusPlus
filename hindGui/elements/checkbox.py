@@ -21,7 +21,7 @@ class Checkbox(Element):
     def __init__(
         self,
         text,
-        default=False,
+        chunawa=False,
         size=(None, None),
         s=(None, None),
         auto_size_text=None,
@@ -33,11 +33,11 @@ class Checkbox(Element):
         change_submits=False,
         enable_events=False,
         disabled=False,
-        event=None,
+        action=None,
         k=None,
         pad=None,
         p=None,
-        hover=None,
+        ke_upar=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
@@ -47,8 +47,8 @@ class Checkbox(Element):
         """
         :param text:                Text to display next to checkbox
         :type text:                 (str)
-        :param default:             Set to True if you want this checkbox initially checked
-        :type default:              (bool)
+        :param chunawa:             Set to True if you want this checkbox initially checked
+        :type chunawa:              (bool)
         :param size:                (w, h) w=characters-wide, h=rows-high. If an int instead of a tuple is supplied, then height is auto-set to 1
         :type size:                 (int, int)  | (None, None) | int
         :param s:                   Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -71,16 +71,16 @@ class Checkbox(Element):
         :type enable_events:        (bool)
         :param disabled:            set disable state
         :type disabled:             (bool)
-        :param event:                 Used with window.find_element and with return values to uniquely identify this element
-        :type event:                  str | int | tuple | object
-        :param k:                   Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                 Used with window.find_element and with return values to uniquely identify this element
+        :type action:                  str | int | tuple | object
+        :param k:                   Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                    str | int | tuple | object
         :param pad:                 Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                  (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                   Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                    (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param hover:             text, that will appear when mouse hovers over the element
-        :type hover:              (str)
+        :param ke_upar:             text, that will appear when mouse hovers over the element
+        :type ke_upar:              (str)
         :param right_click_menu:    A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:     List[List[ List[str] | str ]]
         :param expand_x:            If True the element will automatically expand in the X direction to fill available space
@@ -94,7 +94,7 @@ class Checkbox(Element):
         """
 
         self.Text = text
-        self.InitialState = bool(default)
+        self.InitialState = bool(chunawa)
         self.Value = None
         self.TKCheckbutton = self.Widget = None  # type: tk.Checkbutton
         self.Disabled = disabled
@@ -118,7 +118,7 @@ class Checkbox(Element):
         else:
             self.CheckboxBackgroundColor = checkbox_color
         self.ChangeSubmits = change_submits or enable_events
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -131,9 +131,9 @@ class Checkbox(Element):
             font=font,
             background_color=background_color,
             text_color=self.TextColor,
-            event=event,
+            action=action,
             pad=pad,
-            hover=hover,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
@@ -148,7 +148,7 @@ class Checkbox(Element):
         """
         return self.TKIntVar.get() != 0
 
-    def change(
+    def badlo(
         self,
         value=None,
         text=None,
@@ -160,11 +160,11 @@ class Checkbox(Element):
     ):
         """
         Changes some of the settings for the Checkbox Element. Must call `Window.Read` or `Window.Finalize` prior.
-        Note that changing visibility may cause element to change locations when made nazar after invisible
+        Note that changing visibility may cause element to badlo locations when made nazar after invisible
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -186,7 +186,7 @@ class Checkbox(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Checkbox.change - The window was closed')
+            _error_popup_with_traceback('Error in Checkbox.badlo - The window was closed')
             return
 
         if value is not None:
@@ -195,7 +195,7 @@ class Checkbox(Element):
                 self.TKIntVar.set(value)
                 self.InitialState = value
             except:
-                print('Checkbox change failed')
+                print('Checkbox badlo failed')
         if disabled is True:
             self.TKCheckbutton.configure(state='disabled')
         elif disabled is False:
@@ -237,4 +237,4 @@ class Checkbox(Element):
             self._nazar = nazar
 
     Get = get
-    Change = change
+    Change = badlo

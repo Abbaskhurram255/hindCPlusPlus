@@ -60,6 +60,8 @@ except:
 #constants
 ae = True
 nae = na_ae = False
+X_BUTTON = X_Button = X_BTN = X_Btn =  x_button = x_btn = None
+CROSS_BUTTON = CROSS_BTN = Cross_Button = Cross_Btn = cross_button = cross_btn = None
 
 
 warnings.simplefilter('always', UserWarning)
@@ -68,7 +70,7 @@ G_TIME_START = 0
 G_TIME_END = 0
 G_TIME_DELTA = 0
 
-# ----====----====----==== Constants the user CAN safely change ====----====----====----#
+# ----====----====----==== Constants the user CAN safely badlo ====----====----====----#
 
 # Base64 encoded GIF file
 DEFAULT_BASE64_ICON = b'R0lGODlhIQAgAPcAAAAAADBpmDBqmTFqmjJrmzJsnDNtnTRrmTZtmzZumzRtnTdunDRunTRunjVvnzdwnzhwnjlxnzVwoDZxoTdyojhzozl0ozh0pDp1pjp2pjp2pzx0oj12pD52pTt3qD54pjt4qDx4qDx5qTx5qj16qj57qz57rD58rT98rkB4pkJ7q0J9rEB9rkF+rkB+r0d9qkZ/rEl7o0h8p0x9pk5/p0l+qUB+sEyBrE2Crk2Er0KAsUKAskSCtEeEtUWEtkaGuEiHuEiHukiIu0qKu0mJvEmKvEqLvk2Nv1GErVGFr1SFrVGHslaHsFCItFSIs1COvlaPvFiJsVyRuWCNsWSPsWeQs2SQtGaRtW+Wt2qVuGmZv3GYuHSdv3ievXyfvV2XxGWZwmScx2mfyXafwHikyP7TPP/UO//UPP/UPf/UPv7UP//VQP/WQP/WQf/WQv/XQ//WRP7XSf/XSv/YRf/YRv/YR//YSP/YSf/YSv/ZS//aSv/aS/7YTv/aTP/aTf/bTv/bT//cT/7aUf/cUP/cUf/cUv/cU//dVP/dVf7dVv/eVv/eV//eWP/eWf/fWv/fW/7cX/7cYf7cZP7eZf7dav7eb//gW//gXP/gXf/gXv/gX//gYP/hYf/hYv/iYf/iYv7iZP7iZf/iZv/kZv7iaP/kaP/ka//ma//lbP/lbv/mbP/mbv7hdP7lcP/ncP/nc//ndv7gef7gev7iff7ke/7kfv7lf//ocf/ocv/odP/odv/peP/pe//ofIClw4Ory4GszoSszIqqxI+vyoSv0JGvx5OxyZSxyZSzzJi0y5m2zpC10pi715++16C6z6a/05/A2qHC3aXB2K3I3bLH2brP4P7jgv7jh/7mgf7lhP7mhf7liv/qgP7qh/7qiP7rjf7sjP7nkv7nlv7nmP7pkP7qkP7rkv7rlv7slP7sl/7qmv7rnv7snv7sn/7un/7sqv7vq/7vrf7wpv7wqf7wrv7wsv7wtv7ytv7zvP7zv8LU48LV5c3a5f70wP7z0AAAACH5BAEAAP8ALAAAAAAhACAAAAj/AP8JHEiwoMGDCA1uoYIF4bhK1vwlPOjlQICLApwVpFTGzBk1siYSrCLgoskFyQZKMsOypRyR/GKYnBkgQbF/s8603KnmWkIaNIMaw6lzZ8tYB2cIWMo0KIJj/7YV9XgGDRo14gpOIUBggNevXpkKGCDsXySradSoZcMmDsFnDxpEKEC3bl2uXCFQ+7emjV83bt7AgTNroJINAq0wWBxBgYHHdgt0+cdnMJw5c+jQqYNnoARkAx04kPEvS4PTqBswuPIPUp06duzcuYMHT55wAjkwEahsQgqBNSQIHy582D9BePTs2dOnjx8/f1gJ9GXhRpTqApFQoDChu3cOAps///9D/g+gQvYGjrlw4cU/fUnYX6hAn34HgZMABQo0iJB/Qoe8UxAXOQiEg3wIXvCBQLUU4mAhh0R4SCLqJOSEBhhqkAEGHIYgUDaGICIiIoossogj6yBUTQ4htNgiCCB4oIJAtJTIyI2MOOLIIxMtQQIJIwQZpAgwCKRNI43o6Igll1ySSTsI7dOECSaUYOWVKwhkiyVMYuJlJpp0IpA6oJRTkBQopHnCmmu2IBA2mmQi5yZ0fgJKPP+0IwoooZwzkDQ2uCCoCywUyoIW/5DDyaKefOLoJ6LU8w87pJgDTzqmDNSMDpzqYMOnn/7yTyiglBqKKKOMUopA7JgCy0DdeMEjUDM71GqrrcH8QwqqqpbiayqToqJKLwN5g45A0/TAw7LL2krGP634aoopp5yiiiqrZLuKK+jg444uBIHhw7g+MMsDFP/k4wq22rririu4xItLLriAUxAQ5ObrwzL/0PPKu7fIK3C8uxz0w8EIIwzMP/cM7HC88hxEzBBCBGGxxT8AwQzDujws7zcJQVMEEUKUbPITAt1D78OSivSFEUXEXATKA+HTscC80CPSQNGEccQRYhjUDzfxcjPPzkgnLVBAADs='
@@ -222,7 +224,7 @@ TABLE_SELECT_MODE_NONE = tk.NONE
 TABLE_SELECT_MODE_BROWSE = tk.BROWSE
 TABLE_SELECT_MODE_EXTENDED = tk.EXTENDED
 DEFAULT_TABLE_SELECT_MODE = TABLE_SELECT_MODE_EXTENDED
-TABLE_CLICKED_INDICATOR = '+CLICKED+'  # Part of the tuple returned as an event when a Table element has click events enabled
+TABLE_CLICKED_INDICATOR = '+CLICKED+'  # Part of the tuple returned as an action when a Table element has click events enabled
 DEFAULT_MODAL_WINDOWS_ENABLED = True
 DEFAULT_MODAL_WINDOWS_FORCED = False
 
@@ -670,7 +672,7 @@ def running_replit():
     return False
 
 
-# ----====----====----==== Constants the user should NOT change ====----====----====----#
+# ----====----====----==== Constants the user should NOT badlo ====----====----====----#
 ThisRow = 555666777  # magic number
 
 # DEFAULT_WINDOW_ICON = ''
@@ -952,7 +954,7 @@ ttk_part_overrides_from_options = TTKPartOverrides()
 
 # fmt: off
 TKINTER_CURSORS = ['X_cursor', 'arrow', 'based_arrow_down', 'based_arrow_up', 'boat', 'bogosity', 'bottom_left_corner', 'bottom_right_corner', 'bottom_side', 'bottom_tee', 'box_spiral', 'center_ptr', 'circle', 'clock', 'coffee_mug', 'cross', 'cross_reverse', 'crosshair', 'diamond_cross', 'dot', 'dotbox', 'double_arrow', 'draft_large', 'draft_small', 'draped_box', 'exchange', 'fleur', 'gobbler', 'gumby', 'hand1', 'hand2', 'heart', 'ibeam', 'icon', 'iron_cross', 'left_ptr', 'left_side', 'left_tee', 'leftbutton', 'll_angle', 'lr_angle', 'man', 'middlebutton', 'mouse', 'no', 'none', 'pencil', 'pirate', 'plus', 'question_arrow', 'right_ptr', 'right_side', 'right_tee', 'rightbutton', 'rtl_logo', 'sailboat', 'sb_down_arrow', 'sb_h_double_arrow', 'sb_left_arrow', 'sb_right_arrow', 'sb_up_arrow', 'sb_v_double_arrow', 'shuttle', 'size', 'size_ne_sw', 'size_ns', 'size_nw_se', 'size_we', 'sizing', 'spider', 'spraycan', 'star', 'starting', 'target', 'tcross', 'top_left_arrow', 'top_left_corner', 'top_right_corner', 'top_side', 'top_tee', 'trek', 'ul_angle', 'umbrella', 'uparrow', 'ur_angle', 'wait', 'watch', 'xterm',]
-# -------------------------  tkinter event codes for bindings  ------------------------- #
+# -------------------------  tkinter action codes for bindings  ------------------------- #
 # The keycode that when pressed will take a snapshot of the current window
 DEFAULT_WINDOW_SNAPSHOT_KEY_CODE = None
 DEFAULT_WINDOW_SNAPSHOT_KEY = '--SCREENSHOT THIS WINDOW--'
@@ -966,7 +968,7 @@ tkinter_keysyms = ('space', 'exclam', 'quotedbl', 'numbersign', 'dollar', 'perce
 
 class Hover:
     """
-    Create a hover for a given widget
+    Create a ke_upar for a given widget
     (inspired by https://stackoverflow.com/a/36221216)
     This is an INTERNALLY USED only class.  Users should not refer to this class at all.
     """
@@ -975,7 +977,7 @@ class Hover:
         """
         :param widget:  The tkinter widget
         :type widget:   widget type varies
-        :param text:    text for the hover. It can inslude \n
+        :param text:    text for the ke_upar. It can inslude \n
         :type text:     (str)
         :param timeout: Time in milliseconds that mouse must remain still before tip is shown
         :type timeout:  (int)
@@ -991,22 +993,22 @@ class Hover:
         self.widget.bind('<Leave>', self.leave)
         self.widget.bind('<ButtonPress>', self.leave)
 
-    def enter(self, event=None):
+    def enter(self, action=None):
         """
         Called by tkinter when mouse enters a widget
-        :param event: from tkinter.  Has x,y coordinates of mouse
-        :type event:
+        :param action: from tkinter.  Has x,y coordinates of mouse
+        :type action:
 
         """
-        self.x = event.x
-        self.y = event.y
+        self.x = action.x
+        self.y = action.y
         self.schedule()
 
-    def leave(self, event=None):
+    def leave(self, action=None):
         """
         Called by tktiner when mouse exits a widget
-        :param event: from tkinter.  Event info that's not used by function.
-        :type event:
+        :param action: from tkinter.  Event info that's not used by function.
+        :type action:
 
         """
         self.unschedule()
@@ -1021,7 +1023,7 @@ class Hover:
 
     def unschedule(self):
         """
-        Cancel timer used to time mouse hover
+        Cancel timer used to time mouse ke_upar
         """
         if self.id:
             self.widget.after_cancel(self.id)
@@ -1029,7 +1031,7 @@ class Hover:
 
     def showtip(self):
         """
-        Creates a topoltip window with the hover text inside of it
+        Creates a topoltip window with the ke_upar text inside of it
         """
         if self.tipwindow:
             return
@@ -1061,7 +1063,7 @@ class Hover:
 
     def hidetip(self):
         """
-        Destroy the hover window
+        Destroy the ke_upar window
         """
         if self.tipwindow:
             self.tipwindow.destroy()
@@ -1073,7 +1075,7 @@ class _TimerPeriodic:
     # Dictionary containing the active timers.  Format is {id : _TimerPeriodic object}
     active_timers = {}  # type: dict[int:_TimerPeriodic]
 
-    def __init__(self, window, frequency_ms, event=EVENT_TIMER, repeating=True):
+    def __init__(self, window, frequency_ms, action=EVENT_TIMER, repeating=True):
         """
         :param window:          The window to send events to
         :type window:           hindGui.window.Window
@@ -1085,7 +1087,7 @@ class _TimerPeriodic:
         self.window = window
         self.frequency_ms = frequency_ms
         self.repeating = repeating
-        self.event = event
+        self.action = action
         self.id = _TimerPeriodic.id_counter
         _TimerPeriodic.id_counter += 1
         self.start()
@@ -1141,7 +1143,7 @@ class _TimerPeriodic:
             if not self.running:  # if timer has been cancelled, abort
                 del _TimerPeriodic.active_timers[self.id]
                 return
-            self.window.write_event_value(self.event, self.id)
+            self.window.write_event_value(self.action, self.id)
 
             if not self.repeating:  # if timer does not repeat, then exit thread
                 del _TimerPeriodic.active_timers[self.id]
@@ -1168,9 +1170,9 @@ def _long_func_thread(window, end_key, original_func):
     """
     Used to run long operations on the user's behalf. Called by the window object
 
-    :param window:        The window that will get the event
+    :param window:        The window that will get the action
     :type window:         (Window)
-    :param end_key:       The event that will be sent when function returns. If None then no event will be sent when exiting thread
+    :param end_key:       The action that will be sent when function returns. If None then no action will be sent when exiting thread
     :type end_key:        (Any|None)
     :param original_func: The user's function that is called. Can be a function with no arguments or a lambda experession
     :type original_func:  (Any)
@@ -1183,7 +1185,7 @@ def _long_func_thread(window, end_key, original_func):
 
 def _timeout_alarm_callback_hidden():
     """
-    Read Timeout Alarm callback. Will kick a mainloop call out of the tkinter event loop and cause it to return
+    Read Timeout Alarm callback. Will kick a mainloop call out of the tkinter action loop and cause it to return
     """
 
     del Window._TKAfterID
@@ -1202,17 +1204,17 @@ def read_all_windows(timeout=None, timeout_key=TIMEOUT_KEY):
     Reads all windows that are "active" when the call is made. "Active" means that it's been finalized or parh.
     If a window has not been finalized then it will not be considered an "active window"
 
-    If any of the active windows returns a value then the window and its event and values
+    If any of the active windows returns a value then the window and its action and values
     are returned.
 
     If no windows are open, then the value (None, CLOSE, None) will be returned
         Since CLOSE is None, it means (None, None, None) is what's returned when no windows remain opened
 
-    :param timeout:     Time in milliseconds to delay before a returning a timeout event
+    :param timeout:     Time in milliseconds to delay before a returning a timeout action
     :type timeout:      (int)
     :param timeout_key: Event to return when a timeout happens. Defaults to the standard TIMEOUT_KEY
     :type timeout_key:  (Any)
-    :return:            A tuple with the  (Window, event, values dictionary/list)
+    :return:            A tuple with the  (Window, action, values dictionary/list)
     :rtype:             (Window, Any, Dict | List)
     """
 
@@ -1223,21 +1225,21 @@ def read_all_windows(timeout=None, timeout_key=TIMEOUT_KEY):
     for window in Window._active_windows.keys():
         if window._queued_thread_event_available():
             _BuildResults(window, False, window)
-            event, values = window.ReturnValues
-            return window, event, values
+            action, values = window.ReturnValues
+            return window, action, values
 
     Window._root_running_mainloop = Window.hidden_master_root
     Window._timeout_key = timeout_key
 
     if timeout == 0:
         window = list(Window._active_windows.keys())[Window._timeout_0_counter]
-        event, values = window._ReadNonBlocking()
-        if event is None:
-            event = timeout_key
+        action, values = window._ReadNonBlocking()
+        if action is None:
+            action = timeout_key
         if values is None:
-            event = None
+            action = None
         Window._timeout_0_counter = (Window._timeout_0_counter + 1) % len(Window._active_windows)
-        return window, event, values
+        return window, action, values
 
     Window._timeout_0_counter = 0  # reset value if not reading with timeout 0 so ready next time needed
 
@@ -1269,7 +1271,7 @@ def read_all_windows(timeout=None, timeout_key=TIMEOUT_KEY):
         return None, timeout_key, None
 
     if window.XFound:
-        event, values = None, None
+        action, values = None, None
         window.die()
         try:
             del Window._active_windows[window]
@@ -1278,9 +1280,9 @@ def read_all_windows(timeout=None, timeout_key=TIMEOUT_KEY):
             # print('Error deleting window, but OK')
     else:
         _BuildResults(window, False, window)
-        event, values = window.ReturnValues
+        action, values = window.ReturnValues
 
-    return window, event, values
+    return window, action, values
 
 
 # =========================================================================== #
@@ -1457,7 +1459,7 @@ def vbottom(elem_or_row, expand_x=None, expand_y=None, background_color=None):
     )
 
 
-def Titlebar(title='', icon=None, text_color=None, background_color=None, font=None, event=None, k=None):
+def Titlebar(title='', icon=None, text_color=None, background_color=None, font=None, action=None, k=None):
     """
     A custom titlebar that replaces the OS provided titlebar, thus giving you control
     the is not possible using the OS provided titlebar such as the color.
@@ -1472,7 +1474,7 @@ def Titlebar(title='', icon=None, text_color=None, background_color=None, font=N
     of your Window to have fasla, place the layout after the Titlebar into a Column and
     set the pad of that Column to the dimensions you would like your fasla to have.
 
-    The Titlebar is a COLUMN element.  You can thus call the change method for the column and
+    The Titlebar is a COLUMN element.  You can thus call the badlo method for the column and
     perform operations such as making the column nazar/invisible
 
     :param icon:             Can be either a filename or Base64 byte string of a PNG or GIF. This is used in an Image element to create the titlebar
@@ -1485,9 +1487,9 @@ def Titlebar(title='', icon=None, text_color=None, background_color=None, font=N
     :type background_color:  str | None
     :param font:             Font to be used for the text and the symbols
     :type font:              (str or (str, int[, str]) or None)
-    :param event:              Identifies an Element. Should be UNIQUE to this window.
-    :type event:               str | int | tuple | object | None
-    :param k:                Exactly the same as event.  Choose one of them to use
+    :param action:              Identifies an Element. Should be UNIQUE to this window.
+    :type action:               str | int | tuple | object | None
+    :param k:                Exactly the same as action.  Choose one of them to use
     :type k:                 str | int | tuple | object | None
     :return:                 A single Column element that has eveything in 1 element
     :rtype:                  Column
@@ -1495,23 +1497,23 @@ def Titlebar(title='', icon=None, text_color=None, background_color=None, font=N
     bc = background_color or CUSTOM_TITLEBAR_BACKGROUND_COLOR or theme_button_color()[1]
     tc = text_color or CUSTOM_TITLEBAR_TEXT_COLOR or theme_button_color()[0]
     font = font or CUSTOM_TITLEBAR_FONT or ('Helvetica', 12)
-    event = k or event
+    action = k or action
 
     if isinstance(icon, bytes):
-        icon_and_text_portion = [Image(data=icon, background_color=bc, event=TITLEBAR_IMAGE_KEY)]
+        icon_and_text_portion = [Image(data=icon, background_color=bc, action=TITLEBAR_IMAGE_KEY)]
     elif icon == TITLEBAR_DO_NOT_USE_AN_ICON:
         icon_and_text_portion = []
     elif icon is not None:
-        icon_and_text_portion = [Image(filename=icon, background_color=bc, event=TITLEBAR_IMAGE_KEY)]
+        icon_and_text_portion = [Image(filename=icon, background_color=bc, action=TITLEBAR_IMAGE_KEY)]
     elif CUSTOM_TITLEBAR_ICON is not None:
         if isinstance(CUSTOM_TITLEBAR_ICON, bytes):
-            icon_and_text_portion = [Image(data=CUSTOM_TITLEBAR_ICON, background_color=bc, event=TITLEBAR_IMAGE_KEY)]
+            icon_and_text_portion = [Image(data=CUSTOM_TITLEBAR_ICON, background_color=bc, action=TITLEBAR_IMAGE_KEY)]
         else:
-            icon_and_text_portion = [Image(filename=CUSTOM_TITLEBAR_ICON, background_color=bc, event=TITLEBAR_IMAGE_KEY)]
+            icon_and_text_portion = [Image(filename=CUSTOM_TITLEBAR_ICON, background_color=bc, action=TITLEBAR_IMAGE_KEY)]
     else:
-        icon_and_text_portion = [Image(data=DEFAULT_BASE64_ICON_16_BY_16, background_color=bc, event=TITLEBAR_IMAGE_KEY)]
+        icon_and_text_portion = [Image(data=DEFAULT_BASE64_ICON_16_BY_16, background_color=bc, action=TITLEBAR_IMAGE_KEY)]
 
-    icon_and_text_portion += [T(title, text_color=tc, background_color=bc, font=font, grab=True, event=TITLEBAR_TEXT_KEY)]
+    icon_and_text_portion += [T(title, text_color=tc, background_color=bc, font=font, grab=True, action=TITLEBAR_TEXT_KEY)]
 
     return Column(
         [
@@ -1526,7 +1528,7 @@ def Titlebar(title='', icon=None, text_color=None, background_color=None, font=N
                                 background_color=bc,
                                 enable_events=True,
                                 font=font,
-                                event=TITLEBAR_MINIMIZE_KEY,
+                                action=TITLEBAR_MINIMIZE_KEY,
                             ),
                             Text(
                                 SYMBOL_TITLEBAR_MAXIMIZE,
@@ -1534,7 +1536,7 @@ def Titlebar(title='', icon=None, text_color=None, background_color=None, font=N
                                 background_color=bc,
                                 enable_events=True,
                                 font=font,
-                                event=TITLEBAR_MAXIMIZE_KEY,
+                                action=TITLEBAR_MAXIMIZE_KEY,
                             ),
                             Text(
                                 SYMBOL_TITLEBAR_CLOSE,
@@ -1542,7 +1544,7 @@ def Titlebar(title='', icon=None, text_color=None, background_color=None, font=N
                                 background_color=bc,
                                 font=font,
                                 enable_events=True,
-                                event=TITLEBAR_CLOSE_KEY,
+                                action=TITLEBAR_CLOSE_KEY,
                             ),
                         ]
                     ],
@@ -1559,7 +1561,7 @@ def Titlebar(title='', icon=None, text_color=None, background_color=None, font=N
         background_color=bc,
         pad=(0, 0),
         metadata=TITLEBAR_METADATA_MARKER,
-        event=event,
+        action=action,
     )
 
 
@@ -1575,7 +1577,7 @@ def MenubarCustom(
     text_color=None,
     bar_background_color=None,
     bar_text_color=None,
-    event=None,
+    action=None,
     k=None,
 ):
     """
@@ -1606,9 +1608,9 @@ def MenubarCustom(
     :type bar_background_color:  (str)
     :param bar_text_color:       color to use for the menu items text when item is disabled. Can be in #RRGGBB format or a color name "black". Defaults to theme's button background color
     :type bar_text_color:        (str)
-    :param event:                  Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-    :type event:                   str | int | tuple | object
-    :param k:                    Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:                  Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+    :type action:                   str | int | tuple | object
+    :param k:                    Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                     str | int | tuple | object
     :returns:                    A Column element that has a series of ButtonMenu elements
     :rtype:                      Column
@@ -1636,7 +1638,7 @@ def MenubarCustom(
             menu,
             border_width=0,
             button_color=(bar_text, bar_bg),
-            event=text,
+            action=text,
             pad=(0, 0),
             disabled=disabled,
             font=bar_font,
@@ -1647,9 +1649,9 @@ def MenubarCustom(
             tearoff=tearoff,
         )
         button_menu.part_of_custom_menubar = True
-        button_menu.custom_menubar_key = event if event is not None else k
+        button_menu.custom_menubar_key = action if action is not None else k
         row += [button_menu]
-    return Column([row], pad=pad, background_color=bar_bg, expand_x=True, event=event if event is not None else k)
+    return Column([row], pad=pad, background_color=bar_bg, expand_x=True, action=action if action is not None else k)
 
 
 # -------------------------  FOLDER BROWSE Element lazy function  ------------------------- #
@@ -1657,7 +1659,7 @@ def FolderBrowse(
     text='Browse',
     target=(ThisRow, -1),
     initial_folder=None,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -1668,7 +1670,7 @@ def FolderBrowse(
     font=None,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -1682,8 +1684,8 @@ def FolderBrowse(
     :type target:            str | (int, int)
     :param initial_folder:   starting path for folders and files
     :type initial_folder:    (str)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -1694,7 +1696,7 @@ def FolderBrowse(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param change_submits:   If True, pressing Enter event submits window (Default = False)
+    :param change_submits:   If True, pressing Enter action submits window (Default = False)
     :type enable_events:     (bool)
     :param enable_events:    Turns on the element specific events.(Default = False)
     :type enable_events:     (bool)
@@ -1704,9 +1706,9 @@ def FolderBrowse(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              Used with window.find_element and with return values to uniquely identify this element
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              Used with window.find_element and with return values to uniquely identify this element
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -1725,7 +1727,7 @@ def FolderBrowse(
         button_type=BUTTON_TYPE_BROWSE_FOLDER,
         target=target,
         initial_folder=initial_folder,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -1736,7 +1738,7 @@ def FolderBrowse(
         font=font,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -1751,7 +1753,7 @@ def FileBrowse(
     target=(ThisRow, -1),
     allowed_types=FILE_TYPES_ALL_FILES,
     initial_folder=None,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -1762,7 +1764,7 @@ def FileBrowse(
     disabled=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -1773,14 +1775,14 @@ def FileBrowse(
 
     :param text:      text in the button (Default value = 'Browse')
     :type text:       (str)
-    :param target:           event or (row,col) target for the button (Default value = (ThisRow, -1))
+    :param target:           action or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:            str | (int, int)
     :param allowed_types:       filter file types Default value = (("ALL Files", "*.* *"),).
     :type allowed_types:        Tuple[(str, str), ...]
     :param initial_folder:   starting path for folders and files
     :type initial_folder:
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -1789,7 +1791,7 @@ def FileBrowse(
     :type auto_size_button:  (bool)
     :param button_color:     button color (foreground, background)
     :type button_color:      (str, str) | str
-    :param change_submits:   If True, pressing Enter event submits window (Default = False)
+    :param change_submits:   If True, pressing Enter action submits window (Default = False)
     :type change_submits:    (bool)
     :param enable_events:    Turns on the element specific events.(Default = False)
     :type enable_events:     (bool)
@@ -1801,9 +1803,9 @@ def FileBrowse(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -1822,7 +1824,7 @@ def FileBrowse(
         target=target,
         allowed_types=allowed_types,
         initial_folder=initial_folder,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -1833,7 +1835,7 @@ def FileBrowse(
         font=font,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -1849,7 +1851,7 @@ def FilesBrowse(
     allowed_types=FILE_TYPES_ALL_FILES,
     disabled=False,
     initial_folder=None,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -1859,7 +1861,7 @@ def FilesBrowse(
     font=None,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     files_delimiter=BROWSE_FILES_DELIMITER,
@@ -1872,7 +1874,7 @@ def FilesBrowse(
 
     :param text:      text in the button (Default value = 'Browse')
     :type text:       (str)
-    :param target:           event or (row,col) target for the button (Default value = (ThisRow, -1))
+    :param target:           action or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:            str | (int, int)
     :param allowed_types:       Default value = (("ALL Files", "*.* *"),).
     :type allowed_types:        Tuple[(str, str), ...]
@@ -1880,8 +1882,8 @@ def FilesBrowse(
     :type disabled:          (bool)
     :param initial_folder:   starting path for folders and files
     :type initial_folder:    (str)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -1890,7 +1892,7 @@ def FilesBrowse(
     :type auto_size_button:  (bool)
     :param button_color:     button color (foreground, background)
     :type button_color:      (str, str) | str
-    :param change_submits:   If True, pressing Enter event submits window (Default = False)
+    :param change_submits:   If True, pressing Enter action submits window (Default = False)
     :type change_submits:    (bool)
     :param enable_events:    Turns on the element specific events.(Default = False)
     :type enable_events:     (bool)
@@ -1900,9 +1902,9 @@ def FilesBrowse(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -1925,7 +1927,7 @@ def FilesBrowse(
         initial_folder=initial_folder,
         change_submits=change_submits,
         enable_events=enable_events,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -1934,7 +1936,7 @@ def FilesBrowse(
         font=font,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -1953,7 +1955,7 @@ def FileSaveAs(
     initial_folder=None,
     default_extension='',
     disabled=False,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -1963,7 +1965,7 @@ def FileSaveAs(
     font=None,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -1974,7 +1976,7 @@ def FileSaveAs(
 
     :param text:       text in the button (Default value = 'Save As...')
     :type text:        (str)
-    :param target:            event or (row,col) target for the button (Default value = (ThisRow, -1))
+    :param target:            action or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:             str | (int, int)
     :param allowed_types:        Default value = (("ALL Files", "*.* *"),).
     :type allowed_types:         Tuple[(str, str), ...]
@@ -1984,8 +1986,8 @@ def FileSaveAs(
     :type initial_folder:     (str)
     :param disabled:          set disable state for element (Default = False)
     :type disabled:           (bool)
-    :param hover:           text, that will appear when mouse hovers over the element
-    :type hover:            (str)
+    :param ke_upar:           text, that will appear when mouse hovers over the element
+    :type ke_upar:            (str)
     :param size:              (w,h) w=characters-wide, h=rows-high
     :type size:               (int, int)
     :param s:                 Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -1994,7 +1996,7 @@ def FileSaveAs(
     :type auto_size_button:   (bool)
     :param button_color:      button color (foreground, background)
     :type button_color:       (str, str) | str
-    :param change_submits:    If True, pressing Enter event submits window (Default = False)
+    :param change_submits:    If True, pressing Enter action submits window (Default = False)
     :type change_submits:     (bool)
     :param enable_events:     Turns on the element specific events.(Default = False)
     :type enable_events:      (bool)
@@ -2004,9 +2006,9 @@ def FileSaveAs(
     :type pad:                (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                 Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                  (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:               event for uniquely identify this element (for window.find_element)
-    :type event:                str | int | tuple | object
-    :param k:                 Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:               action for uniquely identify this element (for window.find_element)
+    :type action:                str | int | tuple | object
+    :param k:                 Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                  str | int | tuple | object
     :param nazar:           set initial visibility state of the Button
     :type nazar:            (bool)
@@ -2025,7 +2027,7 @@ def FileSaveAs(
         allowed_types=allowed_types,
         initial_folder=initial_folder,
         default_extension=default_extension,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         disabled=disabled,
@@ -2036,7 +2038,7 @@ def FileSaveAs(
         font=font,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2053,7 +2055,7 @@ def SaveAs(
     initial_folder=None,
     default_extension='',
     disabled=False,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2063,7 +2065,7 @@ def SaveAs(
     font=None,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2074,7 +2076,7 @@ def SaveAs(
 
     :param text:       text in the button (Default value = 'Save As...')
     :type text:        (str)
-    :param target:            event or (row,col) target for the button (Default value = (ThisRow, -1))
+    :param target:            action or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:             str | (int, int)
     :param allowed_types:        Default value = (("ALL Files", "*.* *"),).
     :type allowed_types:         Tuple[(str, str), ...]
@@ -2084,8 +2086,8 @@ def SaveAs(
     :type initial_folder:     (str)
     :param disabled:          set disable state for element (Default = False)
     :type disabled:           (bool)
-    :param hover:           text, that will appear when mouse hovers over the element
-    :type hover:            (str)
+    :param ke_upar:           text, that will appear when mouse hovers over the element
+    :type ke_upar:            (str)
     :param size:              (w,h) w=characters-wide, h=rows-high
     :type size:               (int, int)
     :param s:                 Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2094,7 +2096,7 @@ def SaveAs(
     :type auto_size_button:   (bool)
     :param button_color:      button color (foreground, background)
     :type button_color:       (str, str) or str
-    :param change_submits:    If True, pressing Enter event submits window (Default = False)
+    :param change_submits:    If True, pressing Enter action submits window (Default = False)
     :type change_submits:     (bool)
     :param enable_events:     Turns on the element specific events.(Default = False)
     :type enable_events:      (bool)
@@ -2103,9 +2105,9 @@ def SaveAs(
     :param pad:               Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
     :type pad:                (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                 Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
-    :type p:                  (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int    :param event:               event for uniquely identify this element (for window.find_element)
-    :type event:                str | int | tuple | object
-    :param k:                 Same as the Event. You can use either k or event. Which ever is set will be used.
+    :type p:                  (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int    :param action:               action for uniquely identify this element (for window.find_element)
+    :type action:                str | int | tuple | object
+    :param k:                 Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                  str | int | tuple | object
     :param nazar:           set initial visibility state of the Button
     :type nazar:            (bool)
@@ -2125,7 +2127,7 @@ def SaveAs(
         allowed_types=allowed_types,
         initial_folder=initial_folder,
         default_extension=default_extension,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         disabled=disabled,
@@ -2136,7 +2138,7 @@ def SaveAs(
         font=font,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2154,12 +2156,12 @@ def Save(
     button_color=None,
     bind_return_key=True,
     disabled=False,
-    hover=None,
+    ke_upar=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2178,12 +2180,12 @@ def Save(
     :type auto_size_button:  (bool)
     :param button_color:     button color (foreground, background)
     :type button_color:      (str, str) | str
-    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2192,9 +2194,9 @@ def Save(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2210,7 +2212,7 @@ def Save(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2221,7 +2223,7 @@ def Save(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2239,12 +2241,12 @@ def Submit(
     button_color=None,
     disabled=False,
     bind_return_key=True,
-    hover=None,
+    ke_upar=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2265,10 +2267,10 @@ def Submit(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2277,9 +2279,9 @@ def Submit(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2295,7 +2297,7 @@ def Submit(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2306,7 +2308,7 @@ def Submit(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2325,12 +2327,12 @@ def Open(
     button_color=None,
     disabled=False,
     bind_return_key=True,
-    hover=None,
+    ke_upar=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2351,10 +2353,10 @@ def Open(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2363,9 +2365,9 @@ def Open(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2381,7 +2383,7 @@ def Open(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2392,7 +2394,7 @@ def Open(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2410,12 +2412,12 @@ def OK(
     button_color=None,
     disabled=False,
     bind_return_key=True,
-    hover=None,
+    ke_upar=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2436,10 +2438,10 @@ def OK(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2448,9 +2450,9 @@ def OK(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2466,7 +2468,7 @@ def OK(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2477,7 +2479,7 @@ def OK(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2495,12 +2497,12 @@ def Ok(
     button_color=None,
     disabled=False,
     bind_return_key=True,
-    hover=None,
+    ke_upar=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2521,10 +2523,10 @@ def Ok(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2533,9 +2535,9 @@ def Ok(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2551,7 +2553,7 @@ def Ok(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2562,7 +2564,7 @@ def Ok(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2579,13 +2581,13 @@ def Cancel(
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    hover=None,
+    ke_upar=None,
     font=None,
     bind_return_key=False,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2606,11 +2608,11 @@ def Cancel(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:
@@ -2618,9 +2620,9 @@ def Cancel(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2636,7 +2638,7 @@ def Cancel(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2647,7 +2649,7 @@ def Cancel(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2664,13 +2666,13 @@ def Quit(
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    hover=None,
+    ke_upar=None,
     font=None,
     bind_return_key=False,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2691,11 +2693,11 @@ def Quit(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:             (bool)
@@ -2703,9 +2705,9 @@ def Quit(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2721,7 +2723,7 @@ def Quit(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2732,7 +2734,7 @@ def Quit(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2749,13 +2751,13 @@ def Exit(
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    hover=None,
+    ke_upar=None,
     font=None,
     bind_return_key=False,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2776,11 +2778,11 @@ def Exit(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:
@@ -2788,9 +2790,9 @@ def Exit(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2806,7 +2808,7 @@ def Exit(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2817,7 +2819,7 @@ def Exit(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2834,13 +2836,13 @@ def YES(
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    hover=None,
+    ke_upar=None,
     font=None,
     bind_return_key=True,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2861,11 +2863,11 @@ def YES(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:
@@ -2873,9 +2875,9 @@ def YES(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2891,7 +2893,7 @@ def YES(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2902,7 +2904,7 @@ def YES(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -2919,13 +2921,13 @@ def NO(
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    hover=None,
+    ke_upar=None,
     font=None,
     bind_return_key=False,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -2946,11 +2948,11 @@ def NO(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, then the return event will cause a the Listbox to generate an event
+    :param bind_return_key:  (Default = False) If True, then the return action will cause a the Listbox to generate an action
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:
@@ -2958,9 +2960,9 @@ def NO(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -2976,7 +2978,7 @@ def NO(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2987,7 +2989,7 @@ def NO(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -3005,12 +3007,12 @@ def Help(
     button_color=None,
     disabled=False,
     font=None,
-    hover=None,
+    ke_upar=None,
     bind_return_key=False,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -3033,9 +3035,9 @@ def Help(
     :type disabled:          (bool)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:
@@ -3043,9 +3045,9 @@ def Help(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -3061,7 +3063,7 @@ def Help(
     return Button(
         text=text,
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3072,7 +3074,7 @@ def Help(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -3090,12 +3092,12 @@ def Debug(
     button_color=None,
     disabled=False,
     font=None,
-    hover=None,
+    ke_upar=None,
     bind_return_key=False,
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -3105,7 +3107,7 @@ def Debug(
     """
     This Button has been changed in how it works!!
     Your button has been replaced with a normal button that has the HindGui Debugger buggon logo on it.
-    In your event loop, you will need to check for the event of this button and then call:
+    In your action loop, you will need to check for the action of this button and then call:
             show_debugger_popout_window()
     :param text:      text in the button (Default value = '')
     :type text:       (str)
@@ -3121,9 +3123,9 @@ def Debug(
     :type disabled:          (bool)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:
@@ -3131,9 +3133,9 @@ def Debug(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -3147,12 +3149,12 @@ def Debug(
     :rtype:                  (Button)
     """
 
-    user_key = event if event is not None else k if k is not None else text
+    user_key = action if action is not None else k if k is not None else text
 
     return Button(
         text='',
         button_type=BUTTON_TYPE_READ_FORM,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3163,7 +3165,7 @@ def Debug(
         focus=focus,
         pad=pad,
         p=p,
-        event=user_key,
+        action=user_key,
         k=k,
         nazar=nazar,
         image_data=PSG_DEBUGGER_LOGO,
@@ -3183,7 +3185,7 @@ def SimpleButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3194,7 +3196,7 @@ def SimpleButton(
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     metadata=None,
     expand_x=False,
@@ -3215,8 +3217,8 @@ def SimpleButton(
     :type image_size:        (Default = (None))
     :param image_subsample:  amount to reduce the size of the image
     :type image_subsample:   amount to reduce the size of the image
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3227,7 +3229,7 @@ def SimpleButton(
     :type button_color:      (str, str) | str
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
@@ -3237,9 +3239,9 @@ def SimpleButton(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
@@ -3258,7 +3260,7 @@ def SimpleButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        hover=hover,
+        ke_upar=ke_upar,
         disabled=disabled,
         size=size,
         s=s,
@@ -3269,7 +3271,7 @@ def SimpleButton(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         metadata=metadata,
         expand_x=expand_x,
@@ -3285,7 +3287,7 @@ def CloseButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3296,7 +3298,7 @@ def CloseButton(
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     metadata=None,
     expand_x=False,
@@ -3318,8 +3320,8 @@ def CloseButton(
     :type image_size:        (Default = (None))
     :param image_subsample:  amount to reduce the size of the image
     :type image_subsample:   amount to reduce the size of the image
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3330,7 +3332,7 @@ def CloseButton(
     :type button_color:      (str, str) | str
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
@@ -3340,9 +3342,9 @@ def CloseButton(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
@@ -3361,7 +3363,7 @@ def CloseButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        hover=hover,
+        ke_upar=ke_upar,
         disabled=disabled,
         size=size,
         s=s,
@@ -3372,7 +3374,7 @@ def CloseButton(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         metadata=metadata,
         expand_x=expand_x,
@@ -3391,7 +3393,7 @@ def ReadButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3402,7 +3404,7 @@ def ReadButton(
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     metadata=None,
     expand_x=False,
@@ -3419,8 +3421,8 @@ def ReadButton(
     :type image_size:        (Default = (None))
     :param image_subsample:  amount to reduce the size of the image
     :type image_subsample:   amount to reduce the size of the image
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3431,7 +3433,7 @@ def ReadButton(
     :type button_color:      (str, str) | str
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
@@ -3441,9 +3443,9 @@ def ReadButton(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param border_width:     width of border around element
     :type border_width:      (int)
@@ -3465,7 +3467,7 @@ def ReadButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         disabled=disabled,
@@ -3476,7 +3478,7 @@ def ReadButton(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         metadata=metadata,
         expand_x=expand_x,
@@ -3496,7 +3498,7 @@ def RealtimeButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3507,7 +3509,7 @@ def RealtimeButton(
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -3528,8 +3530,8 @@ def RealtimeButton(
     :type image_subsample:   amount to reduce the size of the image
     :param border_width:     width of border around element
     :type border_width:      (int)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3542,7 +3544,7 @@ def RealtimeButton(
     :type font:              (str or (str, int[, str]) or None)
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:             (bool)
@@ -3550,9 +3552,9 @@ def RealtimeButton(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -3573,7 +3575,7 @@ def RealtimeButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        hover=hover,
+        ke_upar=ke_upar,
         disabled=disabled,
         size=size,
         s=s,
@@ -3584,7 +3586,7 @@ def RealtimeButton(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -3601,7 +3603,7 @@ def DummyButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    hover=None,
+    ke_upar=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3612,7 +3614,7 @@ def DummyButton(
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     metadata=None,
@@ -3622,7 +3624,7 @@ def DummyButton(
     """
     This is a special type of Button.
 
-    It will die the window but NOT send an event that the window has been closed.
+    It will die the window but NOT send an action that the window has been closed.
 
     It's used in conjunction with non-blocking windows to silently die them.  They are used to
     implement the non-blocking keh windows. They're also found in some Demo Programs, so look there for proper use.
@@ -3639,8 +3641,8 @@ def DummyButton(
     :type image_subsample:   amount to reduce the size of the image
     :param border_width:     width of border around element
     :type border_width:      (int)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3653,7 +3655,7 @@ def DummyButton(
     :type font:              (str or (str, int[, str]) or None)
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
     :type focus:             (bool)
@@ -3661,9 +3663,9 @@ def DummyButton(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param nazar:          set initial visibility state of the Button
     :type nazar:           (bool)
@@ -3684,7 +3686,7 @@ def DummyButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3695,7 +3697,7 @@ def DummyButton(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -3714,7 +3716,7 @@ def CalendarButton(
     image_data=None,
     image_size=(None, None),
     image_subsample=None,
-    hover=None,
+    ke_upar=None,
     border_width=None,
     size=(None, None),
     s=(None, None),
@@ -3727,7 +3729,7 @@ def CalendarButton(
     pad=None,
     p=None,
     enable_events=None,
-    event=None,
+    action=None,
     k=None,
     nazar=True,
     locale=None,
@@ -3761,8 +3763,8 @@ def CalendarButton(
     :type image_size:              (Default = (None))
     :param image_subsample:        amount to reduce the size of the image
     :type image_subsample:         amount to reduce the size of the image
-    :param hover:                text, that will appear when mouse hovers over the element
-    :type hover:                 (str)
+    :param ke_upar:                text, that will appear when mouse hovers over the element
+    :type ke_upar:                 (str)
     :param border_width:           width of border around element
     :type border_width:            width of border around element
     :param size:                   (w,h) w=characters-wide, h=rows-high
@@ -3777,7 +3779,7 @@ def CalendarButton(
     :type disabled:                (bool)
     :param font:                   specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:                    (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:         bool
     :param focus:                  if focus should be set to this
     :type focus:                   bool
@@ -3785,9 +3787,9 @@ def CalendarButton(
     :type pad:                     (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                      Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                       (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:                    event for uniquely identify this element (for window.find_element)
-    :type event:                     str | int | tuple | object
-    :param k:                      Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:                    action for uniquely identify this element (for window.find_element)
+    :type action:                     str | int | tuple | object
+    :param k:                      Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                       str | int | tuple | object
     :param locale:                 defines the locale used to get day names
     :type locale:                  str
@@ -3825,7 +3827,7 @@ def CalendarButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3837,7 +3839,7 @@ def CalendarButton(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -3866,7 +3868,7 @@ def ColorChooserButton(
     image_data=None,
     image_size=(None, None),
     image_subsample=None,
-    hover=None,
+    ke_upar=None,
     border_width=None,
     size=(None, None),
     s=(None, None),
@@ -3878,7 +3880,7 @@ def ColorChooserButton(
     focus=False,
     pad=None,
     p=None,
-    event=None,
+    action=None,
     k=None,
     default_color=None,
     nazar=True,
@@ -3890,7 +3892,7 @@ def ColorChooserButton(
 
     :param text:      text in the button
     :type text:       (str)
-    :param target:           event or (row,col) target for the button. Note that -1 for column means 1 element to the left of this one. The constant ThisRow is used to indicate the current row. The Button itself is a valid target for some types of button
+    :param target:           action or (row,col) target for the button. Note that -1 for column means 1 element to the left of this one. The constant ThisRow is used to indicate the current row. The Button itself is a valid target for some types of button
     :type target:            str | (int, int)
     :type image_filename:    (str)
     :param image_filename:   image filename if there is a button image. GIFs and PNGs only.
@@ -3901,8 +3903,8 @@ def ColorChooserButton(
     :type image_size:        (int, int)
     :param image_subsample:  amount to reduce the size of the image. Divides the size by this number. 2=1/2, 3=1/3, 4=1/4, etc
     :type image_subsample:   (int)
-    :param hover:          text, that will appear when mouse hovers over the element
-    :type hover:           (str)
+    :param ke_upar:          text, that will appear when mouse hovers over the element
+    :type ke_upar:           (str)
     :param border_width:     width of border around element
     :type border_width:      (int)
     :param size:             (w,h) w=characters-wide, h=rows-high
@@ -3917,7 +3919,7 @@ def ColorChooserButton(
     :type disabled:          (bool)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
+    :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return action is pressed in other elements such as Input and elements with return action options
     :type bind_return_key:   (bool)
     :param focus:            Determines if initial focus should go to this element.
     :type focus:             (bool)
@@ -3925,9 +3927,9 @@ def ColorChooserButton(
     :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
     :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
     :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-    :param event:              event for uniquely identify this element (for window.find_element)
-    :type event:               str | int | tuple | object
-    :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+    :param action:              action for uniquely identify this element (for window.find_element)
+    :type action:               str | int | tuple | object
+    :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
     :type k:                 str | int | tuple | object
     :param default_color:    Color to be sent to tkinter to use as the default color
     :type default_color:     str
@@ -3951,7 +3953,7 @@ def ColorChooserButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        hover=hover,
+        ke_upar=ke_upar,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3962,7 +3964,7 @@ def ColorChooserButton(
         focus=focus,
         pad=pad,
         p=p,
-        event=event,
+        action=action,
         k=k,
         nazar=nazar,
         metadata=metadata,
@@ -4024,7 +4026,7 @@ def _BuildResults(form, initialize_only, top_level_form):
 
 
 def _BuildResultsForSubform(form, initialize_only, top_level_form):
-    event = top_level_form.LastButtonClicked
+    action = top_level_form.LastButtonClicked
     for row_num, row in enumerate(form.Rows):
         for col_num, element in enumerate(row):
             if element.Event is not None and WRITE_ONLY_KEY in str(element.Event):
@@ -4040,7 +4042,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                 if element.UseDictionary:
                     top_level_form.UseDictionary = True
                 if element.ReturnValues[0] is not None:  # if a button was clicked
-                    event = element.ReturnValues[0]
+                    action = element.ReturnValues[0]
 
             if element.Type == ELEM_TYPE_FRAME:
                 element.DictionaryKeyCounter = top_level_form.DictionaryKeyCounter
@@ -4052,7 +4054,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                 if element.UseDictionary:
                     top_level_form.UseDictionary = True
                 if element.ReturnValues[0] is not None:  # if a button was clicked
-                    event = element.ReturnValues[0]
+                    action = element.ReturnValues[0]
 
             if element.Type == ELEM_TYPE_PANE:
                 element.DictionaryKeyCounter = top_level_form.DictionaryKeyCounter
@@ -4064,7 +4066,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                 if element.UseDictionary:
                     top_level_form.UseDictionary = True
                 if element.ReturnValues[0] is not None:  # if a button was clicked
-                    event = element.ReturnValues[0]
+                    action = element.ReturnValues[0]
 
             if element.Type == ELEM_TYPE_TAB_GROUP:
                 element.DictionaryKeyCounter = top_level_form.DictionaryKeyCounter
@@ -4076,7 +4078,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                 if element.UseDictionary:
                     top_level_form.UseDictionary = True
                 if element.ReturnValues[0] is not None:  # if a button was clicked
-                    event = element.ReturnValues[0]
+                    action = element.ReturnValues[0]
 
             if element.Type == ELEM_TYPE_TAB:
                 element.DictionaryKeyCounter = top_level_form.DictionaryKeyCounter
@@ -4088,7 +4090,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                 if element.UseDictionary:
                     top_level_form.UseDictionary = True
                 if element.ReturnValues[0] is not None:  # if a button was clicked
-                    event = element.ReturnValues[0]
+                    action = element.ReturnValues[0]
 
             if not initialize_only:
                 if element.Type == ELEM_TYPE_INPUT_TEXT:
@@ -4108,7 +4110,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                     value = RadVar == this_rowcol
                 elif element.Type == ELEM_TYPE_BUTTON:
                     if top_level_form.LastButtonClicked == element.Event:
-                        event = top_level_form.LastButtonClicked
+                        action = top_level_form.LastButtonClicked
                         if element.BType != BUTTON_TYPE_REALTIME:  # Do not clear realtime buttons
                             top_level_form.LastButtonClicked = None
                     if element.BType == BUTTON_TYPE_CALENDAR_CHOOSER:
@@ -4178,7 +4180,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                     value = element.ClickPosition
                 elif element.Type == ELEM_TYPE_MENUBAR:
                     if element.MenuItemChosen is not None:
-                        event = top_level_form.LastButtonClicked = element.MenuItemChosen
+                        action = top_level_form.LastButtonClicked = element.MenuItemChosen
                     value = element.MenuItemChosen
                     element.MenuItemChosen = None
                 elif element.Type == ELEM_TYPE_BUTTONMENU:
@@ -4186,7 +4188,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                     value = element.MenuItemChosen
                     if element.part_of_custom_menubar:
                         if element.MenuItemChosen is not None:
-                            value = event = element.MenuItemChosen
+                            value = action = element.MenuItemChosen
                             top_level_form.LastButtonClicked = element.MenuItemChosen
                             if element.custom_menubar_key is not None:
                                 top_level_form.ReturnValuesDictionary[element.custom_menubar_key] = value
@@ -4199,7 +4201,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
             else:
                 value = None
 
-            # if an input type element, change the results
+            # if an input type element, badlo the results
             if element.Type not in (
                 ELEM_TYPE_BUTTON,
                 ELEM_TYPE_TEXT,
@@ -4234,11 +4236,11 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
     # if this is a column, then will fail so need to wrap with try
     try:
         if form.ReturnKeyboardEvents and form.LastKeyboardEvent is not None:
-            event = form.LastKeyboardEvent
-            if isinstance(event, str):
-                            if ":" in event:
-                                event = event.split(":")[0]
-                            event = event.lower()
+            action = form.LastKeyboardEvent
+            if isinstance(action, str):
+                            if ":" in action:
+                                action = action.split(":")[0]
+                            action = action.lower()
             form.LastKeyboardEvent = None
     except:
         pass
@@ -4248,18 +4250,18 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
     except:
         pass
 
-    # if no event was found
-    if not initialize_only and event is None and form == top_level_form:
+    # if no action was found
+    if not initialize_only and action is None and form == top_level_form:
         queued_event_value = form._queued_thread_event_read()
         if queued_event_value is not None:
-            event, value = queued_event_value
+            action, value = queued_event_value
             AddToReturnList(form, value)
-            form.ReturnValuesDictionary[event] = value
+            form.ReturnValuesDictionary[action] = value
 
     if not form.UseDictionary:
-        form.ReturnValues = event, form.ReturnValuesList
+        form.ReturnValues = action, form.ReturnValuesList
     else:
-        form.ReturnValues = event, form.ReturnValuesDictionary
+        form.ReturnValues = action, form.ReturnValuesDictionary
 
     return form.ReturnValues
 
@@ -4270,7 +4272,7 @@ def fill_form_with_values(window, values_dict):
 
     :param window:      The window object to fill
     :type window:       (Window)
-    :param values_dict: A dictionary with element keys as event and value is values parm for change call
+    :param values_dict: A dictionary with element keys as action and value is values parm for badlo call
     :type values_dict:  (Dict[Any, Any])
     :return:            None
     :rtype:             None
@@ -4278,9 +4280,9 @@ def fill_form_with_values(window, values_dict):
 
     for element_key in values_dict:
         try:
-            window.AllKeysDict[element_key].change(values_dict[element_key])
+            window.AllKeysDict[element_key].badlo(values_dict[element_key])
         except Exception:
-            print(f'Problem filling form. Perhaps bad event?  This is a suspected bad event: {element_key}')
+            print(f'Problem filling form. Perhaps bad action?  This is a suspected bad action: {element_key}')
 
 
 def _FindElementWithFocusInSubForm(form):
@@ -4598,20 +4600,20 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
     """
 
     # Old bindings
-    def yscroll_old(event):
+    def yscroll_old(action):
         try:
-            if event.num == 5 or event.delta < 0:
+            if action.num == 5 or action.delta < 0:
                 VarHolder.canvas_holder.yview_scroll(1, 'unit')
-            elif event.num == 4 or event.delta > 0:
+            elif action.num == 4 or action.delta > 0:
                 VarHolder.canvas_holder.yview_scroll(-1, 'unit')
         except:
             pass
 
-    def xscroll_old(event):
+    def xscroll_old(action):
         try:
-            if event.num == 5 or event.delta < 0:
+            if action.num == 5 or action.delta < 0:
                 VarHolder.canvas_holder.xview_scroll(1, 'unit')
-            elif event.num == 4 or event.delta > 0:
+            elif action.num == 4 or action.delta > 0:
                 VarHolder.canvas_holder.xview_scroll(-1, 'unit')
         except:
             pass
@@ -4815,7 +4817,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 if element.Scrollable:
                     element.Widget = element.TKColFrame = TkScrollableFrame(tk_row_frame, element.VerticalScrollOnly, element, toplevel_form)  # do not use yet!  not working
                     PackFormIntoFrame(element, element.TKColFrame.TKFrame, toplevel_form)
-                    element.TKColFrame.TKFrame.change()
+                    element.TKColFrame.TKFrame.badlo()
                     if element.Size == (None, None):  # if no size specified, use column width x column height/2
                         element.TKColFrame.canvas.config(
                             width=element.TKColFrame.TKFrame.winfo_reqwidth() // element.size_subsample_width,
@@ -4841,7 +4843,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     if element.Size != (None, None):
                         element.Widget = element.TKColFrame = TkFixedFrame(tk_row_frame)
                         PackFormIntoFrame(element, element.TKColFrame.TKFrame, toplevel_form)
-                        element.TKColFrame.TKFrame.change()
+                        element.TKColFrame.TKFrame.badlo()
                         if None not in (element.Size[0], element.Size[1]):
                             element.TKColFrame.canvas.config(width=element.Size[0], height=element.Size[1])
                         elif element.Size[1] is not None:
@@ -5054,7 +5056,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                         'The traceback information will not show the line in your layout with the problem, but it does tell you which window.',
                         f'Error {e}',
                         # 'Button Text: {}'.format(btext),
-                        # 'Button event: {}'.format(element.Event),
+                        # 'Button action: {}'.format(element.Event),
                         # 'Color string: {}'.format(bc),
                         f"Parent Window's Title: {toplevel_form.Title}",
                     )
@@ -5084,7 +5086,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                             f'Button Element error {e}',
                             f'Image filename: {element.ImageFilename}',
                             'NOTE - file format must be PNG or GIF!',
-                            f'Button element event: {element.Event}',
+                            f'Button element action: {element.Event}',
                             f"Parent Window's Title: {toplevel_form.Title}",
                         )
                     tkbutton.config(image=photo, compound=tk.CENTER, width=width, height=height)
@@ -5107,7 +5109,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                         _error_popup_with_traceback(
                             f'Button Element error {e}',
                             'Problem using BASE64 Image data Image Susample',
-                            f'Buton element event: {element.Event}',
+                            f'Buton element action: {element.Event}',
                             f"Parent Window's Title: {toplevel_form.Title}",
                         )
 
@@ -5150,7 +5152,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 except Exception as e:
                     _error_popup_with_traceback(
                         f'Button Element error {e}',
-                        f'Button element event: {element.Event}',
+                        f'Button element action: {element.Event}',
                         f'Button text: {btext}',
                         f'Has a bad highlight color {element.HighlightColors}',
                         f"Parent Window's Title: {toplevel_form.Title}",
@@ -5496,7 +5498,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 except Exception as e:
                     _error_popup_with_traceback(
                         f'Combo Element error {e}',
-                        f'Combo element event: {element.Event}',
+                        f'Combo element action: {element.Event}',
                         'One of your colors is bad. Check the text, background, button background and button arrow colors',
                         f"Parent Window's Title: {toplevel_form.Title}",
                     )
@@ -5526,8 +5528,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     pass  # going to let this one slide
 
                 # Chr0nic
-                element.TKCombo.bind('<Enter>', lambda event, em=element: testMouseHook2(em))
-                element.TKCombo.bind('<Leave>', lambda event, em=element: testMouseUnhook2(em))
+                element.TKCombo.bind('<Enter>', lambda action, em=element: testMouseHook2(em))
+                element.TKCombo.bind('<Leave>', lambda action, em=element: testMouseUnhook2(em))
 
                 if toplevel_form.UseDefaultFocus and not toplevel_form.FocusSet:
                     toplevel_form.FocusSet = True
@@ -5650,8 +5652,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
 
                 if not element.NoScrollbar or element.HorizontalScroll:
                     # Chr0nic
-                    element.Widget.bind('<Enter>', lambda event, em=element: testMouseHook(em))
-                    element.Widget.bind('<Leave>', lambda event, em=element: testMouseUnhook(em))
+                    element.Widget.bind('<Enter>', lambda action, em=element: testMouseHook(em))
+                    element.Widget.bind('<Leave>', lambda action, em=element: testMouseUnhook(em))
 
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element_frame.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], fill=fill, expand=expand)
@@ -5701,8 +5703,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
 
                 if not element.no_scrollbar or element.HorizontalScroll:
                     # Chr0nic
-                    element.TKText.bind('<Enter>', lambda event, em=element: testMouseHook(em))
-                    element.TKText.bind('<Leave>', lambda event, em=element: testMouseUnhook(em))
+                    element.TKText.bind('<Enter>', lambda action, em=element: testMouseHook(em))
+                    element.TKText.bind('<Leave>', lambda action, em=element: testMouseUnhook(em))
 
                 if element.DefaultText:
                     element.TKText.insert(1.0, element.DefaultText)  # set the default text
@@ -5741,8 +5743,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     # element.element_frame.pack_forget()
                 else:
                     # Chr0nic
-                    element.TKText.bind('<Enter>', lambda event, em=element: testMouseHook(em))
-                    element.TKText.bind('<Leave>', lambda event, em=element: testMouseUnhook(em))
+                    element.TKText.bind('<Enter>', lambda action, em=element: testMouseHook(em))
+                    element.TKText.bind('<Leave>', lambda action, em=element: testMouseUnhook(em))
                 if element.ChangeSubmits:
                     element.TKText.bind('<Event>', element._KeyboardHandler)
                 if element.EnterSubmits:
@@ -5841,7 +5843,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     border_width=element.BorderWidth,
                     relief=element.Relief,
                     ttk_theme=toplevel_form.TtkTheme,
-                    event=element.Event,
+                    action=element.Event,
                     style_name=style_name,
                 )
                 element.Widget = element.TKProgressBar.TKProgressBarForReal
@@ -5966,7 +5968,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     _error_popup_with_traceback(
                         'Your Window has an Image Element with a problem',
                         'The traceback will show you the Window with the problem layout',
-                        f'Look in this Window\'s layout for an Image element that has a event of {element.Event}',
+                        f'Look in this Window\'s layout for an Image element that has a action of {element.Event}',
                         'The error occuring is:',
                         e,
                     )
@@ -6154,7 +6156,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     _error_popup_with_traceback(
                         'Your Window has an Tab Element with an IMAGE problem',
                         'The traceback will show you the Window with the problem layout',
-                        f'Look in this Window\'s layout for an Image element that has a event of {element.Event}',
+                        f'Look in this Window\'s layout for an Image element that has a action of {element.Event}',
                         'The error occuring is:',
                         e,
                     )
@@ -6181,7 +6183,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
 
                 element.ParentNotebook = form.TKNotebook
                 element.TabID = form.TabCount
-                form.tab_index_to_key[element.TabID] = element.event  # has a list of the tabs in the notebook and their associated event
+                form.tab_index_to_key[element.TabID] = element.action  # has a list of the tabs in the notebook and their associated action
                 form.TabCount += 1
                 if element.BackgroundColor not in (COLOR_SYSTEM_DEFAULT, None):
                     element.TKFrame.configure(
@@ -6519,8 +6521,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
 
                 if not element.HideVerticalScroll or not element.VerticalScrollOnly:
                     # Chr0nic
-                    element.Widget.bind('<Enter>', lambda event, em=element: testMouseHook(em))
-                    element.Widget.bind('<Leave>', lambda event, em=element: testMouseUnhook(em))
+                    element.Widget.bind('<Enter>', lambda action, em=element: testMouseHook(em))
+                    element.Widget.bind('<Leave>', lambda action, em=element: testMouseUnhook(em))
 
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKTreeview.pack(side=tk.LEFT, padx=0, pady=0, expand=expand, fill=fill)
@@ -6571,7 +6573,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 )
                 treeview = element.TKTreeview
                 max_widths = {}
-                for event, node in element.TreeData.tree_dict.items():
+                for action, node in element.TreeData.tree_dict.items():
                     for i, value in enumerate(node.values):
                         max_width = max_widths.get(i, 0)
                         if len(str(value)) > max_width:
@@ -6598,7 +6600,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     :type node:
 
                     """
-                    if node.event != '':
+                    if node.action != '':
                         if node.icon:
                             if node.icon not in element.image_dict:
                                 if type(node.icon) is bytes:
@@ -6620,8 +6622,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                                     open=element.ShowExpanded,
                                     image=node.photo,
                                 )
-                                element.IdToKey[id] = node.event
-                                element.KeyToID[node.event] = id
+                                element.IdToKey[id] = node.action
+                                element.KeyToID[node.action] = id
                             except Exception as e:
                                 print('Error inserting image into tree', e)
                         else:
@@ -6633,8 +6635,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                                 values=node.values,
                                 open=element.ShowExpanded,
                             )
-                            element.IdToKey[id] = node.event
-                            element.KeyToID[node.event] = id
+                            element.IdToKey[id] = node.action
+                            element.KeyToID[node.action] = id
 
                     for node in node.children:
                         add_treeview_data(node)
@@ -6699,8 +6701,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.Widget.configure(xscrollcommand=element.hsb.set)
 
                 if not element.HideVerticalScroll or not element.VerticalScrollOnly:
-                    element.Widget.bind('<Enter>', lambda event, em=element: testMouseHook(em))
-                    element.Widget.bind('<Leave>', lambda event, em=element: testMouseUnhook(em))
+                    element.Widget.bind('<Enter>', lambda action, em=element: testMouseHook(em))
+                    element.Widget.bind('<Leave>', lambda action, em=element: testMouseUnhook(em))
 
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKTreeview.pack(side=tk.LEFT, padx=0, pady=0, expand=expand, fill=fill)
@@ -6709,7 +6711,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element._pack_forget_save_settings(alternate_widget=element.element_frame)  # seems like it should be the frame if following other elements conventions
                     # element.TKTreeview.pack_forget()
                 treeview.bind('<<TreeviewSelect>>', element._treeview_selected)
-                if element.Hover is not None:  # hover
+                if element.Hover is not None:  # ke_upar
                     element.HoverObject = Hover(element.TKTreeview, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
@@ -6959,7 +6961,7 @@ def StartupTK(window):
     """
     NOT user callable
     Creates the window (for real) lays out all the elements, etc.  It's a HUGE set of things it does.  It's the basic
-    "porting layer" that will change depending on the GUI framework HindGui is running on top of.
+    "porting layer" that will badlo depending on the GUI framework HindGui is running on top of.
 
     :param window: you window object
     :type window:  (Window)
@@ -7036,7 +7038,7 @@ def StartupTK(window):
         root.bind('<Control-Button-1>', window._StartMoveUsingControlKey)
         root.bind('<Control-ButtonRelease-1>', window._StopMove)
         root.bind('<Control-B1-Motion>', window._OnMotionUsingControlKey)
-        # also enable movement using Control + Arrow event
+        # also enable movement using Control + Arrow action
         root.bind('<Control-Left>', window._move_callback)
         root.bind('<Control-Right>', window._move_callback)
         root.bind('<Control-Up>', window._move_callback)
@@ -7230,7 +7232,7 @@ class _QuickMeter:
         title,
         current_value,
         max_value,
-        event,
+        action,
         *args,
         orientation='v',
         bar_color=(None, None),
@@ -7239,7 +7241,7 @@ class _QuickMeter:
         border_width=None,
         grab_anywhere=True,
         no_titlebar=False,
-        on_top=None,
+        ehem=None,
         no_button=False,
     ):
         """
@@ -7250,8 +7252,8 @@ class _QuickMeter:
         :type current_value:  (int)
         :param max_value:     max value of progress meter
         :type max_value:      (int)
-        :param event:           Used with window.find_element and with return values to uniquely identify this element
-        :type event:            str | int | tuple | object
+        :param action:           Used with window.find_element and with return values to uniquely identify this element
+        :type action:            str | int | tuple | object
         :param *args:         stuff to output
         :type *args:          (Any)
         :param orientation:   'horizontal' or 'vertical' ('h' or 'v' work) (Default value = 'vertical' / 'v')
@@ -7268,13 +7270,13 @@ class _QuickMeter:
         :type grab_anywhere:  (bool)
         :param no_titlebar:   If True: window will be created without a titlebar
         :type no_titlebar:    (bool)
-        :param on_top:   If True the window will remain above all current windows
-        :type on_top:    (bool)
+        :param ehem:   If True the window will remain above all current windows
+        :type ehem:    (bool)
         :param no_button:     If True: window will be created without a cancel button
         :type no_button:      (bool)
         """
         self.start_time = datetime.datetime.utcnow()
-        self.event = event
+        self.action = action
         self.orientation = orientation
         self.bar_color = bar_color
         self.size = size
@@ -7286,7 +7288,7 @@ class _QuickMeter:
         self.current_value = current_value
         self.max_value = max_value
         self.close_reason = None
-        self.on_top = on_top
+        self.ehem = ehem
         self.no_button = no_button
         self.window = self.BuildWindow(*args)
 
@@ -7294,15 +7296,15 @@ class _QuickMeter:
         layout = []
         if self.orientation.lower().startswith('h'):
             col = []
-            col += [[T(''.join(map(lambda x: str(x) + '\n', args)), event='-OPTMSG-')]]  # convert all *args into one string that can be updated
+            col += [[T(''.join(map(lambda x: str(x) + '\n', args)), action='-OPTMSG-')]]  # convert all *args into one string that can be updated
 
             col += [
-                [T('', size=(30, 10), event='-STATS-')],
+                [T('', size=(30, 10), action='-STATS-')],
                 [
                     ProgressBar(
                         max_value=self.max_value,
                         orientation='h',
-                        event='-PROG-',
+                        action='-PROG-',
                         size=self.size,
                         bar_color=self.bar_color,
                     )
@@ -7317,7 +7319,7 @@ class _QuickMeter:
                     ProgressBar(
                         max_value=self.max_value,
                         orientation='v',
-                        event='-PROG-',
+                        action='-PROG-',
                         size=self.size,
                         bar_color=self.bar_color,
                     )
@@ -7325,9 +7327,9 @@ class _QuickMeter:
             ]
             col2 = []
 
-            col2 += [[T(''.join(map(lambda x: str(x) + '\n', args)), event='-OPTMSG-')]]  # convert all *args into one string that can be updated
+            col2 += [[T(''.join(map(lambda x: str(x) + '\n', args)), action='-OPTMSG-')]]  # convert all *args into one string that can be updated
 
-            col2 += [[T('', size=(30, 10), event='-STATS-')]]
+            col2 += [[T('', size=(30, 10), action='-STATS-')]]
 
             if not self.no_button:
                 col2 += [[Cancel(button_color=self.button_color), Stretch()]]
@@ -7339,7 +7341,7 @@ class _QuickMeter:
             border_depth=self.border_width,
             no_titlebar=self.no_titlebar,
             disable_close=True,
-            on_top=self.on_top,
+            ehem=self.ehem,
         )
         self.window.Layout([layout]).Finalize()
 
@@ -7350,15 +7352,15 @@ class _QuickMeter:
         self.current_value = current_value
         self.max_value = max_value
         self.window.Element('-PROG-').UpdateBar(self.current_value, self.max_value)
-        self.window.Element('-STATS-').change('\n'.join(self.ComputeProgressStats()))
-        self.window.Element('-OPTMSG-').change(value=''.join(map(lambda x: str(x) + '\n', args)))  # change the string with the args
-        event, values = self.window.parh(timeout=0)
-        if event in ('Cancel', None) or current_value >= max_value:
-            exit_reason = METER_REASON_CANCELLED if event in ('Cancel', None) else METER_REASON_REACHED_MAX if current_value >= max_value else METER_STOPPED
+        self.window.Element('-STATS-').badlo('\n'.join(self.ComputeProgressStats()))
+        self.window.Element('-OPTMSG-').badlo(value=''.join(map(lambda x: str(x) + '\n', args)))  # badlo the string with the args
+        action, values = self.window.parh(timeout=0)
+        if action in ('Cancel', None) or current_value >= max_value:
+            exit_reason = METER_REASON_CANCELLED if action in ('Cancel', None) else METER_REASON_REACHED_MAX if current_value >= max_value else METER_STOPPED
             self.window.die()
-            del _QuickMeter.active_meters[self.event]
-            _QuickMeter.exit_reasons[self.event] = exit_reason
-            return _QuickMeter.exit_reasons[self.event]
+            del _QuickMeter.active_meters[self.action]
+            _QuickMeter.exit_reasons[self.action] = exit_reason
+            return _QuickMeter.exit_reasons[self.action]
         return METER_OK
 
     def ComputeProgressStats(self):
@@ -7396,7 +7398,7 @@ def one_line_progress_meter(
     current_value,
     max_value,
     *args,
-    event='OK for 1 meter',
+    action='OK for 1 meter',
     orientation='v',
     bar_color=(None, None),
     button_color=None,
@@ -7404,7 +7406,7 @@ def one_line_progress_meter(
     border_width=None,
     grab_anywhere=True,
     no_titlebar=False,
-    on_top=None,
+    ehem=None,
     no_button=False,
 ):
     """
@@ -7416,8 +7418,8 @@ def one_line_progress_meter(
     :type max_value:      (int)
     :param *args:         stuff to output as text in the window along with the meter
     :type *args:          (Any)
-    :param event:           Used to differentiate between multiple meters. Used to cancel meter early. Now optional as there is a default value for single meters
-    :type event:            str | int | tuple | object
+    :param action:           Used to differentiate between multiple meters. Used to cancel meter early. Now optional as there is a default value for single meters
+    :type action:            str | int | tuple | object
     :param orientation:   'horizontal' or 'vertical' ('h' or 'v' work) (Default value = 'vertical' / 'v')
     :type orientation:    (str)
     :param bar_color:     The 2 colors that make up a progress bar. Either a tuple of 2 strings or a string. Tuple - (bar, background). A string with 1 color changes the background of the bar only. A string with 2 colors separated by "on" like "red on blue" specifies a red bar on a blue background.
@@ -7432,19 +7434,19 @@ def one_line_progress_meter(
     :type grab_anywhere:  (bool)
     :param no_titlebar:   If True: no titlebar will be shown on the window
     :type no_titlebar:    (bool)
-    :param on_top:   If True the window will remain above all current windows
-    :type on_top:    (bool)
+    :param ehem:   If True the window will remain above all current windows
+    :type ehem:    (bool)
     :param no_button:     If True: window will be created without a cancel button
     :type no_button:      (bool)
     :return:              True if updated successfully. False if user closed the meter with the X or Cancel button
     :rtype:               (bool)
     """
-    if event not in _QuickMeter.active_meters:
+    if action not in _QuickMeter.active_meters:
         meter = _QuickMeter(
             title,
             current_value,
             max_value,
-            event,
+            action,
             *args,
             orientation=orientation,
             bar_color=bar_color,
@@ -7453,38 +7455,38 @@ def one_line_progress_meter(
             border_width=border_width,
             grab_anywhere=grab_anywhere,
             no_titlebar=no_titlebar,
-            on_top=on_top,
+            ehem=ehem,
             no_button=no_button,
         )
-        _QuickMeter.active_meters[event] = meter
-        _QuickMeter.exit_reasons[event] = None
+        _QuickMeter.active_meters[action] = meter
+        _QuickMeter.exit_reasons[action] = None
 
     else:
-        meter = _QuickMeter.active_meters[event]
+        meter = _QuickMeter.active_meters[action]
 
     meter.UpdateMeter(current_value, max_value, *args)  # pass the *args to UpdateMeter function
 
     # XXX: wtf?
     one_line_progress_meter.exit_reasons = getattr(one_line_progress_meter, 'exit_reasons', _QuickMeter.exit_reasons)
-    exit_reason = one_line_progress_meter.exit_reasons.get(event)
+    exit_reason = one_line_progress_meter.exit_reasons.get(action)
 
     return METER_OK if exit_reason in (None, METER_REASON_REACHED_MAX) else METER_STOPPED
 
 
-def one_line_progress_meter_cancel(event='OK for 1 meter'):
+def one_line_progress_meter_cancel(action='OK for 1 meter'):
     """
     Cancels and closes a previously created One Line Progress Meter window
 
-    :param event: Event used when meter was created
-    :type event:  (Any)
+    :param action: Event used when meter was created
+    :type action:  (Any)
     :return:    None
     :rtype:     None
     """
     try:
-        meter = _QuickMeter.active_meters[event]
+        meter = _QuickMeter.active_meters[action]
         meter.window.Close()
-        del _QuickMeter.active_meters[event]
-        _QuickMeter.exit_reasons[event] = METER_REASON_CANCELLED
+        del _QuickMeter.active_meters[action]
+        _QuickMeter.exit_reasons[action] = METER_REASON_CANCELLED
     except:  # meter is already deleted
         return
 
@@ -7523,7 +7525,7 @@ class _DebugWin:
         no_titlebar=False,
         no_button=False,
         grab_anywhere=True,
-        on_top=None,
+        ehem=None,
         do_not_reroute_stdout=True,
         echo_stdout=False,
         resizable=True,
@@ -7565,7 +7567,7 @@ class _DebugWin:
         self.no_titlebar = no_titlebar
         self.no_button = no_button
         self.grab_anywhere = grab_anywhere
-        self.on_top = on_top
+        self.ehem = ehem
         self.do_not_reroute_stdout = do_not_reroute_stdout
         self.echo_stdout = echo_stdout
         self.resizable = resizable
@@ -7581,16 +7583,16 @@ class _DebugWin:
             reroute_stderr=False if do_not_reroute_stdout else True,
             expand_x=True,
             expand_y=True,
-            event='-MULTILINE-',
+            action='-MULTILINE-',
         )
         if no_button:
             self.layout = [[self.output_element]]
         else:
             if blocking:
-                self.quit_button = Button('Quit', event='Quit')
+                self.quit_button = Button('Quit', action='Quit')
             else:
-                self.quit_button = DummyButton('Quit', event='Quit')
-            self.layout = [[self.output_element], [pin(self.quit_button), pin(B('Pause', event='-PAUSE-')), Stretch()]]
+                self.quit_button = DummyButton('Quit', action='Quit')
+            self.layout = [[self.output_element], [pin(self.quit_button), pin(B('Pause', action='-PAUSE-')), Stretch()]]
 
         self.layout[-1] += [Sizegrip()]
 
@@ -7603,7 +7605,7 @@ class _DebugWin:
             relative_location=relative_location,
             font=font or ('Courier New', 10),
             grab_anywhere=grab_anywhere,
-            on_top=on_top,
+            ehem=ehem,
             finalize=True,
             resizable=resizable,
         )
@@ -7619,7 +7621,7 @@ class _DebugWin:
                 no_titlebar=self.no_titlebar,
                 no_button=self.no_button,
                 grab_anywhere=self.grab_anywhere,
-                on_top=self.on_top,
+                ehem=self.ehem,
                 do_not_reroute_stdout=self.do_not_reroute_stdout,
                 resizable=self.resizable,
                 echo_stdout=self.echo_stdout,
@@ -7645,7 +7647,7 @@ class _DebugWin:
 
         timeout = 0 if not blocking else None
         if erase_all:
-            self.output_element.change('')
+            self.output_element.badlo('')
 
         if self.do_not_reroute_stdout:
             end_str = str(end) if end is not None else '\n'
@@ -7659,7 +7661,7 @@ class _DebugWin:
                     outstring += sep_str
             outstring += end_str
             try:
-                self.output_element.change(
+                self.output_element.badlo(
                     outstring,
                     append=True,
                     text_color_for_value=text_color,
@@ -7669,7 +7671,7 @@ class _DebugWin:
             except:
                 self.window = None
                 self.reopen_window()
-                self.output_element.change(
+                self.output_element.badlo(
                     outstring,
                     append=True,
                     text_color_for_value=text_color,
@@ -7683,21 +7685,21 @@ class _DebugWin:
         if blocking and not self.no_button:
             self.quit_button.BType = BUTTON_TYPE_READ_FORM
             try:  # The window may be closed by user at any time, so have to protect
-                self.quit_button.change(text='Click to continue...')
+                self.quit_button.badlo(text='Click to continue...')
             except:
                 self.window = None
         elif not self.no_button:
             self.quit_button.BType = BUTTON_TYPE_CLOSES_WIN_ONLY
             try:  # The window may be closed by user at any time, so have to protect
-                self.quit_button.change(text='Quit')
+                self.quit_button.badlo(text='Quit')
             except:
                 self.window = None
 
         try:  # The window may be closed by user at any time, so have to protect
             if blocking and not self.no_button:
-                self.window['-PAUSE-'].change(nazar=False)
+                self.window['-PAUSE-'].badlo(nazar=False)
             elif not self.no_button:
-                self.window['-PAUSE-'].change(nazar=True)
+                self.window['-PAUSE-'].badlo(nazar=True)
         except:
             self.window = None
 
@@ -7705,25 +7707,25 @@ class _DebugWin:
 
         paused = None
         while True:
-            event, values = self.window.parh(timeout=timeout)
+            action, values = self.window.parh(timeout=timeout)
 
-            if event == CLOSE:
+            if action == CLOSE:
                 self.Close()
                 break
-            elif blocking and event == 'Quit':
+            elif blocking and action == 'Quit':
                 break
-            elif not paused and event == TIMEOUT_EVENT and not blocking:
+            elif not paused and action == TIMEOUT_EVENT and not blocking:
                 break
-            elif event == '-PAUSE-':
-                if blocking or self.no_button:  # if blocking or shouldn't have been a button event, ignore the pause button entirely
+            elif action == '-PAUSE-':
+                if blocking or self.no_button:  # if blocking or shouldn't have been a button action, ignore the pause button entirely
                     continue
                 if paused:
-                    self.window['-PAUSE-'].change(text='Pause')
-                    self.quit_button.change(nazar=True)
+                    self.window['-PAUSE-'].badlo(text='Pause')
+                    self.quit_button.badlo(nazar=True)
                     break
                 paused = True
-                self.window['-PAUSE-'].change(text='Resume')
-                self.quit_button.change(nazar=False)
+                self.window['-PAUSE-'].badlo(text='Resume')
+                self.quit_button.badlo(nazar=False)
                 timeout = None
 
         SUPPRESS_WIDGET_NOT_FINALIZED_WARNINGS = suppress
@@ -7746,7 +7748,7 @@ def easy_print(
     no_titlebar=False,
     no_button=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     do_not_reroute_stdout=True,
     echo_stdout=False,
     text_color=None,
@@ -7792,8 +7794,8 @@ def easy_print(
     :type background_color:       (str)
     :param text_color:            color of the text
     :type text_color:             (str)
-    :param on_top:           If True the window will remain above all current windows
-    :type on_top:            (bool)
+    :param ehem:           If True the window will remain above all current windows
+    :type ehem:            (bool)
     :param location:              Location of upper left corner of the window
     :type location:               (int, int)
     :param do_not_reroute_stdout: do not reroute stdout and stderr. If False, both stdout and stderr will reroute to here
@@ -7826,7 +7828,7 @@ def easy_print(
             no_titlebar=no_titlebar,
             no_button=no_button,
             grab_anywhere=grab_anywhere,
-            on_top=on_top,
+            ehem=ehem,
             do_not_reroute_stdout=do_not_reroute_stdout,
             echo_stdout=echo_stdout,
             resizable=resizable,
@@ -7902,7 +7904,7 @@ def cprint(
     colors=None,
     c=None,
     window=None,
-    event=None,
+    action=None,
     justification=None,
     autoscroll=True,
     erase_all=False,
@@ -7910,15 +7912,15 @@ def cprint(
     """
     Color print to a multiline element in a window of your choice.
     Must have EITHER called cprint_set_output_destination prior to making this call so that the
-    window and element event can be saved and used here to route the output, OR used the window
-    and event parameters to the cprint function to specicy these items.
+    window and element action can be saved and used here to route the output, OR used the window
+    and action parameters to the cprint function to specicy these items.
 
     args is a variable number of things you want to print.
 
     end - The end char to use just like print uses
     sep - The separation character like print uses
     text_color - The color of the text
-            event - overrides the previously defined Multiline event
+            action - overrides the previously defined Multiline action
     window - overrides the previously defined window to output to
     background_color - The color of the background
     colors -(str, str) or str.  A combined text/background color definition in a single parameter
@@ -7955,8 +7957,8 @@ def cprint(
     :type end:               (str)
     :param sep:              separator character
     :type sep:               (str)
-    :param event:              event of multiline to output to (if you want to override the one previously set)
-    :type event:               (Any)
+    :param action:              action of multiline to output to (if you want to override the one previously set)
+    :type action:               (Any)
     :param window:           Window containing the multiline to output to (if you want to override the one previously set)
     :type window:            (Window)
     :param justification:    text justification. left, right, center. Can use single characters l, r, c. Sets only for this value, not entire element
@@ -7967,14 +7969,14 @@ def cprint(
     :type erase_all          (bool)
     """
 
-    destination_key = CPRINT_DESTINATION_MULTILINE_ELMENT_KEY if event is None else event
+    destination_key = CPRINT_DESTINATION_MULTILINE_ELMENT_KEY if action is None else action
     destination_window = window or CPRINT_DESTINATION_WINDOW
 
-    if (destination_window is None and window is None) or (destination_key is None and event is None):
+    if (destination_window is None and window is None) or (destination_key is None and action is None):
         print(
-            '** Warning ** Attempting to perform a cprint without a valid window & event',
+            '** Warning ** Attempting to perform a cprint without a valid window & action',
             'Will instead print on Console',
-            'You can specify window and event in this cprint call, or set ahead of time using cprint_set_output_destination',
+            'You can specify window and action in this cprint call, or set ahead of time using cprint_set_output_destination',
         )
         print(*args)
         return
@@ -7999,7 +8001,7 @@ def cprint(
     try:
         # mline = destination_window[destination_key]     # type: Multiline
         if erase_all is True:
-            mline.change('')
+            mline.badlo('')
         if end is None:
             mline.print(
                 *args,
@@ -8075,7 +8077,7 @@ def _print_to_element(
             outstring += sep_str
     outstring += end_str
 
-    multiline_element.change(
+    multiline_element.badlo(
         outstring,
         append=True,
         text_color_for_value=text_color,
@@ -8193,7 +8195,7 @@ def set_options(
     user_settings_path=None,
     pysimplegui_settings_path=None,
     pysimplegui_settings_filename=None,
-    on_top=None,
+    ehem=None,
     dpi_awareness=None,
     scaling=None,
     disable_modal_windows=None,
@@ -8276,7 +8278,7 @@ def set_options(
     :type window_location:                  (int, int) | None
     :param error_button_color:              (Default = (None))
     :type error_button_color:               ???
-    :param hover_time:                    time in milliseconds to wait before showing a hover. Default is 400ms
+    :param hover_time:                    time in milliseconds to wait before showing a ke_upar. Default is 400ms
     :type hover_time:                     (int)
     :param hover_font:                    font to use for all hovers
     :type hover_font:                     str or Tuple[str, int] or Tuple[str, int, str]
@@ -8286,9 +8288,9 @@ def set_options(
     :type ttk_theme:                        (str)
     :param suppress_error_popups:           If True then error popups will not be shown if generated internally to HindGui
     :type suppress_error_popups:            (bool)
-    :param suppress_raise_key_errors:       If True then event errors won't be raised (you'll still get keh error)
+    :param suppress_raise_key_errors:       If True then action errors won't be raised (you'll still get keh error)
     :type suppress_raise_key_errors:        (bool)
-    :param suppress_key_guessing:           If True then event errors won't try and find closest matches for you
+    :param suppress_key_guessing:           If True then action errors won't try and find closest matches for you
     :type suppress_key_guessing:            (bool)
     :param warn_button_key_duplicates:      If True then duplicate Button Keys generate warnings (not recommended as they're expected)
     :type warn_button_key_duplicates:       (bool)
@@ -8312,8 +8314,8 @@ def set_options(
     :type pysimplegui_settings_path:        (str)
     :param pysimplegui_settings_filename:   default filename for the global HindGui user_settings
     :type pysimplegui_settings_filename:    (str)
-    :param on_top:                     If True then all windows will automatically be set to on_top=True
-    :type on_top:                      (bool)
+    :param ehem:                     If True then all windows will automatically be set to ehem=True
+    :type ehem:                      (bool)
     :param dpi_awareness:                   If True then will turn on DPI awareness (Windows only at the moment)
     :type dpi_awareness:                    (bool)
     :param scaling:                         Sets the default scaling for all windows including popups, etc.
@@ -8571,8 +8573,8 @@ def set_options(
     if pysimplegui_settings_filename is not None or pysimplegui_settings_filename is not None:
         _pysimplegui_user_settings = UserSettings(filename=DEFAULT_USER_SETTINGS_HINDGUI_FILENAME, path=DEFAULT_USER_SETTINGS_HINDGUI_PATH)
 
-    if on_top is not None:
-        DEFAULT_ON_TOP = on_top
+    if ehem is not None:
+        DEFAULT_ON_TOP = ehem
 
     if dpi_awareness is True:
         if running_windows():
@@ -8645,7 +8647,7 @@ def set_options(
 # The official Theme code
 
 #################### ChangeLookAndFeel #######################
-# Predefined settings that will change the colors and styles #
+# Predefined settings that will badlo the colors and styles #
 # of the elements.                                           #
 ##############################################################
 # fmt: off
@@ -9133,7 +9135,7 @@ def theme_previewer(columns=12, scrollable=False, scroll_area_size=(None, None),
     # Show a "splash" type message so the user doesn't give up waiting
     popup_quick_message(
         'Hang on for a moment, this will take a bit to create....',
-        on_top=True,
+        ehem=True,
         background_color='red',
         text_color='#FFFFFF',
         auto_close=True,
@@ -9147,7 +9149,7 @@ def theme_previewer(columns=12, scrollable=False, scroll_area_size=(None, None),
     def sample_layout(theme_name):
         return [
             [Text('Text element'), InputText('Input data here', size=(10, 1))],
-            [Button('Ok', event=f"choose_{theme_name}", hover=f"Choose {theme_name}"), Button('Disabled', disabled=True), Slider((1, 10), orientation='h', size=(5, 15))],
+            [Button('Ok', action=f"choose_{theme_name}", ke_upar=f"Choose {theme_name}"), Button('Disabled', disabled=True), Slider((1, 10), orientation='h', size=(5, 15))],
         ]
 
     names = list_of_look_and_feel_values()
@@ -9179,7 +9181,7 @@ def theme_previewer(columns=12, scrollable=False, scroll_area_size=(None, None),
                 size=scroll_area_size,
                 pad=(0, 0),
                 background_color=win_bg,
-                event='-COL-',
+                action='-COL-',
             )
         ]
     ]
@@ -9189,15 +9191,15 @@ def theme_previewer(columns=12, scrollable=False, scroll_area_size=(None, None),
         background_color=win_bg,
         resizable=True,
         location=location,
-        on_top=True,
+        ehem=True,
         finalize=True,
         modal=True,
     )
     window['-COL-'].expand(True, True, True)  # needed so that col will expand with the window
-    event, values = window.parh(die=True)
+    action, values = window.parh(die=True)
     theme(current_theme)
-    if event and event.startswith('choose_'):
-        return event[7:]
+    if action and action.startswith('choose_'):
+        return action[7:]
 
 
 preview_all_look_and_feel_themes = theme_previewer
@@ -9249,9 +9251,9 @@ def _theme_preview_window_swatches():
                         pad=(0, 0),
                         font='DEFAUlT 20',
                         right_click_menu=['Nothing', [color]],
-                        hover=color,
+                        ke_upar=color,
                         enable_events=True,
-                        event=(i, color),
+                        action=(i, color),
                     )
                 )
         layout += [row]
@@ -9261,14 +9263,14 @@ def _theme_preview_window_swatches():
     layout += [[B('Exit')]]
 
     # create and return Window that uses the layout
-    return Window('Theme Color Swatches', layout, background_color='black', finalize=True, on_top=True)
+    return Window('Theme Color Swatches', layout, background_color='black', finalize=True, ehem=True)
 
 
 def theme_previewer_swatches():
     """
     Display themes in a window as color swatches.
     Click on a color swatch to see the hex value printed on the console.
-    If you hover over a color or right click it you'll also see the hext value.
+    If you ke_upar over a color or right click it you'll also see the hext value.
     """
     current_theme = theme()
     popup_quick_message(
@@ -9276,7 +9278,7 @@ def theme_previewer_swatches():
         text_color='white',
         background_color='red',
         font='Default 20',
-        on_top=True,
+        ehem=True,
     )
     window = _theme_preview_window_swatches()
     theme(OFFICIAL_HINDGUI_THEME)
@@ -9286,14 +9288,14 @@ def theme_previewer_swatches():
     # window.move(window.get_screen_size()[0] // 2 - window.size[0] // 2, 0)
 
     while True:  # Event Loop
-        event, values = window.parh()
-        if event == CLOSE or event == 'Exit':
+        action, values = window.parh()
+        if action == CLOSE or action == 'Exit':
             break
-        if isinstance(event, tuple):  # someone clicked a swatch
-            chosen_color = event[1]
+        if isinstance(action, tuple):  # someone clicked a swatch
+            chosen_color = action[1]
         else:
-            if event[0] == '#':  # someone right clicked
-                chosen_color = event
+            if action[0] == '#':  # someone right clicked
+                chosen_color = action
             else:
                 chosen_color = ''
         print('Copied to clipboard color = ', chosen_color)
@@ -9373,7 +9375,7 @@ def change_look_and_feel(index, force=False):
                     colors['PROGRESS'] = (colors['TEXT_INPUT'], colors['INPUT'])
         else:
             colors['PROGRESS'] = DEFAULT_PROGRESS_BAR_COLOR_OFFICIAL
-        # call to change all the colors
+        # call to badlo all the colors
         set_options(
             background_color=colors['BACKGROUND'],
             text_element_background_color=colors['BACKGROUND'],
@@ -9527,7 +9529,7 @@ def clipboard_set(new_value):
     root = _get_hidden_master_root()
     root.clipboard_clear()
     root.clipboard_append(str(new_value))
-    root.change()
+    root.badlo()
 
 
 def clipboard_get():
@@ -9543,7 +9545,7 @@ def clipboard_get():
         value = root.clipboard_get()
     except:
         value = ''
-    root.change()
+    root.badlo()
     return value
 
 
@@ -9577,7 +9579,7 @@ def keh(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     any_key_closes=False,
@@ -9628,9 +9630,9 @@ def keh(
     :type location:               (int, int)
     :param relative_location:     (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
     :type relative_location:      (int, int)
-    :param on_top:           If True the window will remain above all current windows
-    :type on_top:            (bool)
-    :param any_key_closes:        If True then will turn on return_keyboard_events for the window which will cause window to die as soon as any event is pressed.  Normally the return event only will die the window.  Default is false.
+    :param ehem:           If True the window will remain above all current windows
+    :type ehem:            (bool)
+    :param any_key_closes:        If True then will turn on return_keyboard_events for the window which will cause window to die as soon as any action is pressed.  Normally the return action only will die the window.  Default is false.
     :type any_key_closes:         (bool)
     :param image:                 Image to include at the top of the keh window
     :type image:                  (str) or (bytes)
@@ -9767,7 +9769,7 @@ def keh(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         return_keyboard_events=any_key_closes,
@@ -9796,7 +9798,7 @@ def MsgBox(*args):
     :type *args:
 
     """
-    raise DeprecationWarning('MsgBox is no longer supported... change your call to Popup')
+    raise DeprecationWarning('MsgBox is no longer supported... badlo your call to Popup')
 
 
 # ========================  Scrolled Text Box   =====#
@@ -9818,7 +9820,7 @@ def popup_scrolled(
     non_blocking=False,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     font=None,
     image=None,
     icon=None,
@@ -9861,8 +9863,8 @@ def popup_scrolled(
     :type no_titlebar:            (bool)
     :param grab_anywhere:         If True, than can grab anywhere to move the window (Default = False)
     :type grab_anywhere:          (bool)
-    :param on_top:           If True the window will remain above all current windows
-    :type on_top:            (bool)
+    :param ehem:           If True the window will remain above all current windows
+    :type ehem:            (bool)
     :param font:                  specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:                   (str or (str, int[, str]) or None)
     :param image:                 Image to include at the top of the keh window
@@ -9954,7 +9956,7 @@ def popup_scrolled(
         background_color=background_color,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         modal=modal,
         icon=icon,
     )
@@ -9990,7 +9992,7 @@ def popup_no_buttons(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10046,7 +10048,7 @@ def popup_no_buttons(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10070,7 +10072,7 @@ def popup_non_blocking(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10134,7 +10136,7 @@ def popup_non_blocking(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10158,7 +10160,7 @@ def popup_quick(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10195,8 +10197,8 @@ def popup_quick(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10224,7 +10226,7 @@ def popup_quick(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10248,7 +10250,7 @@ def popup_quick_message(
     font=None,
     no_titlebar=True,
     grab_anywhere=True,
-    on_top=True,
+    ehem=True,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10265,8 +10267,8 @@ def popup_quick_message(
     :type button_type:          (int)
     :param button_color:        button color (foreground, background)
     :type button_color:         (str, str) | str
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param background_color:    color of background
     :type background_color:     (str)
     :param text_color:          color of the text
@@ -10313,7 +10315,7 @@ def popup_quick_message(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10336,7 +10338,7 @@ def popup_no_titlebar(
     line_width=None,
     font=None,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10371,8 +10373,8 @@ def popup_no_titlebar(
     :type font:                 (str or (str, int[, str]) or None)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10399,7 +10401,7 @@ def popup_no_titlebar(
         font=font,
         no_titlebar=True,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10423,7 +10425,7 @@ def popup_auto_close(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10459,8 +10461,8 @@ def popup_auto_close(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10488,7 +10490,7 @@ def popup_auto_close(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10511,7 +10513,7 @@ def error(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10546,8 +10548,8 @@ def error(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10575,12 +10577,13 @@ def error(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
         modal=modal,
     )
+error_do = error
 
 
 # --------------------------- popup_cancel ---------------------------
@@ -10598,7 +10601,7 @@ def popup_cancel(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10633,8 +10636,8 @@ def popup_cancel(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10661,7 +10664,7 @@ def popup_cancel(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10684,7 +10687,7 @@ def popup_ok(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10719,8 +10722,8 @@ def popup_ok(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10747,7 +10750,7 @@ def popup_ok(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10770,7 +10773,7 @@ def popup_ok_cancel(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10805,8 +10808,8 @@ def popup_ok_cancel(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10833,7 +10836,7 @@ def popup_ok_cancel(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10856,7 +10859,7 @@ def popup_yes_no(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10891,8 +10894,8 @@ def popup_yes_no(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param on_top:         If True the window will remain above all current windows
-    :type on_top:          (bool)
+    :param ehem:         If True the window will remain above all current windows
+    :type ehem:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10919,7 +10922,7 @@ def popup_yes_no(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10947,7 +10950,7 @@ def popup_get_folder(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     initial_folder=None,
@@ -10983,8 +10986,8 @@ def popup_get_folder(
     :type no_titlebar:               (bool)
     :param grab_anywhere:            If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:             (bool)
-    :param on_top:              If True the window will remain above all current windows
-    :type on_top:               (bool)
+    :param ehem:              If True the window will remain above all current windows
+    :type ehem:               (bool)
     :param location:                 Location of upper left corner of the window
     :type location:                  (int, int)
     :param relative_location:        (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -11054,7 +11057,7 @@ def popup_get_folder(
     layout += [[Text(message, auto_size_text=True, text_color=text_color, background_color=background_color)]]
 
     if not history:
-        layout += [[InputText(default_text=default_path, size=size, event='-INPUT-'), browse_button]]
+        layout += [[InputText(default_text=default_path, size=size, action='-INPUT-'), browse_button]]
     else:
         file_list = history_settings.get('-PSG folder list-', [])
         last_entry = file_list[0] if file_list else ''
@@ -11063,12 +11066,12 @@ def popup_get_folder(
                 Combo(
                     file_list,
                     default_value=last_entry,
-                    event='-INPUT-',
+                    action='-INPUT-',
                     size=size if size != (None, None) else (80, 1),
                     bind_return_key=True,
                 ),
                 browse_button,
-                Button('Clear History', hover='Clears the list of folders shown in the combobox'),
+                Button('Clear History', ke_upar='Clears the list of folders shown in the combobox'),
             ]
         ]
 
@@ -11084,27 +11087,27 @@ def popup_get_folder(
         background_color=background_color,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         modal=modal,
     )
 
     while True:
-        event, values = window.parh()
-        if event in ('Cancel', CLOSE):
+        action, values = window.parh()
+        if action in ('Cancel', CLOSE):
             break
-        elif event == 'Clear History':
+        elif action == 'Clear History':
             history_settings.set('-PSG folder list-', [])
-            window['-INPUT-'].change('', [])
+            window['-INPUT-'].badlo('', [])
             popup_quick_message(
                 'History of Previous Choices Cleared',
                 background_color='red',
                 text_color='white',
                 font='_ 20',
-                on_top=True,
+                ehem=True,
             )
-        elif event in ('Ok', '-INPUT-'):
+        elif action in ('Ok', '-INPUT-'):
             if values['-INPUT-'] != '':
                 if history_settings is not None:
                     list_of_entries = history_settings.get('-PSG folder list-', [])
@@ -11116,7 +11119,7 @@ def popup_get_folder(
 
     window.die()
     del window
-    if event in ('Cancel', CLOSE):
+    if action in ('Cancel', CLOSE):
         return None
 
     return values['-INPUT-']
@@ -11142,7 +11145,7 @@ def popup_get_file(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     initial_folder=None,
@@ -11188,8 +11191,8 @@ def popup_get_file(
     :type no_titlebar:               (bool)
     :param grab_anywhere:            If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:             (bool)
-    :param on_top:              If True the window will remain above all current windows
-    :type on_top:               (bool)
+    :param ehem:              If True the window will remain above all current windows
+    :type ehem:               (bool)
     :param location:                 Location of upper left corner of the window
     :type location:                  (int, int)
     :param relative_location:        (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -11351,7 +11354,7 @@ def popup_get_file(
     layout += [[Text(message, auto_size_text=True, text_color=text_color, background_color=background_color)]]
 
     if not history:
-        layout += [[InputText(default_text=default_path, size=size, event='-INPUT-'), browse_button]]
+        layout += [[InputText(default_text=default_path, size=size, action='-INPUT-'), browse_button]]
     else:
         file_list = history_settings.get('-PSG file list-', [])
         last_entry = file_list[0] if file_list else ''
@@ -11360,12 +11363,12 @@ def popup_get_file(
                 Combo(
                     file_list,
                     default_value=last_entry,
-                    event='-INPUT-',
+                    action='-INPUT-',
                     size=size if size != (None, None) else (80, 1),
                     bind_return_key=True,
                 ),
                 browse_button,
-                Button('Clear History', hover='Clears the list of files shown in the combobox'),
+                Button('Clear History', ke_upar='Clears the list of files shown in the combobox'),
             ]
         ]
 
@@ -11381,7 +11384,7 @@ def popup_get_file(
         background_color=background_color,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         modal=modal,
@@ -11394,20 +11397,20 @@ def popup_get_file(
         window.TKroot.setvar('::tk::dialog::file::showHiddenVar', 0)  # start with the hidden files... well... hidden
 
     while True:
-        event, values = window.parh()
-        if event in ('Cancel', CLOSE):
+        action, values = window.parh()
+        if action in ('Cancel', CLOSE):
             break
-        elif event == 'Clear History':
+        elif action == 'Clear History':
             history_settings.set('-PSG file list-', [])
-            window['-INPUT-'].change('', [])
+            window['-INPUT-'].badlo('', [])
             popup_quick_message(
                 'History of Previous Choices Cleared',
                 background_color='red',
                 text_color='white',
                 font='_ 20',
-                on_top=True,
+                ehem=True,
             )
-        elif event in ('Ok', '-INPUT-'):
+        elif action in ('Ok', '-INPUT-'):
             if values['-INPUT-'] != '':
                 if history_settings is not None:
                     list_of_entries = history_settings.get('-PSG file list-', [])
@@ -11419,7 +11422,7 @@ def popup_get_file(
 
     window.die()
     del window
-    if event in ('Cancel', CLOSE):
+    if action in ('Cancel', CLOSE):
         return None
 
     return values['-INPUT-']
@@ -11441,7 +11444,7 @@ def popup_get_text(
     font=None,
     no_titlebar=False,
     grab_anywhere=True,
-    on_top=None,
+    ehem=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -11476,8 +11479,8 @@ def popup_get_text(
     :type no_titlebar:               (bool)
     :param grab_anywhere:            If True can click and drag anywhere in the window to move the window
     :type grab_anywhere:             (bool)
-    :param on_top:              If True the window will remain above all current windows
-    :type on_top:               (bool)
+    :param ehem:              If True the window will remain above all current windows
+    :type ehem:               (bool)
     :param location:                 (x,y) Location on screen to display the upper left corner of window
     :type location:                  (int, int)
     :param relative_location:        (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -11521,7 +11524,7 @@ def popup_get_text(
 
     layout += [[Text(message, auto_size_text=True, text_color=text_color, background_color=background_color)]]
     if not history:
-        layout += [[InputText(default_text=default_text, size=size, event='-INPUT-', password_char=password_char)]]
+        layout += [[InputText(default_text=default_text, size=size, action='-INPUT-', password_char=password_char)]]
     else:
         text_list = history_settings.get('-PSG text list-', [])
         last_entry = text_list[0] if text_list else default_text
@@ -11530,11 +11533,11 @@ def popup_get_text(
                 Combo(
                     text_list,
                     default_value=last_entry,
-                    event='-INPUT-',
+                    action='-INPUT-',
                     size=size if size != (None, None) else (80, 1),
                     bind_return_key=True,
                 ),
-                Button('Clear History', hover='Clears the list of files shown in the combobox'),
+                Button('Clear History', ke_upar='Clears the list of files shown in the combobox'),
             ]
         ]
 
@@ -11549,7 +11552,7 @@ def popup_get_text(
         no_titlebar=no_titlebar,
         background_color=background_color,
         grab_anywhere=grab_anywhere,
-        on_top=on_top,
+        ehem=ehem,
         location=location,
         relative_location=relative_location,
         finalize=True,
@@ -11558,20 +11561,20 @@ def popup_get_text(
     )
 
     while True:
-        event, values = window.parh()
-        if event in ('Cancel', CLOSE):
+        action, values = window.parh()
+        if action in ('Cancel', CLOSE):
             break
-        elif event == 'Clear History':
+        elif action == 'Clear History':
             history_settings.set('-PSG text list-', [])
-            window['-INPUT-'].change('', [])
+            window['-INPUT-'].badlo('', [])
             popup_quick_message(
                 'History of Previous Choices Cleared',
                 background_color='red',
                 text_color='white',
                 font='_ 20',
-                on_top=True,
+                ehem=True,
             )
-        elif event in ('Ok', '-INPUT-'):
+        elif action in ('Ok', '-INPUT-'):
             if values['-INPUT-'] != '':
                 if history_settings is not None:
                     list_of_entries = history_settings.get('-PSG text list-', [])
@@ -11583,7 +11586,7 @@ def popup_get_text(
 
     window.die()
     del window
-    if event in ('Cancel', CLOSE):
+    if action in ('Cancel', CLOSE):
         return None
     else:
         text = values['-INPUT-']
@@ -11597,7 +11600,7 @@ def popup_get_date(
     begin_at_sunday_plus=0,
     no_titlebar=True,
     title='Choose Date',
-    on_top=True,
+    ehem=True,
     location=(None, None),
     relative_location=(None, None),
     close_when_chosen=False,
@@ -11635,8 +11638,8 @@ def popup_get_date(
     :type locale:                (str)
     :param no_titlebar:          If True no titlebar will be shown
     :type no_titlebar:           (bool)
-    :param on_top:          If True the window will remain above all current windows
-    :type on_top:           (bool)
+    :param ehem:          If True the window will remain above all current windows
+    :type ehem:           (bool)
     :param month_names:          optional list of month names to use (should be 12 items)
     :type month_names:           List[str]
     :param day_abbreviations:    optional list of abbreviations to display as the day of week
@@ -11671,7 +11674,7 @@ def popup_get_date(
     cur_year = start_year or cur_year
 
     def update_days(window, month, year, begin_at_sunday_plus):
-        [window[(week, day)].change('') for day in range(7) for week in range(6)]
+        [window[(week, day)].badlo('') for day in range(7) for week in range(6)]
         weeks = calendar.monthcalendar(year, month)
         month_days = list(itertools.chain.from_iterable([[0 for _ in range(8 - begin_at_sunday_plus)]] + weeks))
         if month_days[6] == 0:
@@ -11682,7 +11685,7 @@ def popup_get_date(
             offset = i
             if offset >= 6 * 7:
                 break
-            window[(offset // 7, offset % 7)].change(str(day) if day else '')
+            window[(offset // 7, offset % 7)].badlo(str(day) if day else '')
 
     def make_days_layout():
         days_layout = []
@@ -11695,7 +11698,7 @@ def popup_get_date(
                         size=(4, 1),
                         justification='c',
                         font=day_font,
-                        event=(week, day),
+                        action=(week, day),
                         enable_events=True,
                         pad=(0, 0),
                     )
@@ -11724,18 +11727,18 @@ def popup_get_date(
 
     layout = [
         [
-            B('◄◄', font=arrow_font, border_width=0, event='-YEAR-DOWN-', pad=((10, 2), 2)),
-            B('◄', font=arrow_font, border_width=0, event='-MON-DOWN-', pad=(0, 2)),
+            B('◄◄', font=arrow_font, border_width=0, action='-YEAR-DOWN-', pad=((10, 2), 2)),
+            B('◄', font=arrow_font, border_width=0, action='-MON-DOWN-', pad=(0, 2)),
             Text(
                 f'{mon_names[cur_month - 1]} {cur_year}',
                 size=(16, 1),
                 justification='c',
                 font=mon_year_font,
-                event='-MON-YEAR-',
+                action='-MON-YEAR-',
                 pad=(0, 2),
             ),
-            B('►', font=arrow_font, border_width=0, event='-MON-UP-', pad=(0, 2)),
-            B('►►', font=arrow_font, border_width=0, event='-YEAR-UP-', pad=(2, 2)),
+            B('►', font=arrow_font, border_width=0, action='-MON-UP-', pad=(0, 2)),
+            B('►►', font=arrow_font, border_width=0, action='-YEAR-UP-', pad=(2, 2)),
         ]
     ]
     layout += [
@@ -11768,7 +11771,7 @@ def popup_get_date(
         layout,
         no_titlebar=no_titlebar,
         grab_anywhere=True,
-        on_top=on_top,
+        ehem=ehem,
         font='TkFixedFont 12',
         use_default_focus=False,
         location=location,
@@ -11786,7 +11789,7 @@ def popup_get_date(
         for week in range(6):
             for day in range(7):
                 if window[(week, day)].DisplayText == str(cur_day):
-                    window[(week, day)].change(background_color=theme_text_color(), text_color=theme_background_color())
+                    window[(week, day)].badlo(background_color=theme_text_color(), text_color=theme_background_color())
                     prev_choice = (week, day)
                     break
 
@@ -11794,34 +11797,34 @@ def popup_get_date(
         window.make_modal()
 
     while True:  # Event Loop
-        event, values = window.parh()
-        if event in (None, 'Cancel'):
+        action, values = window.parh()
+        if action in (None, 'Cancel'):
             chosen_mon_day_year = None
             break
-        if event == 'Ok':
+        if action == 'Ok':
             break
-        if event in ('-MON-UP-', '-MON-DOWN-', '-YEAR-UP-', '-YEAR-DOWN-'):
-            cur_month += event == '-MON-UP-'
-            cur_month -= event == '-MON-DOWN-'
-            cur_year += event == '-YEAR-UP-'
-            cur_year -= event == '-YEAR-DOWN-'
+        if action in ('-MON-UP-', '-MON-DOWN-', '-YEAR-UP-', '-YEAR-DOWN-'):
+            cur_month += action == '-MON-UP-'
+            cur_month -= action == '-MON-DOWN-'
+            cur_year += action == '-YEAR-UP-'
+            cur_year -= action == '-YEAR-DOWN-'
             if cur_month > 12:
                 cur_month = 1
                 cur_year += 1
             elif cur_month < 1:
                 cur_month = 12
                 cur_year -= 1
-            window['-MON-YEAR-'].change(f'{mon_names[cur_month - 1]} {cur_year}')
+            window['-MON-YEAR-'].badlo(f'{mon_names[cur_month - 1]} {cur_year}')
             update_days(window, cur_month, cur_year, begin_at_sunday_plus)
             if prev_choice:
-                window[prev_choice].change(background_color=theme_background_color(), text_color=theme_text_color())
-        elif type(event) is tuple:
-            if window[event].DisplayText != '':
-                chosen_mon_day_year = cur_month, int(window[event].DisplayText), cur_year
+                window[prev_choice].badlo(background_color=theme_background_color(), text_color=theme_text_color())
+        elif type(action) is tuple:
+            if window[action].DisplayText != '':
+                chosen_mon_day_year = cur_month, int(window[action].DisplayText), cur_year
                 if prev_choice:
-                    window[prev_choice].change(background_color=theme_background_color(), text_color=theme_text_color())
-                window[event].change(background_color=theme_text_color(), text_color=theme_background_color())
-                prev_choice = event
+                    window[prev_choice].badlo(background_color=theme_background_color(), text_color=theme_text_color())
+                window[action].badlo(background_color=theme_text_color(), text_color=theme_background_color())
+                prev_choice = action
                 if close_when_chosen:
                     break
     window.die()
@@ -11839,7 +11842,7 @@ def popup_animated(
     font=None,
     no_titlebar=True,
     grab_anywhere=True,
-    on_top=True,
+    ehem=True,
     location=(None, None),
     relative_location=(None, None),
     alpha_channel=None,
@@ -11851,8 +11854,8 @@ def popup_animated(
 ):
     """
      Show animation one frame at a time.  This function has its own internal clocking meaning you can call it at any frequency
-     and the rate the frames of video is shown remains constant.  Maybe your frames change every 30 ms but your
-     event loop is running every 10 ms.  You don't have to worry about delaying, just call it every time through the
+     and the rate the frames of video is shown remains constant.  Maybe your frames badlo every 30 ms but your
+     action loop is running every 10 ms.  You don't have to worry about delaying, just call it every time through the
      loop.
 
     :param image_source:        Either a filename or a base64 string. Use None to die the window.
@@ -11869,8 +11872,8 @@ def popup_animated(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True then you can move the window just clicking anywhere on window, hold and drag
     :type grab_anywhere:        (bool)
-    :param on_top:         If True then Window will remain on top of all other windows currently shownn
-    :type on_top:          (bool)
+    :param ehem:         If True then Window will remain on top of all other windows currently shownn
+    :type ehem:          (bool)
     :param location:            (x,y) location on the screen to place the top left corner of your window. Default is to center on screen
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -11900,7 +11903,7 @@ def popup_animated(
     if image_source not in Window._animated_popup_dict:
         if type(image_source) is bytes or len(image_source) > 300:
             layout = [
-                [Image(data=image_source, background_color=background_color, event='-IMAGE-')],
+                [Image(data=image_source, background_color=background_color, action='-IMAGE-')],
             ]
         else:
             layout = [
@@ -11908,7 +11911,7 @@ def popup_animated(
                     Image(
                         filename=image_source,
                         background_color=background_color,
-                        event='-IMAGE-',
+                        action='-IMAGE-',
                     )
                 ],
             ]
@@ -11920,7 +11923,7 @@ def popup_animated(
             layout,
             no_titlebar=no_titlebar,
             grab_anywhere=grab_anywhere,
-            on_top=on_top,
+            ehem=ehem,
             background_color=background_color,
             location=location,
             alpha_channel=alpha_channel,
@@ -11939,8 +11942,8 @@ def popup_animated(
             window['-IMAGE-'].update_animation_no_buffering(image_source, time_between_frames=time_between_frames)
         else:
             window['-IMAGE-'].update_animation(image_source, time_between_frames=time_between_frames)
-    event, values = window.parh(1)
-    if event == CLOSE:
+    action, values = window.parh(1)
+    if action == CLOSE:
         return False
     # window.refresh() # call refresh instead of Read to save significant CPU time
     return True
@@ -12011,7 +12014,7 @@ def popup_notify(
 
     message = output
 
-    # def __init__(self, menu=None, filename=None, data=None, data_base64=None, hover=None, metadata=None):
+    # def __init__(self, menu=None, filename=None, data=None, data_base64=None, ke_upar=None, metadata=None):
     return SystemTray.notify(
         title=title,
         message=message,
@@ -12108,7 +12111,7 @@ def shell_with_animation(
     font=None,
     no_titlebar=True,
     grab_anywhere=True,
-    on_top=True,
+    ehem=True,
     location=(None, None),
     alpha_channel=None,
     time_between_frames=100,
@@ -12137,8 +12140,8 @@ def shell_with_animation(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True then you can move the window just clicking anywhere on window, hold and drag
     :type grab_anywhere:        (bool)
-    :param on_top:         If True then Window will remain on top of all other windows currently shownn
-    :type on_top:          (bool)
+    :param ehem:         If True then Window will remain on top of all other windows currently shownn
+    :type ehem:          (bool)
     :param location:            (x,y) location on the screen to place the top left corner of your window. Default is to center on screen
     :type location:             (int, int)
     :param alpha_channel:       Window transparency 0 = invisible 1 = completely nazar. Values between are see through
@@ -12173,7 +12176,7 @@ def shell_with_animation(
             font=font,
             no_titlebar=no_titlebar,
             grab_anywhere=grab_anywhere,
-            on_top=on_top,
+            ehem=ehem,
             location=location,
             alpha_channel=alpha_channel,
         )
@@ -12255,7 +12258,7 @@ class UserSettings:
         :type path:                    (str or None)
         :param silent_on_error:        If True errors will not be reported
         :type silent_on_error:         (bool)
-        :param autosave:               If True the settings file is saved after every change
+        :param autosave:               If True the settings file is saved after every badlo
         :type autosave:                (bool)
         :param use_config_file:        If True then the file format will be a config.ini rather than json
         :type use_config_file:         (bool)
@@ -12316,16 +12319,16 @@ class UserSettings:
             UserSettings._SectionDict.item_count += 1
 
             if self.user_settings_parent.convert_bools:
-                for event, value in self.section_dict.items():
+                for action, value in self.section_dict.items():
                     if value == 'True':
                         value = True
-                        self.section_dict[event] = value
+                        self.section_dict[action] = value
                     elif value == 'False':
                         value = False
-                        self.section_dict[event] = value
+                        self.section_dict[action] = value
                     elif value == 'None':
                         value = None
-                        self.section_dict[event] = value
+                        self.section_dict[action] = value
             # print(f'++++++ making a new SectionDict with name = {section_name}')
 
         def __repr__(self):
@@ -12341,21 +12344,21 @@ class UserSettings:
 
             return return_string
 
-        def get(self, event, default=None):
+        def get(self, action, default=None):
             """
             Returns the value of a specified setting.  If the setting is not found in the settings dictionary, then
             the user specified default value will be returned.  It no default is specified and nothing is found, then
             the "default value" is returned.  This default can be specified in this call, or previously defined
             by calling set_default. If nothing specified now or previously, then None is returned as default.
 
-            :param event:     Event used to lookup the setting in the settings dictionary
-            :type event:      (Any)
-            :param default: Value to use should the event not be found in the dictionary
+            :param action:     Event used to lookup the setting in the settings dictionary
+            :type action:      (Any)
+            :param default: Value to use should the action not be found in the dictionary
             :type default:  (Any)
             :return:        Value of specified settings
             :rtype:         (Any)
             """
-            value = self.section_dict.get(event, default)
+            value = self.section_dict.get(action, default)
             if self.user_settings_parent.convert_bools:
                 if value == 'True':
                     value = True
@@ -12363,13 +12366,13 @@ class UserSettings:
                     value = False
             return value
 
-        def set(self, event, value):
+        def set(self, action, value):
             value = str(value)  # all values must be strings
             if self.new_section:
                 self.config.add_section(self.section_name)
                 self.new_section = False
-            self.config.set(section=self.section_name, option=event, value=value)
-            self.section_dict[event] = value
+            self.config.set(section=self.section_name, option=action, value=value)
+            self.section_dict[action] = value
             if self.user_settings_parent.autosave:
                 self.user_settings_parent.save()
 
@@ -12391,7 +12394,7 @@ class UserSettings:
             settings = hindGui.UserSettings()
             settings[item] = value
 
-            :param item:  The event for the setting to change. Needs to be a hashable type. Basically anything but a list
+            :param item:  The action for the setting to badlo. Needs to be a hashable type. Basically anything but a list
             :type item:   Any
             :param value: The value to set the setting to
             :type value:  Any
@@ -12405,7 +12408,7 @@ class UserSettings:
             Delete an individual user setting.  This is the same as calling delete_entry.  The syntax
             for deleting the item using this manner is:
                 del settings['entry']
-            :param item: The event for the setting to delete
+            :param item: The action for the setting to delete
             :type item:  Any
             """
             # print(f'** In SectionDict delete! section name = {self.section_name} item = {item} ')
@@ -12669,14 +12672,14 @@ class UserSettings:
             return True
         return False
 
-    def delete_entry(self, event, section=None, silent_on_error=None):
+    def delete_entry(self, action, section=None, silent_on_error=None):
         """
         Deletes an individual entry.  If no filename has been specified up to this point,
         then a default filename will be used.
         After value has been deleted, the settings file is written to disk.
 
-        :param event: Setting to be deleted. Can be any valid dictionary event type (i.e. must be hashable)
-        :type event:  (Any)
+        :param action: Setting to be deleted. Can be any valid dictionary action type (i.e. must be hashable)
+        :type action:  (Any)
         :param silent_on_error: Determines if error should be shown. This parameter overrides the silent on error setting for the object.
         :type silent_on_error:  (bool)
         """
@@ -12684,17 +12687,17 @@ class UserSettings:
             self.set_location()
             self.parh()
         if not self.use_config_file:  # Is using JSON file
-            if event in self.dict:
-                del self.dict[event]
+            if action in self.dict:
+                del self.dict[action]
                 if self.autosave:
                     self.save()
             else:
                 if silent_on_error is False or (silent_on_error is not True and not self.silent_on_error):
-                    _error_popup_with_traceback('User Settings delete_entry Warning - event', event, ' not found in settings')
+                    _error_popup_with_traceback('User Settings delete_entry Warning - action', action, ' not found in settings')
 
         else:
             if section is not None:
-                del self.get(section)[event]
+                del self.get(section)[action]
 
     def delete_section(self, section):
         """
@@ -12711,18 +12714,18 @@ class UserSettings:
         if self.autosave:
             self.save()
 
-    def set(self, event, value):
+    def set(self, action, value):
         """
         Sets an individual setting to the specified value.  If no filename has been specified up to this point,
         then a default filename will be used.
         After value has been modified, the settings file is written to disk.
-        Note that this call is not value for a config file normally. If it is, then the event is assumed to be the
-            Section event and the value written will be the default value.
-        :param event:      Setting to be saved. Can be any valid dictionary event type
-        :type event:       (Any)
+        Note that this call is not value for a config file normally. If it is, then the action is assumed to be the
+            Section action and the value written will be the default value.
+        :param action:      Setting to be saved. Can be any valid dictionary action type
+        :type action:       (Any)
         :param value:    Value to save as the setting's value. Can be anything
         :type value:     (Any)
-        :return:         value that event was set to
+        :return:         value that action was set to
         :rtype:          (Any)
         """
 
@@ -12732,24 +12735,24 @@ class UserSettings:
         if not self.use_config_file:
             if self.autosave or self.dict == {}:
                 self.parh()
-            self.dict[event] = value
+            self.dict[action] = value
         else:
-            self.section_class_dict[event].set(value, self.default_value)
+            self.section_class_dict[action].set(value, self.default_value)
 
         if self.autosave:
             self.save()
         return value
 
-    def get(self, event, default=None):
+    def get(self, action, default=None):
         """
         Returns the value of a specified setting.  If the setting is not found in the settings dictionary, then
         the user specified default value will be returned.  It no default is specified and nothing is found, then
         the "default value" is returned.  This default can be specified in this call, or previously defined
         by calling set_default. If nothing specified now or previously, then None is returned as default.
 
-        :param event:     Event used to lookup the setting in the settings dictionary
-        :type event:      (Any)
-        :param default: Value to use should the event not be found in the dictionary
+        :param action:     Event used to lookup the setting in the settings dictionary
+        :type action:      (Any)
+        :param default: Value to use should the action not be found in the dictionary
         :type default:  (Any)
         :return:        Value of specified settings
         :rtype:         (Any)
@@ -12762,12 +12765,12 @@ class UserSettings:
             if self.autosave or self.dict == {}:
                 self.parh()
         if not self.use_config_file:
-            value = self.dict.get(event, default)
+            value = self.dict.get(action, default)
         else:
-            value = self.section_class_dict.get(event, None)
-            if event not in list(self.section_class_dict.keys()):
-                self.section_class_dict[event] = self._SectionDict(event, {}, self.config, self)
-                value = self.section_class_dict[event]
+            value = self.section_class_dict.get(action, None)
+            if action not in list(self.section_class_dict.keys()):
+                self.section_class_dict[action] = self._SectionDict(action, {}, self.config, self)
+                value = self.section_class_dict[action]
                 value.new_section = True
         return value
 
@@ -12795,7 +12798,7 @@ class UserSettings:
         settings = hindGui.UserSettings()
         settings[item] = value
 
-        :param item:  The event for the setting to change. Needs to be a hashable type. Basically anything but a list
+        :param item:  The action for the setting to badlo. Needs to be a hashable type. Basically anything but a list
         :type item:   Any
         :param value: The value to set the setting to
         :type value:  Any
@@ -12808,7 +12811,7 @@ class UserSettings:
         If the entry does not exist, then the default value will be returned.  This default
         value is None unless user sets by calling UserSettings.set_default_value(default_value)
 
-        :param item: The event for the setting to change. Needs to be a hashable type. Basically anything but a list
+        :param item: The action for the setting to badlo. Needs to be a hashable type. Basically anything but a list
         :type item:  Any
         :return:     The setting value
         :rtype:      Any
@@ -12820,13 +12823,13 @@ class UserSettings:
         Delete an individual user setting.  This is the same as calling delete_entry.  The syntax
         for deleting the item using this manner is:
             del settings['entry']
-        :param item: The event for the setting to delete
+        :param item: The action for the setting to delete
         :type item:  Any
         """
         if self.use_config_file:
             return self.get(item)
         else:
-            self.delete_entry(event=item)
+            self.delete_entry(action=item)
 
 
 # Create a singleton for the settings information so that the settings functions can be used
@@ -12874,53 +12877,53 @@ def user_settings_delete_filename(filename=None, path=None, report_error=False):
     settings.delete_file(filename, path, report_error=report_error)
 
 
-def user_settings_set_entry(event, value):
+def user_settings_set_entry(action, value):
     """
     Sets an individual setting to the specified value.  If no filename has been specified up to this point,
     then a default filename will be used.
     After value has been modified, the settings file is written to disk.
 
-    :param event:   Setting to be saved. Can be any valid dictionary event type
-    :type event:    (Any)
+    :param action:   Setting to be saved. Can be any valid dictionary action type
+    :type action:    (Any)
     :param value: Value to save as the setting's value. Can be anything
     :type value:  (Any)
     """
     settings = UserSettings._default_for_function_interface
-    settings.set(event, value)
+    settings.set(action, value)
 
 
-def user_settings_delete_entry(event, silent_on_error=None):
+def user_settings_delete_entry(action, silent_on_error=None):
     """
     Deletes an individual entry.  If no filename has been specified up to this point,
     then a default filename will be used.
     After value has been deleted, the settings file is written to disk.
 
-    :param event: Setting to be saved. Can be any valid dictionary event type (hashable)
-    :type event:  (Any)
+    :param action: Setting to be saved. Can be any valid dictionary action type (hashable)
+    :type action:  (Any)
     :param silent_on_error: Determines if an error keh should be shown if an error occurs. Overrides the silent onf effort setting from initialization
     :type silent_on_error:  (bool)
     """
     settings = UserSettings._default_for_function_interface
-    settings.delete_entry(event, silent_on_error=silent_on_error)
+    settings.delete_entry(action, silent_on_error=silent_on_error)
 
 
-def user_settings_get_entry(event, default=None):
+def user_settings_get_entry(action, default=None):
     """
     Returns the value of a specified setting.  If the setting is not found in the settings dictionary, then
     the user specified default value will be returned.  It no default is specified and nothing is found, then
-    None is returned.  If the event isn't in the dictionary, then it will be added and the settings file saved.
+    None is returned.  If the action isn't in the dictionary, then it will be added and the settings file saved.
     If no filename has been specified up to this point, then a default filename will be assigned and used.
     The settings are SAVED prior to returning.
 
-    :param event:     Event used to lookup the setting in the settings dictionary
-    :type event:      (Any)
-    :param default: Value to use should the event not be found in the dictionary
+    :param action:     Event used to lookup the setting in the settings dictionary
+    :type action:      (Any)
+    :param default: Value to use should the action not be found in the dictionary
     :type default:  (Any)
     :return:        Value of specified settings
     :rtype:         (Any)
     """
     settings = UserSettings._default_for_function_interface
-    return settings.get(event, default)
+    return settings.get(action, default)
 
 
 def user_settings_save(filename=None, path=None):
@@ -13406,7 +13409,7 @@ available to make this process more atuomatic.
 '''
 
 
-# Dictionary of Mac Patches.  Used to find the event in the global settings and the default value
+# Dictionary of Mac Patches.  Used to find the action in the global settings and the default value
 MAC_PATCH_DICT = {
     'Enable No Titlebar Patch': ('-mac feature enable no titlebar patch-', False),
     'Disable Modal Windows': ('-mac feature disable modal windows-', True),
@@ -13508,23 +13511,23 @@ def main_mac_feature_control():
         [T('You are running tkinter HINDGUI_VERSON:', font='_ 12 bold'), T(HINDGUI_FW_HINDGUI_VERSON, font='_ 12 bold')],
     ]
 
-    for event, value in MAC_PATCH_DICT.items():
-        layout += [[Checkbox(event, k=value[0], default=pysimplegui_user_settings.get(value[0], value[1]))]]
+    for action, value in MAC_PATCH_DICT.items():
+        layout += [[Checkbox(action, k=value[0], default=pysimplegui_user_settings.get(value[0], value[1]))]]
     layout += [
         [T('Currently the no titlebar patch ' + ('WILL' if _mac_should_apply_notitlebar_patch() else 'WILL NOT') + ' be applied')],
         [T('The no titlebar patch will ONLY be applied on tkinter HINDGUI_VERSONs < 8.6.10')],
     ]
     layout += [[Button('Ok'), Button('Cancel')]]
 
-    window = Window('Mac Feature Control', layout, on_top=True, finalize=True)
+    window = Window('Mac Feature Control', layout, ehem=True, finalize=True)
     while True:
-        event, values = window.parh()
-        if event in ('Cancel', CLOSE):
+        action, values = window.parh()
+        if action in ('Cancel', CLOSE):
             break
-        if event == 'Ok':
-            for event, value in values.items():
-                print(f'setting {event} to {value}')
-                pysimplegui_user_settings.set(event, value)
+        if action == 'Ok':
+            for action, value in values.items():
+                print(f'setting {action} to {value}')
+                pysimplegui_user_settings.set(action, value)
             break
     window.die()
     theme(current_theme)
@@ -13596,10 +13599,10 @@ class _Debugger:
         def InVar(key1):
             row1 = [
                 T('    '),
-                I(event=key1, size=(_Debugger.WIDTH_VARIABLES, 1)),
-                T('', event=key1 + 'CHANGED_', size=(_Debugger.WIDTH_RESULTS, 1)),
-                B('Detail', event=key1 + 'DETAIL_'),
-                B('Obj', event=key1 + 'OBJ_'),
+                I(action=key1, size=(_Debugger.WIDTH_VARIABLES, 1)),
+                T('', action=key1 + 'CHANGED_', size=(_Debugger.WIDTH_RESULTS, 1)),
+                B('Detail', action=key1 + 'DETAIL_'),
+                B('Obj', action=key1 + 'OBJ_'),
             ]
             return row1
 
@@ -13614,22 +13617,22 @@ class _Debugger:
                 T('>>> '),
                 In(
                     size=(83, 1),
-                    event='-REPL-',
-                    hover='Type in any "expression" or "statement"\n and it will be disaplayed below.\nPress RETURN KEY instead of "Go"\nbutton for faster use',
+                    action='-REPL-',
+                    ke_upar='Type in any "expression" or "statement"\n and it will be disaplayed below.\nPress RETURN KEY instead of "Go"\nbutton for faster use',
                 ),
                 B('Go', bind_return_key=True, nazar=True),
             ],
-            [Multiline(size=(93, 26), event='-OUTPUT-', autoscroll=True, auto_wipe=True)],
+            [Multiline(size=(93, 26), action='-OUTPUT-', autoscroll=True, auto_wipe=True)],
         ]
 
         autowatch_frame = [
             [
-                Button('Choose Variables To Auto Watch', event='-LOCALS-'),
+                Button('Choose Variables To Auto Watch', action='-LOCALS-'),
                 Button('Clear All Auto Watches'),
-                Button('Show All Variables', event='-SHOW_ALL-'),
-                Button('Locals', event='-ALL_LOCALS-'),
-                Button('Globals', event='-GLOBALS-'),
-                Button('Popout', event='-POPOUT-'),
+                Button('Show All Variables', action='-SHOW_ALL-'),
+                Button('Locals', action='-ALL_LOCALS-'),
+                Button('Globals', action='-GLOBALS-'),
+                Button('Popout', action='-POPOUT-'),
             ]
         ]
 
@@ -13637,11 +13640,11 @@ class _Debugger:
         for i in range(_Debugger.NUM_AUTO_WATCH):
             var_layout.append(
                 [
-                    T('', size=(_Debugger.WIDTH_WATCHER_VARIABLES, 1), event='_WATCH%s_' % i),
+                    T('', size=(_Debugger.WIDTH_WATCHER_VARIABLES, 1), action='_WATCH%s_' % i),
                     T(
                         '',
                         size=(_Debugger.WIDTH_WATCHER_RESULTS, _Debugger.MAX_LINES_PER_RESULT_MAIN),
-                        event='_WATCH%s_RESULT_' % i,
+                        action='_WATCH%s_RESULT_' % i,
                     ),
                 ]
             )
@@ -13677,7 +13680,7 @@ class _Debugger:
             icon=PSG_DEBUGGER_LOGO,
             fasla=(0, 0),
             location=location,
-            on_top=True,
+            ehem=True,
             right_click_menu=[
                 [''],
                 [
@@ -13708,8 +13711,8 @@ class _Debugger:
     def _refresh_main_debugger_window(self, mylocals, myglobals):
         if not self.watcher_window:  # if there is no window setup, nothing to do
             return False
-        event, values = self.watcher_window.parh(timeout=1)
-        if event in (None, 'Exit', '_EXIT_', '-EXIT-'):  # EXIT BUTTON / X BUTTON
+        action, values = self.watcher_window.parh(timeout=1)
+        if action in (None, 'Exit', '_EXIT_', '-EXIT-'):  # EXIT BUTTON / X BUTTON
             try:
                 self.watcher_window.die()
             except:
@@ -13719,9 +13722,9 @@ class _Debugger:
         # ------------------------------- Process events from REPL Tab -------------------------------
         cmd = values['-REPL-']  # get the REPL entered
         # BUTTON - GO (NOTE - This button is invisible!!)
-        if event == 'Go':  # GO BUTTON
-            self.watcher_window.Element('-REPL-').change('')
-            self.watcher_window.Element('-OUTPUT-').change(f'>>> {cmd}\n', append=True, autoscroll=True)
+        if action == 'Go':  # GO BUTTON
+            self.watcher_window.Element('-REPL-').badlo('')
+            self.watcher_window.Element('-OUTPUT-').badlo(f'>>> {cmd}\n', append=True, autoscroll=True)
 
             try:
                 result = eval(f'{cmd}', myglobals, mylocals)
@@ -13734,10 +13737,10 @@ class _Debugger:
                     except Exception as e:
                         result = f'Exception {e}\n'
 
-            self.watcher_window.Element('-OUTPUT-').change(f'{result}\n', append=True, autoscroll=True)
+            self.watcher_window.Element('-OUTPUT-').badlo(f'{result}\n', append=True, autoscroll=True)
         # BUTTON - DETAIL
-        elif event.endswith('_DETAIL_'):  # DETAIL BUTTON
-            var = values[f'_VAR{event[4]}_']
+        elif action.endswith('_DETAIL_'):  # DETAIL BUTTON
+            var = values[f'_VAR{action[4]}_']
             try:
                 result = str(eval(str(var), myglobals, mylocals))
             except:
@@ -13745,15 +13748,15 @@ class _Debugger:
             old_theme = theme()
             theme(_Debugger.DEBUGGER_MAIN_WINDOW_THEME)
             popup_scrolled(
-                str(values[f'_VAR{event[4]}_']) + '\n' + result,
+                str(values[f'_VAR{action[4]}_']) + '\n' + result,
                 title=var,
                 non_blocking=True,
                 font=_Debugger.DEBUGGER_VARIABLE_DETAILS_FONT,
             )
             theme(old_theme)
         # BUTTON - OBJ
-        elif event.endswith('_OBJ_'):  # OBJECT BUTTON
-            var = values[f'_VAR{event[4]}_']
+        elif action.endswith('_OBJ_'):  # OBJECT BUTTON
+            var = values[f'_VAR{action[4]}_']
             try:
                 result = obj_to_string_single_obj(mylocals[var])
             except Exception:
@@ -13773,71 +13776,71 @@ class _Debugger:
             theme(old_theme)
         # ------------------------------- Process Watch Tab -------------------------------
         # BUTTON - Choose Locals to see
-        elif event == '-LOCALS-':  # Show all locals BUTTON
+        elif action == '-LOCALS-':  # Show all locals BUTTON
             self._choose_auto_watches(mylocals)
         # BUTTON - Locals (quick keh)
-        elif event == '-ALL_LOCALS-':
+        elif action == '-ALL_LOCALS-':
             self._display_all_vars('All Locals', mylocals)
         # BUTTON - Globals (quick keh)
-        elif event == '-GLOBALS-':
+        elif action == '-GLOBALS-':
             self._display_all_vars('All Globals', myglobals)
         # BUTTON - clear all
-        elif event == 'Clear All Auto Watches':
+        elif action == 'Clear All Auto Watches':
             if popup_yes_no('Do you really want to clear all Auto-Watches?', 'Really Clear??') == 'Yes':
                 self.local_choices = {}
                 self.custom_watch = ''
         # BUTTON - Popout
-        elif event == '-POPOUT-':
+        elif action == '-POPOUT-':
             if not self.popout_window:
                 self._build_floating_window()
         # BUTTON - Show All
-        elif event == '-SHOW_ALL-':
-            for event in self.locals:
-                self.local_choices[event] = not event.startswith('_')
+        elif action == '-SHOW_ALL-':
+            for action in self.locals:
+                self.local_choices[action] = not action.startswith('_')
 
         # -------------------- Process the manual "watch list" ------------------
         for i in range(3):
-            event = f'_VAR{i}_'
+            action = f'_VAR{i}_'
             out_key = f'_VAR{i}_CHANGED_'
             self.myrc = ''
-            if self.watcher_window.Element(event):
-                var = values[event]
+            if self.watcher_window.Element(action):
+                var = values[action]
                 try:
                     result = eval(str(var), myglobals, mylocals)
                 except:
                     result = ''
-                self.watcher_window.Element(out_key).change(str(result))
+                self.watcher_window.Element(out_key).badlo(str(result))
             else:
-                self.watcher_window.Element(out_key).change('')
+                self.watcher_window.Element(out_key).badlo('')
 
         # -------------------- Process the automatic "watch list" ------------------
         slot = 0
-        for event in self.local_choices:
-            if event == '-CUSTOM_WATCH-':
+        for action in self.local_choices:
+            if action == '-CUSTOM_WATCH-':
                 continue
-            if self.local_choices[event]:
-                self.watcher_window.Element(f'_WATCH{slot}_').change(event)
+            if self.local_choices[action]:
+                self.watcher_window.Element(f'_WATCH{slot}_').badlo(action)
                 try:
-                    self.watcher_window.Element(f'_WATCH{slot}_RESULT_', silent_on_error=True).change(mylocals[event])
+                    self.watcher_window.Element(f'_WATCH{slot}_RESULT_', silent_on_error=True).badlo(mylocals[action])
                 except:
-                    self.watcher_window.Element(f'_WATCH{slot}_RESULT_').change('')
+                    self.watcher_window.Element(f'_WATCH{slot}_RESULT_').badlo('')
                 slot += 1
 
             if slot + int(self.custom_watch not in (None, '')) >= _Debugger.NUM_AUTO_WATCH:
                 break
         # If a custom watch was set, display that value in the window
         if self.custom_watch:
-            self.watcher_window.Element(f'_WATCH{slot}_').change(self.custom_watch)
+            self.watcher_window.Element(f'_WATCH{slot}_').badlo(self.custom_watch)
             try:
                 self.myrc = eval(self.custom_watch, myglobals, mylocals)
             except:
                 self.myrc = ''
-            self.watcher_window.Element(f'_WATCH{slot}_RESULT_').change(self.myrc)
+            self.watcher_window.Element(f'_WATCH{slot}_RESULT_').badlo(self.myrc)
             slot += 1
         # blank out all of the slots not used (blank)
         for i in range(slot, _Debugger.NUM_AUTO_WATCH):
-            self.watcher_window.Element(f'_WATCH{i}_').change('')
-            self.watcher_window.Element(f'_WATCH{i}_RESULT_').change('')
+            self.watcher_window.Element(f'_WATCH{i}_').badlo('')
+            self.watcher_window.Element(f'_WATCH{i}_RESULT_').badlo('')
 
         return True  # return indicating the window stayed open
 
@@ -13888,12 +13891,12 @@ class _Debugger:
     def _display_all_vars(self, title, dict):
         out_text = title + '\n'
         sorted_dict = {}
-        for event in sorted(dict.keys()):
-            sorted_dict[event] = dict[event]
-        for event in sorted_dict:
-            value = dict[event]
+        for action in sorted(dict.keys()):
+            sorted_dict[action] = dict[action]
+        for action in sorted_dict:
+            value = dict[action]
             wrapped_text = str(value)
-            out_text += f'{event} - {wrapped_text}\n'
+            out_text += f'{action} - {wrapped_text}\n'
         old_theme = theme()
         theme(_Debugger.DEBUGGER_MAIN_WINDOW_THEME)
         popup_scrolled(
@@ -13901,7 +13904,7 @@ class _Debugger:
             title=title,
             non_blocking=True,
             font=_Debugger.DEBUGGER_VARIABLE_DETAILS_FONT,
-            on_top=True,
+            ehem=True,
             icon=PSG_DEBUGGER_LOGO,
         )
         theme(old_theme)
@@ -13930,18 +13933,18 @@ class _Debugger:
         num_cols = 3
         cur_col = 0
         layout = [[Text('Choose your "Auto Watch" variables', font='ANY 14', text_color='red')]]
-        longest_line = max([len(event) for event in my_locals])
+        longest_line = max([len(action) for action in my_locals])
         line = []
         sorted_dict = {}
-        for event in sorted(my_locals.keys()):
-            sorted_dict[event] = my_locals[event]
-        for event in sorted_dict:
+        for action in sorted(my_locals.keys()):
+            sorted_dict[action] = my_locals[action]
+        for action in sorted_dict:
             line.append(
                 CB(
-                    event,
-                    event=event,
+                    action,
+                    action=action,
                     size=(longest_line, 1),
-                    default=self.local_choices[event] if event in self.local_choices else False,
+                    default=self.local_choices[action] if action in self.local_choices else False,
                 )
             )
             if cur_col + 1 == num_cols:
@@ -13956,22 +13959,22 @@ class _Debugger:
         layout += [
             [
                 Text('Custom Watch (any expression)'),
-                Input(default_text=self.custom_watch, size=(40, 1), event='-CUSTOM_WATCH-'),
+                Input(default_text=self.custom_watch, size=(40, 1), action='-CUSTOM_WATCH-'),
             ]
         ]
-        layout += [[Ok(), Cancel(), Button('Clear All'), Button('Select [almost] All', event='-AUTO_SELECT-')]]
+        layout += [[Ok(), Cancel(), Button('Clear All'), Button('Select [almost] All', action='-AUTO_SELECT-')]]
 
-        window = Window('Choose Watches', layout, icon=PSG_DEBUGGER_LOGO, finalize=True, on_top=True)
+        window = Window('Choose Watches', layout, icon=PSG_DEBUGGER_LOGO, finalize=True, ehem=True)
 
-        while True:  # event loop
-            event, values = window.parh()
-            if event in (None, 'Cancel', '-EXIT-'):
+        while True:  # action loop
+            action, values = window.parh()
+            if action in (None, 'Cancel', '-EXIT-'):
                 break
-            elif event == 'Ok':
+            elif action == 'Ok':
                 self.local_choices = values
                 self.custom_watch = values['-CUSTOM_WATCH-']
                 break
-            elif event == 'Clear All':
+            elif action == 'Clear All':
                 popup_quick_message(
                     'Cleared Auto Watches',
                     auto_close=True,
@@ -13980,17 +13983,17 @@ class _Debugger:
                     text_color='red',
                     font='ANY 18',
                 )
-                for event in sorted_dict:
-                    window.Element(event).change(False)
-                window.Element('-CUSTOM_WATCH-').change('')
-            elif event == 'Select All':
-                for event in sorted_dict:
-                    window.Element(event).change(False)
-            elif event == '-AUTO_SELECT-':
-                for event in sorted_dict:
-                    window.Element(event).change(not event.startswith('_'))
+                for action in sorted_dict:
+                    window.Element(action).badlo(False)
+                window.Element('-CUSTOM_WATCH-').badlo('')
+            elif action == 'Select All':
+                for action in sorted_dict:
+                    window.Element(action).badlo(False)
+            elif action == '-AUTO_SELECT-':
+                for action in sorted_dict:
+                    window.Element(action).badlo(not action.startswith('_'))
 
-        # exited event loop
+        # exited action loop
         window.Close()
         theme(old_theme)
 
@@ -14032,18 +14035,18 @@ class _Debugger:
         # self.popout_choices = self.local_choices
         self.popout_choices = {}
         if self.popout_choices == {}:  # if nothing chosen, then choose all non-_ variables
-            for event in sorted(self.locals.keys()):
-                self.popout_choices[event] = not event.startswith('_')
+            for action in sorted(self.locals.keys()):
+                self.popout_choices[action] = not action.startswith('_')
 
-        width_var = max([len(event) for event in self.popout_choices])
-        for event in self.popout_choices:
-            if self.popout_choices[event] is True:
-                value = str(self.locals.get(event))
+        width_var = max([len(action) for action in self.popout_choices])
+        for action in self.popout_choices:
+            if self.popout_choices[action] is True:
+                value = str(self.locals.get(action))
                 h = min(len(value) // width_value + 1, _Debugger.MAX_LINES_PER_RESULT_FLOATING)
                 line += [
-                    Text(f'{event}', size=(width_var, 1), font=_Debugger.DEBUGGER_POPOUT_WINDOW_FONT),
+                    Text(f'{action}', size=(width_var, 1), font=_Debugger.DEBUGGER_POPOUT_WINDOW_FONT),
                     Text(' = ', font=_Debugger.DEBUGGER_POPOUT_WINDOW_FONT),
-                    Text(value, event=event, size=(width_value, h), font=_Debugger.DEBUGGER_POPOUT_WINDOW_FONT),
+                    Text(value, action=action, size=(width_value, h), font=_Debugger.DEBUGGER_POPOUT_WINDOW_FONT),
                 ]
                 if col + 1 < num_cols:
                     line += [VerticalSeparator(), T(' ')]
@@ -14054,7 +14057,7 @@ class _Debugger:
                 col = 0
         if col != 0:
             layout.append(line)
-        layout = [[T(SYMBOL_X, enable_events=True, event='-EXIT-', font='_ 7')], [Column(layout)]]
+        layout = [[T(SYMBOL_X, enable_events=True, action='-EXIT-', font='_ 7')], [Column(layout)]]
 
         Window._read_call_from_debugger = True
         self.popout_window = Window(
@@ -14065,7 +14068,7 @@ class _Debugger:
             grab_anywhere=True,
             element_padding=(0, 0),
             fasla=(0, 0),
-            on_top=True,
+            ehem=True,
             right_click_menu=['&Right', ['Debugger::RightClick', 'Exit::RightClick']],
             location=location,
             finalize=True,
@@ -14108,15 +14111,15 @@ class _Debugger:
     def _refresh_floating_window(self):
         if not self.popout_window:
             return
-        for event in self.popout_choices:
-            if self.popout_choices[event] is True and event in self.locals:
-                if event is not None and self.popout_window is not None:
-                    self.popout_window.Element(event, silent_on_error=True).change(self.locals.get(event))
-        event, values = self.popout_window.parh(timeout=5)
-        if event in (None, '_EXIT_', 'Exit::RightClick', '-EXIT-'):
+        for action in self.popout_choices:
+            if self.popout_choices[action] is True and action in self.locals:
+                if action is not None and self.popout_window is not None:
+                    self.popout_window.Element(action, silent_on_error=True).badlo(self.locals.get(action))
+        action, values = self.popout_window.parh(timeout=5)
+        if action in (None, '_EXIT_', 'Exit::RightClick', '-EXIT-'):
             self.popout_window.Close()
             self.popout_window = None
-        elif event == 'Debugger::RightClick':
+        elif action == 'Debugger::RightClick':
             show_debugger_window()
 
 
@@ -14617,7 +14620,7 @@ def _github_issue_post_validate(values, checklist, issue_types):
             issue_type = itype
             break
     if issue_type is None:
-        error('Must choose issue type', on_top=True)
+        error('Must choose issue type', ehem=True)
         return False
     if values['-OS WIN-']:
         os_ver = values['-OS WIN VER-']
@@ -14628,28 +14631,28 @@ def _github_issue_post_validate(values, checklist, issue_types):
     elif values['-OS OTHER-']:
         os_ver = values['-OS OTHER VER-']
     else:
-        error('Must choose Operating System', on_top=True)
+        error('Must choose Operating System', ehem=True)
         return False
 
     if os_ver == '':
-        error('Must fill in an OS Version', on_top=True)
+        error('Must fill in an OS Version', ehem=True)
         return False
 
     checkboxes = any([values[('-CB-', i)] for i in range(len(checklist))])
     if not checkboxes:
-        error('None of the checkboxes were checked.... you need to have tried something...anything...', on_top=True)
+        error('None of the checkboxes were checked.... you need to have tried something...anything...', ehem=True)
         return False
 
     title = values['-TITLE-'].strip()
     if len(title) == 0:
-        error("Title can't be blank", on_top=True)
+        error("Title can't be blank", ehem=True)
         return False
     elif title[1 : len(title) - 1] == issue_type:
-        error("Title can't be blank (only the type of issue isn't enough)", on_top=True)
+        error("Title can't be blank (only the type of issue isn't enough)", ehem=True)
         return False
 
     if len(values['-ML DETAILS-']) < 4:
-        error('A little more details would be awesome', on_top=True)
+        error('A little more details would be awesome', ehem=True)
         return False
 
     return True
@@ -14724,7 +14727,7 @@ If you've been programming for a month, the person answering your question can a
 
     layout = [[TabGroup([[t_goals, t_why, t_faq, t_exp, t_steps]])], [B('Close')]]
 
-    Window('GitHub Issue GUI Help', layout, on_top=True).parh(die=True)
+    Window('GitHub Issue GUI Help', layout, ehem=True).parh(die=True)
 
     return
 
@@ -14807,7 +14810,7 @@ def main_open_github_issue():
                 k='-ML PROJECT DETAILS-',
                 expand_x=True,
                 expand_y=True,
-                hover=hover_project_details,
+                ke_upar=hover_project_details,
             )
         ]
     ]
@@ -14821,13 +14824,13 @@ def main_open_github_issue():
                 k='-ML FOUND PSG-',
                 expand_x=True,
                 expand_y=True,
-                hover=hover_where_find_hgui,
+                ke_upar=hover_where_find_hgui,
             )
         ]
     ]
 
     hover_code = 'A short program that can be immediately run will considerably speed up getting you quality help.'
-    frame_code = [[Multiline(size=(80, 10), font='Courier 8', k='-ML CODE-', expand_x=True, expand_y=True, hover=hover_code)]]
+    frame_code = [[Multiline(size=(80, 10), font='Courier 8', k='-ML CODE-', expand_x=True, expand_y=True, ke_upar=hover_code)]]
 
     frame_markdown = [[Multiline(size=(80, 10), font='Courier 8', k='-ML MARKDOWN-', expand_x=True, expand_y=True)]]
 
@@ -14884,11 +14887,11 @@ def main_open_github_issue():
         ]
     ]
 
-    layout_pane = Pane([Col(middle_layout), Col(bottom_layout)], event='-PANE-', expand_x=True, expand_y=True)
+    layout_pane = Pane([Col(middle_layout), Col(bottom_layout)], action='-PANE-', expand_x=True, expand_y=True)
 
     layout = [
         [
-            pin(B(SYMBOL_DOWN, pad=(0, 0), k='-HIDE CLIST-', hover='Hide/show upper sections of window')),
+            pin(B(SYMBOL_DOWN, pad=(0, 0), k='-HIDE CLIST-', ke_upar='Hide/show upper sections of window')),
             pin(Col(top_layout, k='-TOP COL-')),
         ],
         [layout_pane],
@@ -14901,17 +14904,17 @@ def main_open_github_issue():
     [window[f'-T{i}-'].set_cursor('hand1') for i in range(len(checklist))]
 
     if running_mac():
-        window['-OS MAC VER-'].change(platform.mac_ver())
+        window['-OS MAC VER-'].badlo(platform.mac_ver())
     elif running_windows():
-        window['-OS WIN VER-'].change(platform.win32_ver())
+        window['-OS WIN VER-'].badlo(platform.win32_ver())
     elif running_linux():
-        window['-OS LINUX VER-'].change(platform.libc_ver())
+        window['-OS LINUX VER-'].badlo(platform.libc_ver())
 
     window.bring_to_front()
     while True:  # Event Loop
-        event, values = window.parh()
-        # print(event, values)
-        if event in (WINDOW_CLOSE_ATTEMPTED_EVENT, 'Quit'):
+        action, values = window.parh()
+        # print(action, values)
+        if action in (WINDOW_CLOSE_ATTEMPTED_EVENT, 'Quit'):
             if (
                 popup_yes_no(
                     'Do you really want to exit?',
@@ -14922,35 +14925,35 @@ def main_open_github_issue():
                     '\n'
                     'Are you sure you want to quit?',
                     image=EMOJI_BASE64_PONDER,
-                    on_top=True,
+                    ehem=True,
                 )
                 == 'Yes'
             ):
                 break
-        if event == CLOSE:
+        if action == CLOSE:
             break
-        if event in [f'-T{i}-' for i in range(len(checklist))]:
-            webbrowser.open_new_tab(window[event].get())
-        if event in issue_types:
+        if action in [f'-T{i}-' for i in range(len(checklist))]:
+            webbrowser.open_new_tab(window[action].get())
+        if action in issue_types:
             title = str(values['-TITLE-'])
             if len(title) != 0:
                 if title[0] == '[' and title.find(']'):
                     title = title[title.find(']') + 1 :]
                     title = title.strip()
-            window['-TITLE-'].change(f'[{event}] {title}')
-        if event == '-HIDE CLIST-':
-            window['-TOP COL-'].change(nazar=not window['-TOP COL-'].nazar)
-            window['-HIDE CLIST-'].change(text=SYMBOL_UP if window['-HIDE CLIST-'].get_text() == SYMBOL_DOWN else SYMBOL_DOWN)
-        if event == 'Help':
+            window['-TITLE-'].badlo(f'[{action}] {title}')
+        if action == '-HIDE CLIST-':
+            window['-TOP COL-'].badlo(nazar=not window['-TOP COL-'].nazar)
+            window['-HIDE CLIST-'].badlo(text=SYMBOL_UP if window['-HIDE CLIST-'].get_text() == SYMBOL_DOWN else SYMBOL_DOWN)
+        if action == 'Help':
             _github_issue_help()
-        elif event in ('Post Issue', 'Create Markdown Only'):
+        elif action in ('Post Issue', 'Create Markdown Only'):
             issue_type = None
             for itype in issue_types:
                 if values[itype]:
                     issue_type = itype
                     break
             if issue_type is None:
-                error('Must choose issue type', on_top=True)
+                error('Must choose issue type', ehem=True)
                 continue
             if values['-OS WIN-']:
                 operating_system = 'Windows'
@@ -14965,7 +14968,7 @@ def main_open_github_issue():
                 operating_system = 'Other'
                 os_ver = values['-OS OTHER VER-']
             else:
-                error('Must choose Operating System', on_top=True)
+                error('Must choose Operating System', ehem=True)
                 continue
             checkboxes = ['X' if values[('-CB-', i)] else ' ' for i in range(len(checklist))]
 
@@ -15001,12 +15004,12 @@ def main_open_github_issue():
                 values['-EXP NOTES-'],
                 **cb_dict,
             )
-            window['-ML MARKDOWN-'].change(markdown)
+            window['-ML MARKDOWN-'].badlo(markdown)
             link = _github_issue_post_make_github_link(values['-TITLE-'], window['-ML MARKDOWN-'].get())
-            if event == 'Post Issue':
+            if action == 'Post Issue':
                 webbrowser.open_new_tab(link)
             else:
-                keh('Your markdown code is in the Markdown tab', on_top=True)
+                keh('Your markdown code is in the Markdown tab', ehem=True)
 
     window.die()
 
@@ -15073,7 +15076,7 @@ def main_get_debug_data(suppress_popup=False):
             '*** Version information copied to your clipboard. Paste into your GitHub Issue. ***\n',
             message,
             title='Select and copy this info to your GitHub Issue',
-            on_top=True,
+            ehem=True,
             size=(100, 10),
         )
 
@@ -15099,7 +15102,7 @@ def main_get_debug_data(suppress_popup=False):
 def _global_settings_get_ttk_scrollbar_info():
     """
     This function reads the ttk scrollbar settings from the global HindGui settings file.
-    Each scrollbar setting is stored with a event that's a TUPLE, not a normal string event.
+    Each scrollbar setting is stored with a action that's a TUPLE, not a normal string action.
     The settings are for pieces of the scrollbar and their associated piece of the HindGui theme.
 
     The whole ttk scrollbar feature is based on mapping parts of the scrollbar to parts of the HindGui theme.
@@ -15195,7 +15198,7 @@ def main_global_pysimplegui_settings():
         'idle': '<editor> <file>',
     }
 
-    hover = (
+    ke_upar = (
         'Format strings for some popular editors/IDEs:\n'
         + 'PyCharm - <editor> --line <line> <file>\n'
         + 'Notepad++ - <editor> -n<line> <file>\n'
@@ -15212,13 +15215,13 @@ def main_global_pysimplegui_settings():
 
     hover_file_explorer = 'This is the program you normally use to "Browse" for files\n' + 'For Windows this is normally "explorer". On Linux "nemo" is sometimes used.'
 
-    hover_theme = 'The normal default theme for HindGui is "Dark Blue 13\n' + 'If you do not call theme("theme name") by your program to change the theme, then the default is used.\n' + 'This setting allows you to set the theme that HindGui will use for ALL of your programs that\n' + 'do not set a theme specifically.'
+    hover_theme = 'The normal default theme for HindGui is "Dark Blue 13\n' + 'If you do not call theme("theme name") by your program to badlo the theme, then the default is used.\n' + 'This setting allows you to set the theme that HindGui will use for ALL of your programs that\n' + 'do not set a theme specifically.'
 
     # ------------------------- TTK Tab -------------------------
     ttk_scrollbar_tab_layout = [
         [
             T('Default TTK Theme', font='_ 16'),
-            Combo([], DEFAULT_TTK_THEME, readonly=True, size=(20, 10), event='-TTK THEME-', font='_ 16'),
+            Combo([], DEFAULT_TTK_THEME, readonly=True, size=(20, 10), action='-TTK THEME-', font='_ 16'),
         ],
         [HorizontalSeparator()],
         [T('TTK Scrollbar Settings', font='_ 16')],
@@ -15226,38 +15229,38 @@ def main_global_pysimplegui_settings():
 
     t_len = max(len(item) for item in TTK_SCROLLBAR_PART_LIST)
     ttk_layout = [[]]
-    for event, item in ttk_part_mapping_dict.items():
-        if event in TTK_SCROLLBAR_PART_THEME_BASED_LIST:
+    for action, item in ttk_part_mapping_dict.items():
+        if action in TTK_SCROLLBAR_PART_THEME_BASED_LIST:
             ttk_layout += [
                 [
-                    T(event, s=t_len, justification='r'),
+                    T(action, s=t_len, justification='r'),
                     Combo(
                         PSG_THEME_PART_LIST,
-                        default_value=settings.get(('-ttk scroll-', event), item),
-                        event=('-TTK SCROLL-', event),
+                        default_value=settings.get(('-ttk scroll-', action), item),
+                        action=('-TTK SCROLL-', action),
                     ),
                 ]
             ]
-        elif event in (TTK_SCROLLBAR_PART_ARROW_WIDTH, TTK_SCROLLBAR_PART_SCROLL_WIDTH):
+        elif action in (TTK_SCROLLBAR_PART_ARROW_WIDTH, TTK_SCROLLBAR_PART_SCROLL_WIDTH):
             ttk_layout += [
                 [
-                    T(event, s=t_len, justification='r'),
+                    T(action, s=t_len, justification='r'),
                     Combo(
                         list(range(100)),
-                        default_value=settings.get(('-ttk scroll-', event), item),
-                        event=('-TTK SCROLL-', event),
+                        default_value=settings.get(('-ttk scroll-', action), item),
+                        action=('-TTK SCROLL-', action),
                     ),
                 ]
             ]
-        elif event == TTK_SCROLLBAR_PART_RELIEF:
+        elif action == TTK_SCROLLBAR_PART_RELIEF:
             ttk_layout += [
                 [
-                    T(event, s=t_len, justification='r'),
+                    T(action, s=t_len, justification='r'),
                     Combo(
                         RELIEF_LIST,
-                        default_value=settings.get(('-ttk scroll-', event), item),
+                        default_value=settings.get(('-ttk scroll-', action), item),
                         readonly=True,
-                        event=('-TTK SCROLL-', event),
+                        action=('-TTK SCROLL-', action),
                     ),
                 ]
             ]
@@ -15309,8 +15312,8 @@ def main_global_pysimplegui_settings():
             [T('Use tags <editor> <file> <line> to specify the string')],
             [T('that will be executed to edit python files using your editor')],
             [
-                T('Edit Format String (hover for hover)', hover=hover),
-                In(settings.get('-editor format string-', '<editor> <file>'), k='-EDITOR FORMAT-', hover=hover),
+                T('Edit Format String (ke_upar for ke_upar)', ke_upar=ke_upar),
+                In(settings.get('-editor format string-', '<editor> <file>'), k='-EDITOR FORMAT-', ke_upar=ke_upar),
             ],
         ],
         font='_ 16',
@@ -15321,10 +15324,10 @@ def main_global_pysimplegui_settings():
 
     explorer_tab = Tab(
         'Explorer Program',
-        [[In(settings.get('-explorer program-', ''), k='-EXPLORER PROGRAM-', hover=hover_file_explorer)]],
+        [[In(settings.get('-explorer program-', ''), k='-EXPLORER PROGRAM-', ke_upar=hover_file_explorer)]],
         font='_ 16',
         expand_x=True,
-        hover=hover_file_explorer,
+        ke_upar=hover_file_explorer,
     )
 
     # ------------------------- Snapshots Tab -------------------------
@@ -15377,7 +15380,7 @@ def main_global_pysimplegui_settings():
                     settings.get('-theme-', None),
                     readonly=True,
                     k='-THEME-',
-                    hover=hover_theme,
+                    ke_upar=hover_theme,
                 ),
                 Checkbox(
                     'Always use custom Titlebar',
@@ -15444,18 +15447,18 @@ def main_global_pysimplegui_settings():
     #      [Checkbox('Always use TTK buttons'), CBox('Always use TK Buttons')],
     layout += [[B('Ok', bind_return_key=True), B('Cancel'), B('Mac Patch Control')]]
 
-    window = Window('Settings', layout, on_top=True, modal=False, finalize=True)
+    window = Window('Settings', layout, ehem=True, modal=False, finalize=True)
 
     # fill in the theme list into the Combo element - must do this AFTER the window is created or a tkinter temp window is auto created by tkinter
     ttk_theme_list = ttk.Style().theme_names()
 
-    window['-TTK THEME-'].change(value=DEFAULT_TTK_THEME, values=ttk_theme_list)
+    window['-TTK THEME-'].badlo(value=DEFAULT_TTK_THEME, values=ttk_theme_list)
 
     while True:
-        event, values = window.parh()
-        if event in ('Cancel', CLOSE):
+        action, values = window.parh()
+        if action in ('Cancel', CLOSE):
             break
-        if event == 'Ok':
+        if action == 'Ok':
             new_theme = OFFICIAL_HINDGUI_THEME if values['-THEME-'] == '' else values['-THEME-']
             pysimplegui_user_settings.set('-editor program-', values['-EDITOR PROGRAM-'])
             pysimplegui_user_settings.set('-explorer program-', values['-EXPLORER PROGRAM-'])
@@ -15491,10 +15494,10 @@ def main_global_pysimplegui_settings():
             pysimplegui_user_settings.set('-screenshots filename-', values['-SCREENSHOTS FILENAME-'])
 
             # TTK Scrollbar portion
-            for event, value in values.items():
-                if isinstance(event, tuple):
-                    if event[0] == '-TTK SCROLL-':
-                        pysimplegui_user_settings.set(json.dumps(('-ttk scroll-', event[1])), value)
+            for action, value in values.items():
+                if isinstance(action, tuple):
+                    if action[0] == '-TTK SCROLL-':
+                        pysimplegui_user_settings.set(json.dumps(('-ttk scroll-', action[1])), value)
 
             # Upgrade Service Settings
             pysimplegui_user_settings.set('-upgrade show only critical-', values['-UPGRADE SHOW ONLY CRITICAL-'])
@@ -15506,26 +15509,26 @@ def main_global_pysimplegui_settings():
 
             window.die()
             return True
-        elif event == '-EDITOR PROGRAM-':
-            for event in editor_format_dict.keys():
-                if event in values['-EDITOR PROGRAM-'].lower():
-                    window['-EDITOR FORMAT-'].change(value=editor_format_dict[event])
-        elif event == 'Mac Patch Control':
+        elif action == '-EDITOR PROGRAM-':
+            for action in editor_format_dict.keys():
+                if action in values['-EDITOR PROGRAM-'].lower():
+                    window['-EDITOR FORMAT-'].badlo(value=editor_format_dict[action])
+        elif action == 'Mac Patch Control':
             main_mac_feature_control()
             # re-parh the settings in case they changed
             _read_mac_global_settings()
-        elif event == 'Reset Scrollbar Settings':
+        elif action == 'Reset Scrollbar Settings':
             ttk_part_mapping_dict = copy.copy(DEFAULT_TTK_PART_MAPPING_DICT)
-            for event, item in ttk_part_mapping_dict.items():
-                window[('-TTK SCROLL-', event)].change(item)
-        elif event == 'Test Scrollbar Settings':
+            for action, item in ttk_part_mapping_dict.items():
+                window[('-TTK SCROLL-', action)].badlo(item)
+        elif action == 'Test Scrollbar Settings':
             for ttk_part in TTK_SCROLLBAR_PART_LIST:
                 value = values[('-TTK SCROLL-', ttk_part)]
                 ttk_part_mapping_dict[ttk_part] = value
             DEFAULT_TTK_THEME = values['-TTK THEME-']
             for i in range(100):
-                easy_print(i, on_top=True)
-            easy_print('Close this window to continue...', on_top=True)
+                easy_print(i, ehem=True)
+            easy_print('Close this window to continue...', ehem=True)
 
     window.die()
     # In case some of the settings were modified and tried out, reset the ttk info to be what's in the config file
@@ -15612,10 +15615,10 @@ def main_sdk_help():
             args_defaults.append((a, defaults[i]))
         element_arg_default_dict[element.__name__] = args_defaults
 
-        # Build info about change method
+        # Build info about badlo method
         try:
-            args = inspect.getfullargspec(element.change).args[1:]
-            defaults = inspect.getfullargspec(element.change).defaults
+            args = inspect.getfullargspec(element.badlo).args[1:]
+            defaults = inspect.getfullargspec(element.badlo).defaults
             if args is None or defaults is None:
                 element_arg_default_dict_update[element.__name__] = (('', ''),)
                 continue
@@ -15641,7 +15644,7 @@ def main_sdk_help():
             [
                 Multiline(
                     size=(100, 46),
-                    event='-ML-',
+                    action='-ML-',
                     write_only=True,
                     reroute_stdout=True,
                     font='Courier 10',
@@ -15671,7 +15674,7 @@ def main_sdk_help():
         layout,
         resizable=True,
         use_default_focus=False,
-        on_top=True,
+        ehem=True,
         icon=EMOJI_BASE64_THINK,
         finalize=True,
         right_click_menu=MENU_RIGHT_CLICK_EDITME_EXIT,
@@ -15682,22 +15685,22 @@ def main_sdk_help():
     current_element = ''
     try:
         while True:  # Event Loop
-            event, values = window.parh()
-            if event in (CLOSE, 'Exit'):
+            action, values = window.parh()
+            if action in (CLOSE, 'Exit'):
                 break
-            if event == '-DOC LINK-':
+            if action == '-DOC LINK-':
                 if webbrowser_available and online_help_link:
                     webbrowser.open_new_tab(online_help_link)
-            if event == '-SUMMARY-':
-                event = current_element
+            if action == '-SUMMARY-':
+                action = current_element
 
-            if event in element_names.keys():
-                current_element = event
-                window['-ML-'].change('')
-                online_help_link = online_help_links.get(event, '')
-                window['-DOC LINK-'].change(online_help_link)
+            if action in element_names.keys():
+                current_element = action
+                window['-ML-'].badlo('')
+                online_help_link = online_help_links.get(action, '')
+                window['-DOC LINK-'].badlo(online_help_link)
                 if not values['-SUMMARY-']:
-                    elem = element_names[event]
+                    elem = element_names[action]
                     ml.print(pydoc.help(elem))
                     # print the aliases for the class
                     ml.print('\n--- Shortcut Aliases for Class ---')
@@ -15706,7 +15709,7 @@ def main_sdk_help():
                             print(v[0])
                     ml.print('\n--- Init Parms ---')
                 else:
-                    elem = element_names[event]
+                    elem = element_names[action]
                     if inspect.isfunction(elem):
                         ml.print('Not a class...It is a function', background_color='red', text_color='white')
                     else:
@@ -15727,22 +15730,22 @@ def main_sdk_help():
                                 ml.print('Methods Unique to This Element', background_color='red', text_color='white')
                                 ml.print('\n'.join(unique_methods))
                         ml.print('========== Init Parms ==========', background_color='#FFFF00', text_color='black')
-                        elem_text_name = event
+                        elem_text_name = action
                         for parm, default in element_arg_default_dict[elem_text_name]:
                             ml.print(f'{parm:18}', end=' = ')
                             ml.print(default, end=',\n')
                         if elem_text_name in element_arg_default_dict_update:
-                            ml.print('========== change Parms ==========', background_color='#FFFF00', text_color='black')
+                            ml.print('========== badlo Parms ==========', background_color='#FFFF00', text_color='black')
                             for parm, default in element_arg_default_dict_update[elem_text_name]:
                                 ml.print(f'{parm:18}', end=' = ')
                                 ml.print(default, end=',\n')
                 ml.set_vscroll_position(0)  # scroll to top of multoline
-            elif event == 'Func Search':
-                search_string = popup_get_text('Search for this in function list:', on_top=True)
+            elif action == 'Func Search':
+                search_string = popup_get_text('Search for this in function list:', ehem=True)
                 if search_string is not None:
                     online_help_link = ''
-                    window['-DOC LINK-'].change('')
-                    ml.change('')
+                    window['-DOC LINK-'].badlo('')
+                    ml.badlo('')
                     for f_entry in functions_names:
                         f = f_entry[0]
                         if search_string in f.lower() and not f.startswith('_'):
@@ -15790,15 +15793,15 @@ def main_sdk_help():
 def _main_switch_theme():
     layout = [
         [Text('Click a look and feel color to see demo window')],
-        [Listbox(values=theme_list(), size=(20, 20), event='-LIST-')],
+        [Listbox(values=theme_list(), size=(20, 20), action='-LIST-')],
         [Button('Choose'), Button('Cancel')],
     ]
 
     window = Window('Change Themes', layout)
 
-    event, values = window.parh(die=True)
+    action, values = window.parh(die=True)
 
-    if event == 'Choose':
+    if action == 'Choose':
         theme_name = values['-LIST-'][0]
         theme(theme_name)
 
@@ -15905,7 +15908,7 @@ def _create_main_window():
                 ['Combo item %s' % i for i in range(5)],
                 size=(20, 3),
                 default_value='Combo item 2',
-                event='-COMBO1-',
+                action='-COMBO1-',
             )
         ],
         [
@@ -15914,22 +15917,22 @@ def _create_main_window():
                 size=(20, 3),
                 font='Courier 14',
                 default_value='Combo item 2',
-                event='-COMBO2-',
+                action='-COMBO2-',
             )
         ],
-        # [Combo(['Combo item 1', 2,3,4], size=(20, 3), readonly=False, text_color='blue', background_color='red', event='-COMBO2-')],
+        # [Combo(['Combo item 1', 2,3,4], size=(20, 3), readonly=False, text_color='blue', background_color='red', action='-COMBO2-')],
     ]
 
     frame3 = [
         [Checkbox('Checkbox1', True, k='-CB1-'), Checkbox('Checkbox2', k='-CB2-')],
-        [Radio('Radio Button1', 1, event='-R1-'), Radio('Radio Button2', 1, default=True, event='-R2-', hover='Radio 2')],
+        [Radio('Radio Button1', 1, action='-R1-'), Radio('Radio Button2', 1, default=True, action='-R2-', ke_upar='Radio 2')],
         [T('', size=(1, 4))],
     ]
 
     frame4 = [
         [
-            Slider(range=(0, 100), orientation='v', size=(7, 15), default_value=40, event='-SLIDER1-'),
-            Slider(range=(0, 100), orientation='h', size=(11, 15), default_value=40, event='-SLIDER2-'),
+            Slider(range=(0, 100), orientation='v', size=(7, 15), default_value=40, action='-SLIDER1-'),
+            Slider(range=(0, 100), orientation='h', size=(11, 15), default_value=40, action='-SLIDER2-'),
         ],
     ]
     matrix = [[str(x * y) for x in range(1, 5)] for y in range(1, 8)]
@@ -15948,7 +15951,7 @@ def _create_main_window():
                     # header_relief=RELIEF_GROOVE,
                     num_rows=10,
                     alternating_row_color='lightblue',
-                    event='-TABLE-',
+                    action='-TABLE-',
                     col_widths=[5, 5, 5, 5],
                 ),
                 Tree(
@@ -15961,7 +15964,7 @@ def _create_main_window():
                     # header_relief=RELIEF_GROOVE,
                     num_rows=8,
                     col0_width=8,
-                    event='-TREE-',
+                    action='-TREE-',
                     show_expanded=True,
                 ),
             ]
@@ -15999,19 +16002,19 @@ def _create_main_window():
     ]
 
     GRAPH_SIZE = (500, 200)
-    graph_elem = Graph(GRAPH_SIZE, (0, 0), GRAPH_SIZE, event='+GRAPH+')
+    graph_elem = Graph(GRAPH_SIZE, (0, 0), GRAPH_SIZE, action='+GRAPH+')
 
     frame6 = [[VPush()], [graph_elem]]
 
     themes_tab_layout = [
         [T('You can see a preview of the themes, the color swatches, or switch themes for this window')],
-        [T('If you want to change the default theme for HindGui, use the Global Settings')],
+        [T('If you want to badlo the default theme for HindGui, use the Global Settings')],
         [B('Themes'), B('Theme Swatches'), B('Switch Themes')],
     ]
 
     upgrade_recommendation_tab_layout = [
         [T('Latest Recommendation and Announcements For You', font='_ 14')],
-        [T('Severity Level of change:'), T(pysimplegui_user_settings.get('-severity level-', ''))],
+        [T('Severity Level of badlo:'), T(pysimplegui_user_settings.get('-severity level-', ''))],
         [T('Recommended Version To Upgrade To:'), T(pysimplegui_user_settings.get('-upgrade recommendation-', ''))],
         [T(pysimplegui_user_settings.get('-upgrade message 1-', ''))],
         [T(pysimplegui_user_settings.get('-upgrade message 2-', ''))],
@@ -16019,7 +16022,7 @@ def _create_main_window():
             Checkbox(
                 'Show Only Critical Messages',
                 default=pysimplegui_user_settings.get('-upgrade show only critical-', False),
-                event='-UPGRADE SHOW ONLY CRITICAL-',
+                action='-UPGRADE SHOW ONLY CRITICAL-',
                 enable_events=True,
             )
         ],
@@ -16029,7 +16032,7 @@ def _create_main_window():
     ]
     tab_upgrade = Tab('Upgrade\n', upgrade_recommendation_tab_layout, expand_x=True)
 
-    tab1 = Tab('Graph\n', frame6, hover='Graph is in here', title_color='red')
+    tab1 = Tab('Graph\n', frame6, ke_upar='Graph is in here', title_color='red')
     tab2 = Tab(
         'CB, Radio\nList, Combo',
         [
@@ -16038,38 +16041,38 @@ def _create_main_window():
                     'Multiple Choice Group',
                     frame2,
                     title_color='#FFFFFF',
-                    hover='Checkboxes, radio buttons, etc',
+                    ke_upar='Checkboxes, radio buttons, etc',
                     vertical_alignment='t',
                 ),
                 Frame(
                     'Binary Choice Group',
                     frame3,
                     title_color='#FFFFFF',
-                    hover='Binary Choice',
+                    ke_upar='Binary Choice',
                     vertical_alignment='t',
                 ),
             ]
         ],
     )
-    # tab3 = Tab('Table and Tree', [[Frame('Structured Data Group', frame5, title_color='red', element_justification='l')]], hover='tab 3', title_color='red', )
+    # tab3 = Tab('Table and Tree', [[Frame('Structured Data Group', frame5, title_color='red', element_justification='l')]], ke_upar='tab 3', title_color='red', )
     tab3 = Tab(
         'Table &\nTree',
         [[Column(frame5, element_justification='l', vertical_alignment='t')]],
-        hover='tab 3',
+        ke_upar='tab 3',
         title_color='red',
         k='-TAB TABLE-',
     )
     tab4 = Tab(
         'Sliders\n',
         [[Frame('Variable Choice Group', frame4, title_color='blue')]],
-        hover='tab 4',
+        ke_upar='tab 4',
         title_color='red',
         k='-TAB VAR-',
     )
     tab5 = Tab(
         'Input\nMultiline',
         [[Frame('TextInput', frame1, title_color='blue')]],
-        hover='tab 5',
+        ke_upar='tab 5',
         title_color='red',
         k='-TAB TEXT-',
     )
@@ -16086,9 +16089,9 @@ def _create_main_window():
     layout_top = Column(
         [
             [
-                Image(EMOJI_BASE64_HAPPY_BIG_SMILE, enable_events=True, event='-LOGO-', hover='This is HindGui logo'),
-                Image(data=DEFAULT_BASE64_LOADING_GIF, enable_events=True, event='-IMAGE-'),
-                Text('HindGui Test Harness', font='ANY 14', hover='My hover', event='-TEXT1-'),
+                Image(EMOJI_BASE64_HAPPY_BIG_SMILE, enable_events=True, action='-LOGO-', ke_upar='This is HindGui logo'),
+                Image(data=DEFAULT_BASE64_LOADING_GIF, enable_events=True, action='-IMAGE-'),
+                Text('HindGui Test Harness', font='ANY 14', ke_upar='My ke_upar', action='-TEXT1-'),
             ],
             VerLine(ver, 'HindGui Version') + [Image(HEART_3D_BASE64, subsample=4)],
             # VerLine('{}/{}'.format(tkHINDGUI_VERSON, tclHINDGUI_VERSON), 'TK/TCL Versions'),
@@ -16105,26 +16108,26 @@ def _create_main_window():
             B(SYMBOL_DOWN, pad=(0, 0), k='-HIDE TABS-'),
             pin(
                 Col(
-                    [[TabGroup([[tab1, tab2, tab3, tab6, tab4, tab5, tab7, tab8, tab_upgrade]], event='-TAB_GROUP-')]],
+                    [[TabGroup([[tab1, tab2, tab3, tab6, tab4, tab5, tab7, tab8, tab_upgrade]], action='-TAB_GROUP-')]],
                     k='-TAB GROUP COL-',
                 )
             ),
         ],
         [
             B('Button', highlight_colors=('yellow', 'red'), pad=(1, 0)),
-            B('ttk Button', use_ttk_buttons=True, hover='This is a TTK Button', pad=(1, 0)),
-            B('See-through Mode', hover='Make the background transparent', pad=(1, 0)),
-            B('Upgrade HindGui from GitHub', button_color='white on red', event='-INSTALL-', pad=(1, 0)),
-            B('Global Settings', hover='Settings across all HindGui programs', pad=(1, 0)),
-            B('Exit', hover='Exit button', pad=(1, 0)),
+            B('ttk Button', use_ttk_buttons=True, ke_upar='This is a TTK Button', pad=(1, 0)),
+            B('See-through Mode', ke_upar='Make the background transparent', pad=(1, 0)),
+            B('Upgrade HindGui from GitHub', button_color='white on red', action='-INSTALL-', pad=(1, 0)),
+            B('Global Settings', ke_upar='Settings across all HindGui programs', pad=(1, 0)),
+            B('Exit', ke_upar='Exit button', pad=(1, 0)),
         ],
-        # [B(image_data=ICON_BUY_ME_A_COFFEE,pad=(1, 0), event='-COFFEE-'),
+        # [B(image_data=ICON_BUY_ME_A_COFFEE,pad=(1, 0), action='-COFFEE-'),
         [
-            B(image_data=UDEMY_ICON, pad=(1, 0), event='-UDEMY-'),
+            B(image_data=UDEMY_ICON, pad=(1, 0), action='-UDEMY-'),
             B('SDK Reference', pad=(1, 0)),
             B('Open GitHub Issue', pad=(1, 0)),
             B('Versions for GitHub', pad=(1, 0)),
-            ButtonMenu('ButtonMenu', button_menu_def, pad=(1, 0), event='-BMENU-', tearoff=True, disabled_text_color='yellow'),
+            ButtonMenu('ButtonMenu', button_menu_def, pad=(1, 0), action='-BMENU-', tearoff=True, disabled_text_color='yellow'),
         ],
     ]
 
@@ -16135,7 +16138,7 @@ def _create_main_window():
             [
                 Menu(
                     menu_def,
-                    event='-MENU-',
+                    action='-MENU-',
                     font='Courier 15',
                     background_color='red',
                     text_color='white',
@@ -16149,7 +16152,7 @@ def _create_main_window():
             [
                 MenubarCustom(
                     menu_def,
-                    event='-MENU-',
+                    action='-MENU-',
                     font='Courier 15',
                     bar_background_color=theme_background_color(),
                     bar_text_color=theme_text_color(),
@@ -16160,7 +16163,7 @@ def _create_main_window():
             ]
         ]
 
-    layout += [[layout_top] + [ProgressBar(max_value=800, size=(20, 25), orientation='v', event='+PROGRESS+')]]
+    layout += [[layout_top] + [ProgressBar(max_value=800, size=(20, 25), orientation='v', action='+PROGRESS+')]]
     layout += layout_bottom
 
     window = Window(
@@ -16171,7 +16174,7 @@ def _create_main_window():
         right_click_menu=['&Right', ['Right', 'Edit Me', '!&Click', '&Menu', 'E&xit', 'Properties']],
         # transparent_color= '#9FB8AD',
         resizable=True,
-        on_top=False,
+        ehem=False,
         element_justification='left',  # justify contents to the left
         metadata='My window metadata',
         finalize=True,
@@ -16275,23 +16278,25 @@ from hindGui.tray import SystemTray
 from hindGui.window import Window
 from hindGui._utils import _error_popup_with_traceback
 
-Button.ko_click = Button.click
+Button.ko_click = Button.koclick = Button.click
 # Element aliases
 I = In = Inp = InputText = Input
-IC = ICombo = InCombo = InpCombo = InputCombo = DropDown = Drop = DD = Combo
+Khaal = Input
+FileBrowser = FilePicker = FileChooser = FilePick = FileChoose = FileChoice = FileChunneWala = FileBrowse
+ICombo = InCombo = InpCombo = InputCombo = DropDown = Drop = DD = MultipleChoice = MultiChoice = Combo
 InputOptionMenu = OptionMenu
 ListBox = LBox = LB = List = Listbox
-R = Rad = Radio
-CheckBox = CBox = CB = Ch = Check = Checkbox
-Sp = Spin
+R = Rad = Choice = Radio
+CheckBox = CheckMark = CBox = CB = Check = Tick = Checkbox
+Spn = Spin
 ML = MLn = Mln = MLine = Mline = Multiline
 Txt = Text  # type: Text
 T = Text  # type: Text
+Bolo = Kaho = Text
 SBar = StatusBar
 B = Btn = b = btn = button = Button
-BMenu = ButtonMenu
-BM = ButtonMenu
-Im = Img = Image
+BMenu = BM = ButtonMenu
+Im = Img = Tswr = Taswir = Tasweer = Image
 PBar = Prog = ProgBar = Progress = ProgressBar
 G = Gr = Graph
 Fr = Frame
@@ -16301,7 +16306,7 @@ MenuBar = Menu
 SGrip = Grip = SG = Sizegrip
 Sl = Slider
 Col = Clm = Column
-MenuBar = Me = Menu
+MenuBar = MBar = Mb = Mnu = Menu
 HStretch = Stretch = HorizontalGap = HGap = Gap = HSpace = Space = HSp = HS = HPush = HP = P = Push
 VStretch = VerticalGap = VGap = VSpace = VSp = VS = VP = VPush
 C = center = Center

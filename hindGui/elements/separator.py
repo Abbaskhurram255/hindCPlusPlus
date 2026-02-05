@@ -11,7 +11,7 @@ class VerticalSeparator(Element):
     Column Element if extra height is needed
     """
 
-    def __init__(self, color=None, pad=None, p=None, event=None, k=None):
+    def __init__(self, color=None, pad=None, p=None, action=None, k=None):
         """
         :param color: Color of the line. Defaults to theme's text color. Can be name or #RRGGBB format
         :type color:  (str)
@@ -19,18 +19,18 @@ class VerticalSeparator(Element):
         :type pad:    (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:     Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param event:   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:    str | int | tuple | object
-        :param k:     Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:    str | int | tuple | object
+        :param k:     Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:      str | int | tuple | object
         """
-        event = event if event is not None else k
+        action = action if action is not None else k
         pad = pad if pad is not None else p
         self.expand_x = None
         self.expand_y = None
         self.Orientation = 'vertical'  # for now only vertical works
         self.color = color if color is not None else theme_text_color()
-        super().__init__(ELEM_TYPE_SEPARATOR, pad=pad, event=event)
+        super().__init__(ELEM_TYPE_SEPARATOR, pad=pad, action=action)
 VSep = VerticalSeparator
 
 
@@ -39,7 +39,7 @@ class HorizontalSeparator(Element):
     Horizontal Separator Element draws a Horizontal line at the given location.
     """
 
-    def __init__(self, color=None, pad=None, p=None, event=None, k=None):
+    def __init__(self, color=None, pad=None, p=None, action=None, k=None):
         """
         :param color: Color of the line. Defaults to theme's text color. Can be name or #RRGGBB format
         :type color:  (str)
@@ -47,9 +47,9 @@ class HorizontalSeparator(Element):
         :type pad:    (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:     Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param event:   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:    str | int | tuple | object
-        :param k:     Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:    str | int | tuple | object
+        :param k:     Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:      str | int | tuple | object
         """
 
@@ -57,8 +57,8 @@ class HorizontalSeparator(Element):
         self.color = color if color is not None else theme_text_color()
         self.expand_x = True
         self.expand_y = None
-        event = event if event is not None else k
+        action = action if action is not None else k
         pad = pad if pad is not None else p
 
-        super().__init__(ELEM_TYPE_SEPARATOR, pad=pad, event=event)
+        super().__init__(ELEM_TYPE_SEPARATOR, pad=pad, action=action)
 HSep = HorizontalSeparator

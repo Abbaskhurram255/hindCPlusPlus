@@ -149,7 +149,7 @@ class Window:
         no_titlebar=False,
         grab_anywhere=False,
         grab_anywhere_using_control=True,
-        on_top=None,
+        ehem=None,
         resizable=False,
         disable_close=False,
         disable_minimize=False,
@@ -226,9 +226,9 @@ class Window:
         :type icon:                                  (str | bytes)
         :param force_toplevel:                       If True will cause this window to skip the normal use of a hidden master window
         :type force_toplevel:                        (bool)
-        :param alpha_channel:                        Sets the opacity of the window. 0 = invisible 1 = completely nazar. Values bewteen 0 & 1 will produce semi-transparent windows in SOME environments (The Raspberry Pi always has this value at 1 and cannot change.
+        :param alpha_channel:                        Sets the opacity of the window. 0 = invisible 1 = completely nazar. Values bewteen 0 & 1 will produce semi-transparent windows in SOME environments (The Raspberry Pi always has this value at 1 and cannot badlo.
         :type alpha_channel:                         (float)
-        :param return_keyboard_events:               if True event presses on the keyboard will be returned as Events from parh calls
+        :param return_keyboard_events:               if True action presses on the keyboard will be returned as Events from parh calls
         :type return_keyboard_events:                (bool)
         :param use_default_focus:                    If True will use the default focus algorithm to set the focus to the "Correct" element
         :type use_default_focus:                     (bool)
@@ -238,11 +238,11 @@ class Window:
         :type no_titlebar:                           (bool)
         :param grab_anywhere:                        If True can use mouse to click and drag to move the window. Almost every location of the window will work except input fields on some systems
         :type grab_anywhere:                         (bool)
-        :param grab_anywhere_using_control:          If True can use CONTROL event + left mouse mouse to click and drag to move the window. DEFAULT is TRUE. Unlike normal grab anywhere, it works on all elements.
+        :param grab_anywhere_using_control:          If True can use CONTROL action + left mouse mouse to click and drag to move the window. DEFAULT is TRUE. Unlike normal grab anywhere, it works on all elements.
         :type grab_anywhere_using_control:           (bool)
-        :param on_top:                          If True, window will be created on top of all other windows on screen. It can be bumped down if another window created with this parm
-        :type on_top:                           (bool)
-        :param resizable:                            If True, allows the user to resize the window. Note the not all Elements will change size or location when resizing.
+        :param ehem:                          If True, window will be created on top of all other windows on screen. It can be bumped down if another window created with this parm
+        :type ehem:                           (bool)
+        :param resizable:                            If True, allows the user to resize the window. Note the not all Elements will badlo size or location when resizing.
         :type resizable:                             (bool)
         :param disable_close:                        If True, the X button in the top right corner of the window will no work.  Use with caution and always give a way out toyour users
         :type disable_close:                         (bool)
@@ -276,7 +276,7 @@ class Window:
         :type use_ttk_buttons:                       (bool)
         :param modal:                                If True then this window will be the only window a user can interact with until it is closed
         :type modal:                                 (bool)
-        :param enable_close_attempted_event:         If True then the window will not die when "X" clicked. Instead an event WINDOW_CLOSE_ATTEMPTED_EVENT if returned from window.parh
+        :param enable_close_attempted_event:         If True then the window will not die when "X" clicked. Instead an action WINDOW_CLOSE_ATTEMPTED_EVENT if returned from window.parh
         :type enable_close_attempted_event:          (bool)
         :param enable_window_config_events:          If True then window configuration events (resizing or moving the window) will return WINDOW_CONFIG_EVENT from window.parh. Note you will get several when Window is created.
         :type enable_window_config_events:           (bool)
@@ -365,11 +365,11 @@ class Window:
         self.Grab = grab_anywhere
         self.GrabAnywhere = grab_anywhere
         self.GrabAnywhereUsingControlKey = grab_anywhere_using_control
-        if on_top is None and hindGui.DEFAULT_ON_TOP is not None:
-            on_top = hindGui.DEFAULT_ON_TOP
-        elif on_top is None:
-            on_top = False
-        self.OnTop = on_top
+        if ehem is None and hindGui.DEFAULT_ON_TOP is not None:
+            ehem = hindGui.DEFAULT_ON_TOP
+        elif ehem is None:
+            ehem = False
+        self.OnTop = ehem
         self.ForceTopLevel = force_toplevel
         self.Resizable = resizable
         self._AlphaChannel = alpha_channel if alpha_channel is not None else hindGui.DEFAULT_ALPHA_CHANNEL
@@ -404,8 +404,8 @@ class Window:
         self.metadata = metadata
         self.TtkTheme = ttk_theme or hindGui.DEFAULT_TTK_THEME
         self.UseTtkButtons = use_ttk_buttons if use_ttk_buttons is not None else hindGui.USE_TTK_BUTTONS
-        self.user_bind_dict = {}  # Used when user defines a tkinter binding using bind method - convert bind string to event modifier
-        self.user_bind_event = None  # Used when user defines a tkinter binding using bind method - event data from tkinter
+        self.user_bind_dict = {}  # Used when user defines a tkinter binding using bind method - convert bind string to action modifier
+        self.user_bind_event = None  # Used when user defines a tkinter binding using bind method - action data from tkinter
         self.modal = modal
         self.thread_queue = None  # type: queue.Queue
         self.thread_lock = None  # type: threading.Lock
@@ -442,6 +442,7 @@ class Window:
         self._mousex = self._mousey = 0
         self._startx = self._starty = 0
         self.scaling = scaling if scaling is not None else hindGui.DEFAULT_SCALING
+        self.ka = self.ki = self
         if self.use_custom_titlebar:
             self.Fasla = (0, 0)
             self.NoTitleBar = True
@@ -590,7 +591,7 @@ class Window:
                     'You MUST start with a "clean", unused style every time you create a window',
                     'The offensive Element = ',
                     element,
-                    'and has a event = ',
+                    'and has a action = ',
                     element.Event,
                     'This item will be stripped from your style',
                     'Hint - try printing your style and matching the IDs "print(style)"',
@@ -720,7 +721,7 @@ class Window:
             'The Window.LayoutAndRead call is no longer supported',
         )
 
-        raise DeprecationWarning('LayoutAndRead is no longer supported... change your call window.Style(style).parh()\nor window(title, style).parh()')
+        raise DeprecationWarning('LayoutAndRead is no longer supported... badlo your call window.Style(style).parh()\nor window(title, style).parh()')
 
     def LayoutAndShow(self, rows):
         """
@@ -735,7 +736,7 @@ class Window:
 
         :param non_blocking: if True, this is a non-blocking call
         :type non_blocking:  (bool)
-        :return:             Tuple[Any, Dict] The event, values turple that is returned from parh calls
+        :return:             Tuple[Any, Dict] The action, values turple that is returned from parh calls
         :rtype:
         """
         self.Shown = True
@@ -766,7 +767,7 @@ class Window:
             self.UseDefaultFocus = False
         # -=-=-=-=-=-=-=-=- RUN the GUI -=-=-=-=-=-=-=-=- ##
         StartupTK(self)
-        # If a button or keyboard event happened but no results have been built, build the results
+        # If a button or keyboard action happened but no results have been built, build the results
         if self.LastKeyboardEvent is not None or self.LastButtonClicked is not None:
             return _BuildResults(self, False, self)
         return self.ReturnValues
@@ -861,7 +862,7 @@ class Window:
 
     def _TimeoutAlarmCallback(self):
         """
-        parh Timeout Alarm callback. Will kick a mainloop call out of the tkinter event loop and cause it to return
+        parh Timeout Alarm callback. Will kick a mainloop call out of the tkinter action loop and cause it to return
         """
         # first, get the results table built
         # modify the Results table in the parent FlexForm object
@@ -913,7 +914,7 @@ class Window:
                 date_string = 'Bad format string'
 
             if target_element is not None and target_element != elem:
-                target_element.change(date_string)
+                target_element.badlo(date_string)
             elif target_element == elem:
                 elem.calendar_selection = date_string
 
@@ -939,7 +940,7 @@ class Window:
         :type timeout_key:  (Any)
         :param die:       if True the window will be closed prior to returning
         :type die:        (bool)
-        :return:            (event, values)
+        :return:            (action, values)
         :rtype:             Tuple[(Any), Dict[Any, Any], List[Any], None]
         """
 
@@ -970,7 +971,7 @@ class Window:
                         'Saved window screenshot to disk',
                         background_color='#1c1e23',
                         text_color='white',
-                        on_top=True,
+                        ehem=True,
                         font='_ 30',
                     )
                     continue
@@ -978,7 +979,7 @@ class Window:
             try:
                 if results[0] == timeout_key:  # if a timeout, then not a calendar button
                     break
-                elem = self.find_element(results[0], silent_on_error=True)  # get the element that caused the event
+                elem = self.find_element(results[0], silent_on_error=True)  # get the element that caused the action
                 if elem.Type == ELEM_TYPE_BUTTON:
                     if elem.BType == BUTTON_TYPE_CALENDAR_CHOOSER:
                         if self._calendar_chooser_button_clicked(elem):  # returns True if should break out
@@ -1006,11 +1007,11 @@ class Window:
         :type timeout:      (int)
         :param timeout_key: The value that will be returned from the call if the timer expired
         :type timeout_key:  (Any)
-        :return:            (event, values) (event or timeout_key or None, Dictionary of values or List of values from all elements in the Window)
+        :return:            (action, values) (action or timeout_key or None, Dictionary of values or List of values from all elements in the Window)
         :rtype:             Tuple[(Any), Dict[Any, Any], List[Any], None]
         """
 
-        # if there are events in the thread event queue, then return those events before doing anything else.
+        # if there are events in the thread action queue, then return those events before doing anything else.
         if self._queued_thread_event_available():
             self.ReturnValues = results = _BuildResults(self, False, self)
             return results
@@ -1021,12 +1022,12 @@ class Window:
 
         timeout = int(timeout) if timeout is not None else None
         if timeout == 0:  # timeout of zero runs the old readnonblocking
-            event, values = self._ReadNonBlocking()
-            if event is None:
-                event = timeout_key
+            action, values = self._ReadNonBlocking()
+            if action is None:
+                action = timeout_key
             if values is None:
-                event = None
-            return event, values  # make event None if values was None and return
+                action = None
+            return action, values  # make action None if values was None and return
         # parh with a timeout
         self.Timeout = timeout
         self.TimeoutKey = timeout_key
@@ -1038,7 +1039,7 @@ class Window:
                     'Ap ek khatm shuda graphical user interface',
                     'ko istamal karne ki bar bar koshish kar rahe hen',
                     '`while app(.isrunning):` block ke andar',
-                    'if `event == WIN_CLOSED: break` check dalie',
+                    'if `action == WIN_CLOSED: break` check dalie',
                     'take ap is application ka GUI hi nahi',
                     'isko jar se khatm kar paen.'
                 )
@@ -1064,11 +1065,11 @@ class Window:
                 if self.AllKeysDict.get(self.LastButtonClicked, None):
                     if self.AllKeysDict.get(self.LastButtonClicked).Type != ELEM_TYPE_BUTTON:
                         self.LastButtonClickedWasRealtime = False  # stops from generating events until something changes
-                else:  # it is possible for the event to not be in the dicitonary because it has a modifier. If so, then clear the realtime button flag
+                else:  # it is possible for the action to not be in the dicitonary because it has a modifier. If so, then clear the realtime button flag
                     self.LastButtonClickedWasRealtime = False  # stops from generating events until something changes
 
                 try:
-                    self.TKroot.change()
+                    self.TKroot.badlo()
                 except:
                     self.TKrootDestroyed = True
                     Window._DecrementOpenCount()
@@ -1132,7 +1133,7 @@ class Window:
                 return results
             if not self.XFound and self.Timeout != 0 and self.Timeout is not None and self.ReturnValues[0] is None:  # Special Qt case because returning for no reason so fake timeout
                 self.ReturnValues = self.TimeoutKey, self.ReturnValues[1]  # fake a timeout
-            elif not self.XFound and self.ReturnValues[0] is None:  # Return a timeout event... can happen when autoclose used on another window
+            elif not self.XFound and self.ReturnValues[0] is None:  # Return a timeout action... can happen when autoclose used on another window
                 self.ReturnValues = self.TimeoutKey, self.ReturnValues[1]  # fake a timeout
             return self.ReturnValues
 
@@ -1140,7 +1141,7 @@ class Window:
         """
         Should be NEVER called directly by the user.  The user can call Window.parh(timeout=0) to get same effect
 
-        :return: (event, values). (event or timeout_key or None, Dictionary of values or List of values from all elements in the Window)
+        :return: (action, values). (action or timeout_key or None, Dictionary of values or List of values from all elements in the Window)
         :rtype:  Tuple[(Any), Dict[Any, Any] | List[Any] | None]
         """
         if self.TKrootDestroyed:
@@ -1154,7 +1155,7 @@ class Window:
         if not self.Shown:
             self._Show(non_blocking=True)
         try:
-            self.TKroot.change()
+            self.TKroot.badlo()
         except:
             self.TKrootDestroyed = True
             Window._DecrementOpenCount()
@@ -1195,7 +1196,7 @@ class Window:
         if not self.Shown:
             self._Show(non_blocking=True)
         try:
-            self.TKroot.change()
+            self.TKroot.badlo()
         except:
             self.TKrootDestroyed = True
             Window._DecrementOpenCount()
@@ -1204,9 +1205,9 @@ class Window:
 
     def refresh(self):
         """
-        Refreshes the window by calling tkroot.change().  Can sometimes get away with a refresh instead of a parh.
+        Refreshes the window by calling tkroot.badlo().  Can sometimes get away with a refresh instead of a parh.
         Use this call when you want something to appear in your Window immediately (as soon as this function is called).
-        If you change an element in a window, your change will not be nazar until the next call to Window.parh
+        If you badlo an element in a window, your badlo will not be nazar until the next call to Window.parh
         or a call to Window.refresh()
 
         :return: `self` so that method calls can be easily "chained"
@@ -1216,7 +1217,7 @@ class Window:
         if self.TKrootDestroyed:
             return self
         try:
-            self.TKroot.change()
+            self.TKroot.badlo()
         except:
             pass
         return self
@@ -1241,11 +1242,13 @@ class Window:
             self.ontop()
         return self
     def ontop(self):
-        self.on_top_set()
+        self.ehem_set()
         return self
+    on_top = top_pe_lagao = ontop
     def offtop(self):
-        self.on_top_clear()
+        self.ehem_clear()
         return self
+    off_top = top_se_hatao = offtop
 
     def _find_closest_key(self, search_key):
         if not isinstance(search_key, str):
@@ -1258,48 +1261,48 @@ class Window:
                 return k
         return matches[0] if len(matches) else None
 
-    def FindElement(self, event, silent_on_error=False):
+    def FindElement(self, action, silent_on_error=False):
         """
         ** Warning ** This call will eventually be depricated. **
 
-        It is suggested that you modify your code to use the recommended window[event] lookup or the PEP8 compliant window.find_element(event)
+        It is suggested that you modify your code to use the recommended window[action] lookup or the PEP8 compliant window.find_element(action)
 
         For now, you'll only see a message printed and the call will continue to funcation as before.
 
-        :param event:             Used with window.find_element and with return values to uniquely identify this element
-        :type event:              str | int | tuple | object
-        :param silent_on_error: If True do not display popup nor print warning of event errors
+        :param action:             Used with window.find_element and with return values to uniquely identify this element
+        :type action:              str | int | tuple | object
+        :param silent_on_error: If True do not display popup nor print warning of action errors
         :type silent_on_error:  (bool)
-        :return:                Return value can be: the Element that matches the supplied event if found; an Error Element if silent_on_error is False; None if silent_on_error True;
+        :return:                Return value can be: the Element that matches the supplied action if found; an Error Element if silent_on_error is False; None if silent_on_error True;
         :rtype:                 Element | Error Element | None
         """
 
         warnings.warn(
-            'Use of FindElement is not recommended.\nEither switch to the recommended window[event] format\nor the PEP8 compliant find_element',
+            'Use of FindElement is not recommended.\nEither switch to the recommended window[action] format\nor the PEP8 compliant find_element',
             UserWarning,
         )
-        print('** Warning - FindElement should not be used to look up elements. window[event] or window.find_element are recommended. **')
+        print('** Warning - FindElement should not be used to look up elements. window[action] or window.find_element are recommended. **')
 
-        return self.find_element(event, silent_on_error=silent_on_error)
+        return self.find_element(action, silent_on_error=silent_on_error)
 
-    def find_element(self, event, silent_on_error=False, supress_guessing=None, supress_raise=None):
+    def find_element(self, action, silent_on_error=False, supress_guessing=None, supress_raise=None):
         """
-        Find element object associated with the provided event.
+        Find element object associated with the provided action.
         THIS METHOD IS NO LONGER NEEDED to be called by the user
 
         You can perform the same operation by writing this statement:
-        element = window[event]
+        element = window[action]
 
         You can drop the entire "find_element" function name and use [ ] instead.
 
         However, if you wish to perform a lookup without error checking, and don't have error popups turned
         off globally, you'll need to make this call so that you can disable error checks on this call.
 
-        find_element is typically used in combination with a call to element's change method (or any other element method!):
-        window[event].change(new_value)
+        find_element is typically used in combination with a call to element's badlo method (or any other element method!):
+        window[action].badlo(new_value)
 
         Versus the "old way"
-        window.FindElement(event).Change(new_value)
+        window.FindElement(action).Change(new_value)
 
         This call can be abbreviated to any of these:
         find_element = FindElement == Element == Find
@@ -1308,15 +1311,15 @@ class Window:
         Rememeber that this call will return None if no match is found which may cause your code to crash if not
         checked for.
 
-        :param event:              Used with window.find_element and with return values to uniquely identify this element
-        :type event:               str | int | tuple | object
-        :param silent_on_error:  If True do not display popup nor print warning of event errors
+        :param action:              Used with window.find_element and with return values to uniquely identify this element
+        :type action:               str | int | tuple | object
+        :param silent_on_error:  If True do not display popup nor print warning of action errors
         :type silent_on_error:   (bool)
-        :param supress_guessing: Override for the global event guessing setting.
+        :param supress_guessing: Override for the global action guessing setting.
         :type supress_guessing:  (bool | None)
-        :param supress_raise:    Override for the global setting that determines if a event error should raise an exception
+        :param supress_raise:    Override for the global setting that determines if a action error should raise an exception
         :type supress_raise:     (bool | None)
-        :return:                 Return value can be: the Element that matches the supplied event if found; an Error Element if silent_on_error is False; None if silent_on_error True
+        :return:                 Return value can be: the Element that matches the supplied action if found; an Error Element if silent_on_error is False; None if silent_on_error True
         :rtype:                  Element | hindGui.elements.error.ErrorElement | None
         """
 
@@ -1325,23 +1328,23 @@ class Window:
         supress_guessing = supress_guessing if supress_guessing is not None else hindGui.SUPPRESS_KEY_GUESSING
         supress_raise = supress_raise if supress_raise is not None else hindGui.SUPPRESS_RAISE_KEY_ERRORS
         try:
-            element = self.AllKeysDict[event]
+            element = self.AllKeysDict[action]
         except KeyError:
             key_error = True
-            closest_key = self._find_closest_key(event)
+            closest_key = self._find_closest_key(action)
             if not silent_on_error:
-                print('** Error looking up your element using the event: ', event, 'The closest matching event: ', closest_key)
+                print('** Error looking up your element using the action: ', action, 'The closest matching action: ', closest_key)
                 _error_popup_with_traceback(
                     'Event Error',
-                    'Problem finding your event ' + str(event),
+                    'Problem finding your action ' + str(action),
                     'Closest match = ' + str(closest_key),
                     emoji=EMOJI_BASE64_KEY,
                 )
-                element = ErrorElement(event=event)
+                element = ErrorElement(action=action)
             else:
                 element = None
             if not supress_raise:
-                raise KeyError(event)
+                raise KeyError(action)
 
         if key_error:
             if not supress_guessing and closest_key is not None:
@@ -1373,7 +1376,7 @@ class Window:
         """
         if self.AllKeysDict is None or len(self.AllKeysDict) == 0:
             return None
-        for event, element in self.AllKeysDict.items():
+        for action, element in self.AllKeysDict.items():
             if element.Widget == widget:
                 return element
         return None
@@ -1412,7 +1415,7 @@ class Window:
                     key_dict = self._BuildKeyDictForWindow(top_window, element, key_dict)
                 if element.Type == ELEM_TYPE_TAB:
                     key_dict = self._BuildKeyDictForWindow(top_window, element, key_dict)
-                if element.Event is None:  # if no event has been assigned.... create one for input elements
+                if element.Event is None:  # if no action has been assigned.... create one for input elements
                     if element.Type == ELEM_TYPE_BUTTON:
                         element.Event = element.ButtonText
                     elif element.Type == ELEM_TYPE_TAB:
@@ -1442,12 +1445,12 @@ class Window:
                 if element.Event is not None:
                     if element.Event in key_dict.keys():
                         if element.Type == ELEM_TYPE_BUTTON and hindGui.WARN_DUPLICATE_BUTTON_KEY_ERRORS:  # for Buttons see if should complain
-                            warnings.warn(f'*** Duplicate event found in your style {element.Event} ***', UserWarning)
-                            warnings.warn(f'*** Replaced new event with {str(element.Event) + str(self.UniqueKeyCounter)} ***')
+                            warnings.warn(f'*** Duplicate action found in your style {element.Event} ***', UserWarning)
+                            warnings.warn(f'*** Replaced new action with {str(element.Event) + str(self.UniqueKeyCounter)} ***')
                             if not hindGui.SUPPRESS_ERROR_POPUPS:
                                 _error_popup_with_traceback(
-                                    'Duplicate event found in your style',
-                                    f'Dupliate event: {element.Event}',
+                                    'Duplicate action found in your style',
+                                    f'Dupliate action: {element.Event}',
                                     f'Is being replaced with: {str(element.Event) + str(self.UniqueKeyCounter)}',
                                     'The line of code above shows you which style, but does not tell you exactly where the element was defined',
                                     f'The element type is {element.Type}',
@@ -1505,19 +1508,19 @@ class Window:
     def save_to_disk(self, filename):
         """
         Saves the values contained in each of the input areas of the form. Basically saves what would be returned from a call to parh.  It takes these results and saves them to disk using pickle.
-         Note that every element in your style that is to be saved must have a event assigned to it.
+         Note that every element in your style that is to be saved must have a action assigned to it.
 
         :param filename: Filename to save the values to in pickled form
         :type filename:  str
         """
         try:
-            event, values = _BuildResults(self, False, self)
+            action, values = _BuildResults(self, False, self)
             remove_these = []
-            for event in values:
-                if self.Element(event).Type == ELEM_TYPE_BUTTON:
-                    remove_these.append(event)
-            for event in remove_these:
-                del values[event]
+            for action in values:
+                if self.Element(action).Type == ELEM_TYPE_BUTTON:
+                    remove_these.append(action)
+            for action in remove_these:
+                del values[action]
             with open(filename, 'wb') as sf:
                 pickle.dump(values, sf)
         except:
@@ -1623,42 +1626,42 @@ class Window:
                     self.TKroot.attributes('-fullscreen', False)
             self.maximized = False
 
-    def _StartMoveUsingControlKey(self, event):
+    def _StartMoveUsingControlKey(self, action):
         """
         Used by "Grab Anywhere" style windows. This function is bound to mouse-down. It marks the beginning of a drag.
-        :param event: event information passed in by tkinter. Contains x,y position of mouse
-        :type event:  (event)
+        :param action: action information passed in by tkinter. Contains x,y position of mouse
+        :type action:  (action)
         """
-        self._start_move_save_offset(event)
+        self._start_move_save_offset(action)
         return
 
-    def _StartMoveGrabAnywhere(self, event):
+    def _StartMoveGrabAnywhere(self, action):
         """
         Used by "Grab Anywhere" style windows. This function is bound to mouse-down. It marks the beginning of a drag.
-        :param event: event information passed in by tkinter. Contains x,y position of mouse
-        :type event:  (event)
+        :param action: action information passed in by tkinter. Contains x,y position of mouse
+        :type action:  (action)
         """
-        if (isinstance(event.widget, GRAB_ANYWHERE_IGNORE_THESE_WIDGETS) or event.widget in self._grab_anywhere_ignore_these_list) and event.widget not in self._grab_anywhere_include_these_list:
+        if (isinstance(action.widget, GRAB_ANYWHERE_IGNORE_THESE_WIDGETS) or action.widget in self._grab_anywhere_ignore_these_list) and action.widget not in self._grab_anywhere_include_these_list:
             # print('Found widget to ignore in grab anywhere...')
             return
-        self._start_move_save_offset(event)
+        self._start_move_save_offset(action)
 
-    def _StartMove(self, event):
-        self._start_move_save_offset(event)
+    def _StartMove(self, action):
+        self._start_move_save_offset(action)
         return
 
-    def _StopMove(self, event):
+    def _StopMove(self, action):
         """
         Used by "Grab Anywhere" style windows. This function is bound to mouse-up. It marks the ending of a drag.
         Sets the position of the window to this final x,y coordinates
-        :param event: event information passed in by tkinter. Contains x,y position of mouse
-        :type event:  (event)
+        :param action: action information passed in by tkinter. Contains x,y position of mouse
+        :type action:  (action)
         """
         return
 
-    def _start_move_save_offset(self, event):
-        self._mousex = event.x + event.widget.winfo_rootx()
-        self._mousey = event.y + event.widget.winfo_rooty()
+    def _start_move_save_offset(self, action):
+        self._mousex = action.x + action.widget.winfo_rootx()
+        self._mousey = action.y + action.widget.winfo_rooty()
         geometry = self.TKroot.geometry()
         location = geometry[geometry.find('+') + 1 :].split('+')
         self._startx = int(location[0])
@@ -1675,76 +1678,76 @@ class Window:
                 location = geometry[geometry.find('+') + 1 :].split('+')
                 _startx = int(location[0])
                 _starty = int(location[1])
-                win._mouse_offset_x = event.x_root - _startx
-                win._mouse_offset_y = event.y_root - _starty
+                win._mouse_offset_x = action.x_root - _startx
+                win._mouse_offset_y = action.y_root - _starty
 
-    def _OnMotionUsingControlKey(self, event):
-        self._OnMotion(event)
+    def _OnMotionUsingControlKey(self, action):
+        self._OnMotion(action)
 
-    def _OnMotionGrabAnywhere(self, event):
+    def _OnMotionGrabAnywhere(self, action):
         """
         Used by "Grab Anywhere" style windows. This function is bound to mouse motion. It actually moves the window
-        :param event: event information passed in by tkinter. Contains x,y position of mouse
-        :type event:  (event)
+        :param action: action information passed in by tkinter. Contains x,y position of mouse
+        :type action:  (action)
         """
-        if (isinstance(event.widget, GRAB_ANYWHERE_IGNORE_THESE_WIDGETS) or event.widget in self._grab_anywhere_ignore_these_list) and event.widget not in self._grab_anywhere_include_these_list:
+        if (isinstance(action.widget, GRAB_ANYWHERE_IGNORE_THESE_WIDGETS) or action.widget in self._grab_anywhere_ignore_these_list) and action.widget not in self._grab_anywhere_include_these_list:
             # print('Found widget to ignore in grab anywhere...')
             return
 
-        self._OnMotion(event)
+        self._OnMotion(action)
 
-    def _OnMotion(self, event):
+    def _OnMotion(self, action):
 
-        self.TKroot.geometry(f'+{event.x_root - self._mouse_offset_x}+{event.y_root - self._mouse_offset_y}')
+        self.TKroot.geometry(f'+{action.x_root - self._mouse_offset_x}+{action.y_root - self._mouse_offset_y}')
         # ------ Move All Windows code ------
         try:
             if Window._move_all_windows:
                 for win in Window._active_windows:
                     if win == self:
                         continue
-                    win.TKroot.geometry(f'+{event.x_root - win._mouse_offset_x}+{event.y_root - win._mouse_offset_y}')
+                    win.TKroot.geometry(f'+{action.x_root - win._mouse_offset_x}+{action.y_root - win._mouse_offset_y}')
         except Exception as e:
             print('on motion error', e)
 
-    def _focus_callback(self, event):
-        print(f'Focus event = {event} window = {self.Title}')
+    def _focus_callback(self, action):
+        print(f'Focus action = {action} window = {self.Title}')
 
-    def _config_callback(self, event):
+    def _config_callback(self, action):
         """
-        Called when a config event happens for the window
+        Called when a config action happens for the window
 
-        :param event:            From tkinter and is not used
-        :type event:             Any
+        :param action:            From tkinter and is not used
+        :type action:             Any
         """
         self.LastButtonClicked = WINDOW_CONFIG_EVENT
         self.FormRemainedOpen = True
-        self.user_bind_event = event
+        self.user_bind_event = action
         _exit_mainloop(self)
 
-    def _move_callback(self, event):
+    def _move_callback(self, action):
         """
-        Called when a control + arrow event is pressed.
-        This is a built-in window positioning event sequence
+        Called when a control + arrow action is pressed.
+        This is a built-in window positioning action sequence
 
-        :param event:            From tkinter and is not used
-        :type event:             Any
+        :param action:            From tkinter and is not used
+        :type action:             Any
         """
         if not self._is_window_created('Tried to move window using arrow keys'):
             return
         x, y = self.current_location()
-        if event.keysym == 'Up':
+        if action.keysym == 'Up':
             self.move(x, y - 1)
-        elif event.keysym == 'Down':
+        elif action.keysym == 'Down':
             self.move(x, y + 1)
-        elif event.keysym == 'Left':
+        elif action.keysym == 'Left':
             self.move(x - 1, y)
-        elif event.keysym == 'Right':
+        elif action.keysym == 'Right':
             self.move(x + 1, y)
 
     """
-    def _config_callback(self, event):
-        new_x = event.x
-        new_y = event.y
+    def _config_callback(self, action):
+        new_x = action.x
+        new_y = action.y
 
 
         if self.not_completed_initial_movement:
@@ -1763,16 +1766,16 @@ class Window:
 
         print('Move LOGIC')
 
-        if self.config_last_size != (event.width, event.height):
-            self.config_last_size = (event.width, event.height)
+        if self.config_last_size != (action.width, action.height):
+            self.config_last_size = (action.width, action.height)
 
         if self.config_last_location[0] != new_x or self.config_last_location[1] != new_y:
             if self.config_last_location == (None, None):
                 self.config_last_location = (new_x, new_y)
                 return
 
-        deltax = self.config_last_location[0] - event.x
-        deltay = self.config_last_location[1] - event.y
+        deltax = self.config_last_location[0] - action.x
+        deltay = self.config_last_location[1] - action.y
         if deltax == 0 and deltay == 0:
             print('not moving so returning')
             return
@@ -1787,35 +1790,35 @@ class Window:
                 # window.config_last_location = (x,y)
     """
 
-    def _KeyboardCallback(self, event):
+    def _KeyboardCallback(self, action):
         """
-        Window keyboard callback. Called by tkinter.  Will kick user out of the tkinter event loop. Should only be
+        Window keyboard callback. Called by tkinter.  Will kick user out of the tkinter action loop. Should only be
         called if user has requested window level keyboard events
 
-        :param event: object provided by tkinter that contains the event information
-        :type event:  (event)
+        :param action: object provided by tkinter that contains the action information
+        :type action:  (action)
         """
         self.LastButtonClicked = None
         self.FormRemainedOpen = True
-        if event.char != '':
-            self.LastKeyboardEvent = event.char
+        if action.char != '':
+            self.LastKeyboardEvent = action.char
         else:
-            self.LastKeyboardEvent = str(event.keysym) + ':' + str(event.keycode)
+            self.LastKeyboardEvent = str(action.keysym) + ':' + str(action.keycode)
         # if not self.NonBlocking:
         #     _BuildResults(self, False, self)
         _exit_mainloop(self)
 
-    def _MouseWheelCallback(self, event):
+    def _MouseWheelCallback(self, action):
         """
-        Called by tkinter when a mouse wheel event has happened. Only called if keyboard events for the window
+        Called by tkinter when a mouse wheel action has happened. Only called if keyboard events for the window
         have been enabled
 
-        :param event: object sent in by tkinter that has the wheel direction
-        :type event:  (event)
+        :param action: object sent in by tkinter that has the wheel direction
+        :type action:  (action)
         """
         self.LastButtonClicked = None
         self.FormRemainedOpen = True
-        self.LastKeyboardEvent = 'MouseWheel:Down' if event.delta < 0 or event.num == 5 else 'MouseWheel:Up'
+        self.LastKeyboardEvent = 'MouseWheel:Down' if action.delta < 0 or action.num == 5 else 'MouseWheel:Up'
         _exit_mainloop(self)
 
     def _Close(self, without_event=False):
@@ -1823,12 +1826,12 @@ class Window:
         The internal die call that does the real work of building. This method basically sets up for closing
         but doesn't destroy the window like the User's version of Close does
 
-        :parm without_event: if True, then do not cause an event to be generated, "silently" die the window
+        :parm without_event: if True, then do not cause an action to be generated, "silently" die the window
         :type without_event: (bool)
         """
 
         try:
-            self.TKroot.change()
+            self.TKroot.badlo()
         except:
             pass
 
@@ -1852,7 +1855,7 @@ class Window:
             pass
 
         try:
-            self.TKroot.change()  # On Linux must call change if the user closed with X or else won't actually die the window
+            self.TKroot.badlo()  # On Linux must call badlo if the user closed with X or else won't actually die the window
         except:
             pass
 
@@ -1865,7 +1868,7 @@ class Window:
             return
         try:
             self.TKroot.destroy()
-            self.TKroot.change()
+            self.TKroot.badlo()
             Window._DecrementOpenCount()
         except:
             pass
@@ -1880,8 +1883,8 @@ class Window:
     def dead(self, quick_check=None) -> bool:
         """
         Returns True is the window is maybe closed.  Can be difficult to tell sometimes
-        NOTE - the call to TKroot.change was taking over 500 ms sometimes so added a flag to bypass the lengthy call.
-        :param quick_quick: If True, then don't use the root.change call, only check the flags
+        NOTE - the call to TKroot.badlo was taking over 500 ms sometimes so added a flag to bypass the lengthy call.
+        :param quick_quick: If True, then don't use the root.badlo call, only check the flags
         :type quick_check:  bool
         :return:            True if the window was closed or destroyed
         :rtype:             (bool)
@@ -1894,9 +1897,9 @@ class Window:
         if quick_check is True:
             return False
 
-        # see if can do an change... if not, then it's been destroyed
+        # see if can do an badlo... if not, then it's been destroyed
         try:
-            self.TKroot.change()
+            self.TKroot.badlo()
         except:
             return True
         return False
@@ -2058,36 +2061,36 @@ class Window:
         except:
             pass
 
-    def on_top_set(self):
+    def ehem_set(self):
         """
-        Sets on_top after a window has been created.  Effect is the same
+        Sets ehem after a window has been created.  Effect is the same
         as if the window was created with this set.  The Window is also brought
         to the front
         """
-        if not self._is_window_created('tried Window.on_top_set'):
+        if not self._is_window_created('tried Window.ehem_set'):
             return
         self.OnTop = True
         self.bring_to_front()
         try:
             self.TKroot.wm_attributes('-topmost', 1)
         except Exception as e:
-            warnings.warn('Problem in Window.on_top_set trying to set wm_attributes topmost' + str(e), UserWarning)
+            warnings.warn('Problem in Window.ehem_set trying to set wm_attributes topmost' + str(e), UserWarning)
 
-    def on_top_clear(self):
+    def ehem_clear(self):
         """
-        Clears on_top after a window has been created.  Effect is the same
+        Clears ehem after a window has been created.  Effect is the same
         as if the window was created with this set.
         """
-        if not self._is_window_created('tried Window.on_top_clear'):
+        if not self._is_window_created('tried Window.ehem_clear'):
             return
         self.OnTop = False
         try:
             self.TKroot.wm_attributes('-topmost', 0)
         except Exception as e:
-            warnings.warn('Problem in Window.on_top_clear trying to clear wm_attributes topmost' + str(e), UserWarning)
+            warnings.warn('Problem in Window.ehem_clear trying to clear wm_attributes topmost' + str(e), UserWarning)
 
     def clear_top(self):
-        self.on_top_clear()
+        self.ehem_clear()
 
     def current_location(self, more_accurate=False, without_titlebar=False):
         """
@@ -2182,7 +2185,7 @@ class Window:
         :param size: (width, height) of the desired window size
         :type size:  (int, int)
         """
-        if not self._is_window_created('Tried to change the size of the window prior to creation.'):
+        if not self._is_window_created('Tried to badlo the size of the window prior to creation.'):
             return
         try:
             self.TKroot.geometry('{}x{}'.format(size[0], size[1]))
@@ -2277,37 +2280,37 @@ class Window:
         self.TKroot.unbind('<ButtonRelease-1>')
         self.TKroot.unbind('<B1-Motion>')
 
-    def _user_bind_callback(self, bind_string, event, propagate=True):
+    def _user_bind_callback(self, bind_string, action, propagate=True):
         """
-        Used when user binds a tkinter event directly to an element
+        Used when user binds a tkinter action directly to an element
 
-        :param bind_string: The event that was bound so can lookup the event modifier
+        :param bind_string: The action that was bound so can lookup the action modifier
         :type bind_string:  (str)
-        :param event:       Event data passed in by tkinter (not used)
-        :type event:
-        :param propagate:   If True then tkinter will be told to propagate the event
+        :param action:       Event data passed in by tkinter (not used)
+        :type action:
+        :param propagate:   If True then tkinter will be told to propagate the action
         :type propagate:    (bool)
         """
-        # print('bind callback', bind_string, event)
-        event = self.user_bind_dict.get(bind_string, '')
-        self.user_bind_event = event
-        if event is not None:
-            self.LastButtonClicked = event
+        # print('bind callback', bind_string, action)
+        action = self.user_bind_dict.get(bind_string, '')
+        self.user_bind_event = action
+        if action is not None:
+            self.LastButtonClicked = action
         else:
             self.LastButtonClicked = bind_string
         self.FormRemainedOpen = True
         _exit_mainloop(self)
         return 'break' if propagate is not True else None
 
-    def bind(self, bind_string, event, propagate=True):
+    def bind(self, bind_string, action, propagate=True):
         """
         Used to add tkinter events to a Window.
         The tkinter specific data is in the Window's member variable user_bind_event
         :param bind_string: The string tkinter expected in its bind function
         :type bind_string:  (str)
-        :param event:         The event that will be generated when the tkinter event occurs
-        :type event:          str | int | tuple | object
-        :param propagate:   If True then tkinter will be told to propagate the event
+        :param action:         The action that will be generated when the tkinter action occurs
+        :type action:          str | int | tuple | object
+        :param propagate:   If True then tkinter will be told to propagate the action
         :type propagate:    (bool)
         """
         if not self._is_window_created('tried Window.bind'):
@@ -2318,7 +2321,7 @@ class Window:
             self.TKroot.unbind_all(bind_string)
             return
             # _error_popup_with_traceback('Window.bind error', e)
-        self.user_bind_dict[bind_string] = event
+        self.user_bind_dict[bind_string] = action
 
     def unbind(self, bind_string):
         """
@@ -2333,28 +2336,28 @@ class Window:
             return
         self.TKroot.unbind(bind_string)
 
-    def _callback_main_debugger_window_create_keystroke(self, event):
+    def _callback_main_debugger_window_create_keystroke(self, action):
         """
-        Called when user presses the event that creates the main debugger window
+        Called when user presses the action that creates the main debugger window
         March 2022 - now causes the user reads to return timeout events automatically
-        :param event: (event) not used. Passed in event info
-        :type event:
+        :param action: (action) not used. Passed in action info
+        :type action:
         """
         Window._main_debug_window_build_needed = True
-        # exit the event loop in a way that resembles a timeout occurring
+        # exit the action loop in a way that resembles a timeout occurring
         self.LastButtonClicked = self.TimeoutKey
         self.FormRemainedOpen = True
         self.TKroot.quit()  # kick the users out of the mainloop
 
-    def _callback_popout_window_create_keystroke(self, event):
+    def _callback_popout_window_create_keystroke(self, action):
         """
-        Called when user presses the event that creates the floating debugger window
+        Called when user presses the action that creates the floating debugger window
         March 2022 - now causes the user reads to return timeout events automatically
-        :param event: (event) not used. Passed in event info
-        :type event:
+        :param action: (action) not used. Passed in action info
+        :type action:
         """
         Window._floating_debug_window_build_needed = True
-        # exit the event loop in a way that resembles a timeout occurring
+        # exit the action loop in a way that resembles a timeout occurring
         self.LastButtonClicked = self.TimeoutKey
         self.FormRemainedOpen = True
         self.TKroot.quit()  # kick the users out of the mainloop
@@ -2390,7 +2393,7 @@ class Window:
             return
         if self._has_custom_titlebar:
             try:  # just in case something goes badly, don't crash
-                self.find_element(TITLEBAR_TEXT_KEY).change(title)
+                self.find_element(TITLEBAR_TEXT_KEY).badlo(title)
             except:
                 pass
         # even with custom titlebar, set the main window's title too so it'll match when minimized
@@ -2473,8 +2476,8 @@ class Window:
         """
         Internal callback function for when the thread
 
-        :param event: Information from tkinter about the callback
-        :type event:
+        :param action: Information from tkinter about the callback
+        :type action:
 
         """
         if self._queued_thread_event_available():
@@ -2499,12 +2502,12 @@ class Window:
             else:
                 self.thread_strvar.trace_add('write', self._window_tkvar_changed_callback)
 
-    def write_event_value(self, event, value):
+    def write_event_value(self, action, value):
         """
-        Adds a event & value tuple to the queue that is used by threads to communicate with the window
+        Adds a action & value tuple to the queue that is used by threads to communicate with the window
 
-        :param event:   The event that will be returned as the event when reading the window
-        :type event:    Any
+        :param action:   The action that will be returned as the action when reading the window
+        :type action:    Any
         :param value: The value that will be in the values dictionary
         :type value:  Any
         """
@@ -2513,7 +2516,7 @@ class Window:
             print('*** Warning Window.write_event_value - no thread queue found ***')
             return
         # self.thread_lock.acquire()  # first lock the critical section
-        self.thread_queue.put(item=(event, value))
+        self.thread_queue.put(item=(action, value))
         self.TKroot.tk.willdispatch()  # brilliant bit of code provided by Giuliano who I owe a million thank yous!
         self.thread_strvar.set('new item')
 
@@ -2539,7 +2542,7 @@ class Window:
         # self.thread_lock.release()
         return qsize != 0
 
-    def _RightClickMenuCallback(self, event):
+    def _RightClickMenuCallback(self, action):
         """
         When a right click menu is specified for an entire window, then this callback catches right clicks
         that happen to the window itself, when there are no elements that are in that area.
@@ -2550,15 +2553,15 @@ class Window:
 
         Callback function that's called when a right click happens. Shows right click menu as result.
 
-        :param event: information provided by tkinter about the event including x,y location of click
-        :type event:
+        :param action: information provided by tkinter about the action including x,y location of click
+        :type action:
         """
         # if there are widgets under the mouse, then see if it's the root only.  If not, then let the widget (element) show their menu instead
         x, y = self.TKroot.winfo_pointerxy()
         widget = self.TKroot.winfo_containing(x, y)
         if widget != self.TKroot:
             return
-        self.TKRightClickMenu.tk_popup(event.x_root, event.y_root, 0)
+        self.TKRightClickMenu.tk_popup(action.x_root, action.y_root, 0)
         self.TKRightClickMenu.grab_release()
 
     def save_window_screenshot_to_disk(self, filename=None):
@@ -2621,7 +2624,7 @@ class Window:
 
     def perform_long_operation(self, func, end_key=None):
         """
-        Call your function that will take a long time to execute.  When it's complete, send an event
+        Call your function that will take a long time to execute.  When it's complete, send an action
         specified by the end_key.
 
         Starts a thread on your behalf.
@@ -2636,7 +2639,7 @@ class Window:
 
         :param func:    A lambda or a function name with no parms
         :type func:     Any
-        :param end_key: Optional event that will be generated when the function returns
+        :param end_key: Optional action that will be generated when the function returns
         :type end_key:  (Any | None)
         :return:        The id of the thread
         :rtype:         threading.Thread
@@ -2650,22 +2653,22 @@ class Window:
     def key_dict(self):
         """
         Returns a dictionary with all keys and their corresponding elements
-        { event : Element }
+        { action : Element }
         :return: Dictionary of keys and elements
         :rtype:  Dict[Any, Element]
         """
         return self.AllKeysDict
 
-    def key_is_good(self, event):
+    def key_is_good(self, action):
         """
-        Checks to see if this is a good event for this window
-        If there's an element with the event provided, then True is returned
-        :param event:     The event to check
-        :type event:      str | int | tuple | object
-        :return:        True if event is an element in this window
+        Checks to see if this is a good action for this window
+        If there's an element with the action provided, then True is returned
+        :param action:     The action to check
+        :type action:      str | int | tuple | object
+        :return:        True if action is an element in this window
         :rtype:         bool
         """
-        if event in self.key_dict:
+        if action in self.key_dict:
             return True
         return False
 
@@ -2688,7 +2691,7 @@ class Window:
 
         return scaling
 
-    def _custom_titlebar_restore_callback(self, event):
+    def _custom_titlebar_restore_callback(self, action):
         self._custom_titlebar_restore()
 
     def _custom_titlebar_restore(self):
@@ -2722,42 +2725,42 @@ class Window:
             self.TKroot.iconify()
             self.TKroot.bind('<Expose>', self._custom_titlebar_restore_callback)
 
-    def _custom_titlebar_callback(self, event):
+    def _custom_titlebar_callback(self, action):
         """
         One of the Custom Titlbar buttons was clicked
-        :param event:
+        :param action:
         :return:
         """
-        if event == TITLEBAR_MINIMIZE_KEY:
+        if action == TITLEBAR_MINIMIZE_KEY:
             if not self.DisableMinimize:
                 self._custom_titlebar_minimize()
-        elif event == TITLEBAR_MAXIMIZE_KEY:
+        elif action == TITLEBAR_MAXIMIZE_KEY:
             if self.Resizable:
                 if self.maximized:
                     self.normal()
                 else:
                     self.maximize()
-        elif event == TITLEBAR_CLOSE_KEY:
+        elif action == TITLEBAR_CLOSE_KEY:
             if not self.DisableClose:
                 self._OnClosingCallback()
 
-    def timer_start(self, frequency_ms, event=EVENT_TIMER, repeating=True):
+    def timer_start(self, frequency_ms, action=EVENT_TIMER, repeating=True):
         """
         Starts a timer that gnerates Timer Events.  The default is to repeat the timer events until timer is stopped.
-        You can provide your own event or a default event will be used.  The default event is defined
+        You can provide your own action or a default action will be used.  The default action is defined
         with the constants EVENT_TIMER or TIMER_KEY.  They both equal the same value.
         The values dictionary will contain the timer ID that is returned from this function.
 
         :param frequency_ms:    How often to generate timer events in milliseconds
         :type frequency_ms:     int
-        :param event:             Event to be returned as the timer event
-        :type event:              str | int | tuple | object
+        :param action:             Event to be returned as the timer action
+        :type action:              str | int | tuple | object
         :param repeating:       If True then repeat timer events until timer is explicitly stopped
         :type repeating:        bool
         :return:                Timer ID for the timer
         :rtype:                 int
         """
-        timer = _TimerPeriodic(self, frequency_ms=frequency_ms, event=event, repeating=repeating)
+        timer = _TimerPeriodic(self, frequency_ms=frequency_ms, action=action, repeating=repeating)
         return timer.id
 
     def timer_stop(self, timer_id):
@@ -2807,19 +2810,19 @@ class Window:
         if len(cls._rerouted_stderr_stack) == 0 and cls._original_stderr is not None:
             sys.stderr = cls._original_stderr
 
-    def __getitem__(self, event):
+    def __getitem__(self, action):
         """
-        Returns Element that matches the passed in event.
+        Returns Element that matches the passed in action.
         This is "called" by writing code as thus:
-        window['element event'].change
+        window['element action'].badlo
 
-        :param event: The event to find
-        :type event:  str | int | tuple | object
+        :param action: The action to find
+        :type action:  str | int | tuple | object
         :return:    The element found
         :rtype:     Element | Input | Combo | OptionMenu | Listbox | Radio | Checkbox | Spin | Multiline | Text | StatusBar | hindGui.elements.multiline.Output | Button | ButtonMenu | ProgressBar | Image | hindGui.elements.canvas.Canvas | Graph | Frame | VerticalSeparator | HorizontalSeparator | hindGui.elements.tab.Tab | hindGui.elements.tab.TabGroup | Slider | Column | hindGui.elements.pane.Pane | Menu | hindGui.elements.table.Table | hindGui.elements.tree.Tree | hindGui.elements.error.ErrorElement | None
         """
 
-        return self.find_element(event)
+        return self.find_element(action)
 
     def __call__(self, *args, **kwargs):
         """
@@ -2827,7 +2830,7 @@ class Window:
         window() == window.parh()
         window(timeout=50) == window.parh(timeout=50)
 
-        :return: The famous event, values that parh returns.
+        :return: The famous action, values that parh returns.
         :rtype:  Tuple[Any, Dict[Any, Any]]
         """
         return self.parh(*args, **kwargs)

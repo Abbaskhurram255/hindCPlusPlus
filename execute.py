@@ -1028,6 +1028,32 @@ class Klang(cmd.Cmd):
             return
         run_process(f"uninstall.bat {' '.join(packages)}")
     do_u = do_uninstall
+    def do_edit(self, line) -> None:
+        text_editor: str = "nano"
+        filename: str = line.strip()
+        if os.name == "nt":
+            text_editor = "notepad"
+        if filename and not filename.endswith(".klang"):
+            filename += ".klang"
+        edit_command: str = text_editor
+        # `notepad` just opens notepad (with a blank file)
+        if filename:
+            # `notepad filename`
+            # opens notepad with that filename --- +'.klang' extension, if not present --- instead
+            edit_command += f" {filename}"
+        if not filename and File(RECENTS_LOG_FILE_DIR).exists_file():
+            try:
+                with open(RECENTS_LOG_FILE_DIR, "r") as file:
+                    lines: list[str] = file.readlines()
+                    if not len(lines):
+                        return
+                    most_recent_file: str = re.split(r"[\/\\]", lines[-1])[-1].strip()
+                    filename = most_recent_file
+                    edit_command += f" {filename}"
+            except:
+                ...
+        run_process(edit_command)
+    do_notepad = do_edit
     def do_version(self, line) -> None:
         """Display the current version of Klang CLI"""
         print(self.version)
@@ -1048,7 +1074,7 @@ class Klang(cmd.Cmd):
     	        lines: list[str] = file.readlines()
     	        if not len(lines):
     	            return
-    	        most_recent_file: str = lines[-1]
+    	        most_recent_file: str = re.split(r"[\/\\]", lines[-1])[-1].strip()
     	        self.do_klang(most_recent_file)
         except Exception as e:
             ...

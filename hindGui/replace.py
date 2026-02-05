@@ -1,4 +1,4 @@
-import os
+import os, re
 
 def replace_text_in_files(directory_path, old_text, new_text, file_extension=None):
     """
@@ -23,7 +23,7 @@ def replace_text_in_files(directory_path, old_text, new_text, file_extension=Non
                     content = file.read()
 
                 if old_text in content:
-                    modified_content = content.replace(old_text, new_text)
+                    modified_content = re.sub(rf"\b{re.escape(old_text)}\b", new_text, content)
                     with open(filepath, 'w', encoding='utf-8') as file:
                         file.write(modified_content)
                     print(f"Text replaced in: {filepath}")
@@ -34,9 +34,9 @@ def replace_text_in_files(directory_path, old_text, new_text, file_extension=Non
                 print(f"Error processing {filepath}: {e}")
 
 if __name__ == "__main__":
-    target_directory = r"C:\Users\Adi\Documents\GitHub\hindCPlusPlus\hindGui"
-    text_to_find = "enable_events=False"
-    replacement_text = "enable_events=True"
+    target_directory = r"C:\Users\Adi\Documents\GitHub\hindCPlusPlus\klang_compiler\dist\hindGui"
+    text_to_find = ""
+    replacement_text = ""
     extension_filter = ".py"
 
     replace_text_in_files(target_directory, text_to_find, replacement_text, extension_filter)

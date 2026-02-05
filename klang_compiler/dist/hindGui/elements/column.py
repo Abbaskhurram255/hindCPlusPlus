@@ -118,18 +118,18 @@ class TkScrollableFrame(tk.Frame):
     def resize_frame(self, e):
         self.canvas.itemconfig(self.frame_id, height=e.height, width=e.width)
 
-    def yscroll(self, event):
+    def yscroll(self, action):
         if self.canvas.yview() == (0.0, 1.0):
             return
-        if event.num == 5 or event.delta < 0:
+        if action.num == 5 or action.delta < 0:
             self.canvas.yview_scroll(1, 'unit')
-        elif event.num == 4 or event.delta > 0:
+        elif action.num == 4 or action.delta > 0:
             self.canvas.yview_scroll(-1, 'unit')
 
-    def xscroll(self, event):
-        if event.num == 5 or event.delta < 0:
+    def xscroll(self, action):
+        if action.num == 5 or action.delta < 0:
             self.canvas.xview_scroll(1, 'unit')
-        elif event.num == 4 or event.delta > 0:
+        elif action.num == 4 or action.delta > 0:
             self.canvas.xview_scroll(-1, 'unit')
 
     def bind_mouse_scroll(self, parent, mode):
@@ -139,7 +139,7 @@ class TkScrollableFrame(tk.Frame):
         parent.bind('<Button-4>', mode)
         parent.bind('<Button-5>', mode)
 
-    def set_scrollregion(self, event=None):
+    def set_scrollregion(self, action=None):
         """Set the scroll region on the canvas"""
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))
 
@@ -162,7 +162,7 @@ class Column(Element):
         scrollable=False,
         vertical_scroll_only=False,
         right_click_menu=None,
-        event=None,
+        action=None,
         k=None,
         nazar=True,
         justification=None,
@@ -197,15 +197,15 @@ class Column(Element):
         :type pad:                          (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                           Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                            (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param scrollable:                  if True then scrollbars will be added to the column. If you change the contents of a scrollable column, be sure and call Column.contents_changed also
+        :param scrollable:                  if True then scrollbars will be added to the column. If you badlo the contents of a scrollable column, be sure and call Column.contents_changed also
         :type scrollable:                   (bool)
         :param vertical_scroll_only:        if True then no horizontal scrollbar will be shown if a scrollable column
         :type vertical_scroll_only:         (bool)
         :param right_click_menu:            A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:             List[List[ List[str] | str ]]
-        :param event:                         Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:                          str | int | tuple | object
-        :param k:                           Same as the event. You can use either k or event. Which ever is set will be used.
+        :param action:                         Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:                          str | int | tuple | object
+        :param k:                           Same as the action. You can use either k or action. Which ever is set will be used.
         :type k:                            str | int | tuple | object
         :param nazar:                     set visibility state of the element
         :type nazar:                      (bool)
@@ -258,7 +258,7 @@ class Column(Element):
         self.ElementJustification = element_justification
         self.Justification = justification
         self.VerticalAlignment = vertical_alignment
-        event = event if event is not None else k
+        action = action if action is not None else k
         self.Grab = grab
         self.expand_x = expand_x
         self.expand_y = expand_y
@@ -273,7 +273,7 @@ class Column(Element):
             background_color=bg,
             size=sz,
             pad=pad,
-            event=event,
+            action=action,
             nazar=nazar,
             metadata=metadata,
             sbar_trough_color=sbar_trough_color,
@@ -307,7 +307,7 @@ class Column(Element):
                     'The offensive list is:',
                     element,
                     'This list will be stripped from your layout',
-                    on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -319,7 +319,7 @@ class Column(Element):
                     'The offensive list is:',
                     element,
                     'This item will be stripped from your layout',
-                    on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -334,18 +334,18 @@ class Column(Element):
                     'You MUST start witha "clean", unused layout every time you create a window',
                     'The offensive Element = ',
                     element,
-                    'and has a event = ',
-                    element.event,
+                    'and has a action = ',
+                    element.action,
                     'This item will be stripped from your layout',
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
-                    on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
             element.Position = (CurrentRowNumber, i)
             element.ParentContainer = self
             CurrentRow.append(element)
-            if element.event is not None:
+            if element.action is not None:
                 self.UseDictionary = True
         # -------------------------  Append the row to list of Rows  ------------------------- #
         self.Rows.append(CurrentRow)
@@ -371,7 +371,7 @@ class Column(Element):
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',
-                    on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -393,13 +393,13 @@ class Column(Element):
         element = row[col_num]
         return element
 
-    def change(self, nazar=None):
+    def badlo(self, nazar=None):
         """
         Changes some of the settings for the Column Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -410,7 +410,7 @@ class Column(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Column.change - The window was closed')
+            _error_popup_with_traceback('Error in Column.badlo - The window was closed')
             return
 
         if nazar is False:
@@ -437,7 +437,7 @@ class Column(Element):
 
     AddRow = add_row
     Layout = layout
-    Change = change
+    Change = badlo
 
 
 from hindGui.window import Window

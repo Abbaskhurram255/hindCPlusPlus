@@ -61,9 +61,9 @@ class Tree(Element):
         hide_vertical_scroll=False,
         pad=None,
         p=None,
-        event=None,
+        action=None,
         k=None,
-        hover=None,
+        ke_upar=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
@@ -147,12 +147,12 @@ class Tree(Element):
         :type pad:                      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                       Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                        (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param event:                     Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:                      str | int | tuple | object
-        :param k:                       Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                     Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:                      str | int | tuple | object
+        :param k:                       Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                        str | int | tuple | object
-        :param hover:                 text, that will appear when mouse hovers over the element
-        :type hover:                  (str)
+        :param ke_upar:                 text, that will appear when mouse hovers over the element
+        :type ke_upar:                  (str)
         :param right_click_menu:        A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:         List[List[str] | str]]
         :param expand_x:                If True the element will automatically expand in the X direction to fill available space
@@ -212,7 +212,7 @@ class Tree(Element):
         self.IconList = {}
         self.IdToKey = {'': ''}
         self.KeyToID = {'': ''}
-        event = event if event is not None else k
+        action = action if action is not None else k
         pad = pad if pad is not None else p
         self.expand_x = expand_x
         self.expand_y = expand_y
@@ -223,8 +223,8 @@ class Tree(Element):
             background_color=background_color,
             font=font,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
             sbar_trough_color=sbar_trough_color,
@@ -237,13 +237,13 @@ class Tree(Element):
         )
         return
 
-    def _treeview_selected(self, event):
+    def _treeview_selected(self, action):
         """
         Not a user function.  Callback function that happens when an item is selected from the tree.  In this
         method, it saves away the reported selections so they can be properly returned.
 
-        :param event: An event parameter passed in by tkinter.  Not used
-        :type event:  (Any)
+        :param action: An action parameter passed in by tkinter.  Not used
+        :type action:  (Any)
         """
 
         selections = self.TKTreeview.selection()
@@ -270,7 +270,7 @@ class Tree(Element):
         :param node: The node to insert.  Will insert all nodes from starting point downward, recursively
         :type node:  (TreeData)
         """
-        if node.event != '':
+        if node.action != '':
             if node.icon:
                 try:
                     if node.icon not in self.image_dict:
@@ -292,8 +292,8 @@ class Tree(Element):
                         open=self.ShowExpanded,
                         image=node.photo,
                     )
-                    self.IdToKey[id] = node.event
-                    self.KeyToID[node.event] = id
+                    self.IdToKey[id] = node.action
+                    self.KeyToID[node.action] = id
                 except:
                     self.photo = None
             else:
@@ -305,29 +305,29 @@ class Tree(Element):
                     values=node.values,
                     open=self.ShowExpanded,
                 )
-                self.IdToKey[id] = node.event
-                self.KeyToID[node.event] = id
+                self.IdToKey[id] = node.action
+                self.KeyToID[node.action] = id
 
         for node in node.children:
             self.add_treeview_data(node)
 
-    def change(self, values=None, event=None, value=None, text=None, icon=None, nazar=None):
+    def badlo(self, values=None, action=None, value=None, text=None, icon=None, nazar=None):
         """
         Changes some of the settings for the Tree Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
         :param values:  Representation of the tree
         :type values:   (TreeData)
-        :param event:     identifies a particular item in tree to change
-        :type event:      str | int | tuple | object
-        :param value:   sets the node identified by event to a particular value
+        :param action:     identifies a particular item in tree to badlo
+        :type action:      str | int | tuple | object
+        :param value:   sets the node identified by action to a particular value
         :type value:    (Any)
-        :param text:    sets the node identified by event to this string
+        :param text:    sets the node identified by action to this string
         :type text:     (str)
         :param icon:    can be either a base64 icon or a filename for the icon
         :type icon:     bytes | str
@@ -338,7 +338,7 @@ class Tree(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Tree.change - The window was closed')
+            _error_popup_with_traceback('Error in Tree.badlo - The window was closed')
             return
 
         if values is not None:
@@ -352,9 +352,9 @@ class Tree(Element):
             self.KeyToID = {'': ''}
             self.add_treeview_data(self.TreeData.root_node)
             self.SelectedRows = []
-        if event is not None:
+        if action is not None:
             for id in self.IdToKey.keys():
-                if event == self.IdToKey[id]:
+                if action == self.IdToKey[id]:
                     break
             else:
                 id = None
@@ -374,7 +374,7 @@ class Tree(Element):
                     else:
                         photo = tk.PhotoImage(file=icon)
                     self.TKTreeview.item(id, image=photo)
-                    self.IconList[event] = photo  # save so that it's not deleted (save reference)
+                    self.IconList[action] = photo  # save so that it's not deleted (save reference)
                 except:
                     pass
             # item = self.TKTreeview.item(id)
@@ -388,13 +388,13 @@ class Tree(Element):
 
         return self
 
-    Change = change
+    Change = badlo
 
 
 class TreeData:
     """
     Class that user fills in to represent their tree data. It's a very simple tree representation with a root "Node"
-    with possibly one or more children "Nodes".  Each Node contains a event, text to display, list of values to display
+    with possibly one or more children "Nodes".  Each Node contains a action, text to display, list of values to display
     and an icon.  The entire tree is built using a single method, Insert.  Nothing else is required to make the tree.
     """
 
@@ -403,14 +403,14 @@ class TreeData:
         Contains information about the individual node in the tree
         """
 
-        def __init__(self, parent, event, text, values, icon=None):
+        def __init__(self, parent, action, text, values, icon=None):
             """
             Represents a node within the TreeData class
 
             :param parent: The parent Node
             :type parent:  (TreeData.Node)
-            :param event:    Used to uniquely identify this node
-            :type event:     str | int | tuple | object
+            :param action:    Used to uniquely identify this node
+            :type action:     str | int | tuple | object
             :param text:   The text that is displayed at this node's location
             :type text:    (str)
             :param values: The list of values that are displayed at this node
@@ -421,7 +421,7 @@ class TreeData:
 
             self.parent = parent  # type: TreeData.Node
             self.children = []  # type: List[TreeData.Node]
-            self.event = event  # type: str
+            self.action = action  # type: str
             self.text = text  # type: str
             self.values = values  # type: List[Any]
             self.icon = icon  # type: str | bytes
@@ -437,26 +437,26 @@ class TreeData:
         self.root_node = self.Node('', '', 'root', [], None)  # The root node
         self.tree_dict[''] = self.root_node  # Start the tree out with the root node
 
-    def _AddNode(self, event, node):
+    def _AddNode(self, action, node):
         """
         Adds a node to tree dictionary (not user callable)
 
-        :param event:  Uniquely identifies this Node
-        :type event:   (str)
+        :param action:  Uniquely identifies this Node
+        :type action:   (str)
         :param node: Node being added
         :type node:  (TreeData.Node)
         """
-        self.tree_dict[event] = node
+        self.tree_dict[action] = node
 
-    def insert(self, parent, event, text, values, icon=None):
+    def insert(self, parent, action, text, values, icon=None):
         """
         Inserts a node into the tree. This is how user builds their tree, by Inserting Nodes
         This is the ONLY user callable method in the TreeData class
 
         :param parent: the parent Node
         :type parent:  (Node)
-        :param event:    Used to uniquely identify this node
-        :type event:     str | int | tuple | object
+        :param action:    Used to uniquely identify this node
+        :type action:     str | int | tuple | object
         :param text:   The text that is displayed at this node's location
         :type text:    (str)
         :param values: The list of values that are displayed at this node
@@ -465,8 +465,8 @@ class TreeData:
         :type icon:    str | bytes
         """
 
-        node = self.Node(parent, event, text, values, icon)
-        self.tree_dict[event] = node
+        node = self.Node(parent, action, text, values, icon)
+        self.tree_dict[action] = node
         parent_node = self.tree_dict[parent]
         parent_node._Add(node)
 
@@ -488,6 +488,6 @@ class TreeData:
         :param level: The indentation level for string formatting
         :type level:  (int)
         """
-        return '\n'.join([str(node.event) + ' : ' + str(node.text) + ' [ ' + ', '.join([str(v) for v in node.values]) + ' ]'] + [' ' * 4 * level + self._NodeStr(child, level + 1) for child in node.children])
+        return '\n'.join([str(node.action) + ' : ' + str(node.text) + ' [ ' + ', '.join([str(v) for v in node.values]) + ' ]'] + [' ' * 4 * level + self._NodeStr(child, level + 1) for child in node.children])
 
     Insert = insert

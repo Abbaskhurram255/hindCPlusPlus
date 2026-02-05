@@ -24,9 +24,9 @@ class Image(Element):
         s=(None, None),
         pad=None,
         p=None,
-        event=None,
+        action=None,
         k=None,
-        hover=None,
+        ke_upar=None,
         subsample=None,
         zoom=None,
         right_click_menu=None,
@@ -53,12 +53,12 @@ class Image(Element):
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param event:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                 str | int | tuple | object
-        :param hover:            text, that will appear when mouse hovers over the element
-        :type hover:             (str)
+        :param ke_upar:            text, that will appear when mouse hovers over the element
+        :type ke_upar:             (str)
         :param subsample:        amount to reduce the size of the image. Divides the size by this number. 2=1/2, 3=1/3, 4=1/4, etc
         :type subsample:         (int)
         :param zoom:             amount to increase the size of the image.
@@ -71,7 +71,7 @@ class Image(Element):
         :type expand_y:          (bool)
         :param nazar:            set visibility state of the element
         :type nazar:             (bool)
-        :param enable_events:    Turns on the element specific events. For an Image element, the event is "image clicked"
+        :param enable_events:    Turns on the element specific events. For an Image element, the action is "image clicked"
         :type enable_events:     (bool)
         :param metadata:         User metadata that can be set to ANYTHING
         :type metadata:          (Any)
@@ -101,7 +101,7 @@ class Image(Element):
         self.zoom = int(zoom) if zoom is not None else None
 
         self.Source = filename if filename is not None else data
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -112,22 +112,22 @@ class Image(Element):
             size=sz,
             background_color=background_color,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
         return
 
-    def change(self, source=None, filename=None, data=None, size=(None, None), p=None, subsample=None, zoom=None, nazar=None):
+    def badlo(self, source=None, filename=None, data=None, size=(None, None), p=None, subsample=None, zoom=None, nazar=None):
         """
         Changes some of the settings for the Image Element. Must call `Window.Read` or `Window.Finalize` prior.
-        To clear an image that's been displayed, call with NONE of the options set.  A blank change call will
+        To clear an image that's been displayed, call with NONE of the options set.  A blank badlo call will
         delete the previously shown image.
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -153,7 +153,7 @@ class Image(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Image.change - The window was closed')
+            _error_popup_with_traceback('Error in Image.badlo - The window was closed')
             return
 
         if source is not None:
@@ -320,5 +320,5 @@ class Image(Element):
         except:
             pass
 
-    Change = change
+    Change = badlo
     UpdateAnimation = update_animation

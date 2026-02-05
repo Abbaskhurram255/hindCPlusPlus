@@ -16,7 +16,7 @@ class Input(Element):
 
     def __init__(
         self,
-        default_text='',
+        value='',
         size=(None, None),
         s=(None, None),
         disabled=False,
@@ -26,12 +26,12 @@ class Input(Element):
         background_color=None,
         text_color=None,
         font=None,
-        hover=None,
+        ke_upar=None,
         border_width=None,
         change_submits=False,
         enable_events=False,
         auto_wipe=False,
-        event=None,
+        action=None,
         k=None,
         focus=False,
         pad=None,
@@ -49,8 +49,8 @@ class Input(Element):
         metadata=None,
     ):
         """
-        :param default_text:                       Text initially shown in the input box as a default value(Default value = ''). Will automatically be converted to string
-        :type default_text:                        (Any)
+        :param value:                       Text initially shown in the input box as a default value(Default value = ''). Will automatically be converted to string
+        :type value:                        (Any)
         :param size:                               w=characters-wide, h=rows-high. If an int is supplied rather than a tuple, then a tuple is created width=int supplied and heigh=1
         :type size:                                (int, int) |  (int, None) | int
         :param s:                                  Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -67,19 +67,19 @@ class Input(Element):
         :type text_color:                          (str)
         :param font:                               specifies the font family, size. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:                                (str or (str, int[, str]) or None)
-        :param hover:                            text, that will appear when mouse hovers over the element
-        :type hover:                             (str)
+        :param ke_upar:                            text, that will appear when mouse hovers over the element
+        :type ke_upar:                             (str)
         :param border_width:                       width of border around element in pixels
         :type border_width:                        (int)
         :param change_submits:                     * DEPRICATED DO NOT USE. Use `enable_events` instead
         :type change_submits:                      (bool)
-        :param enable_events:                      If True then changes to this element are immediately reported as an event. Use this instead of change_submits (Default = False)
+        :param enable_events:                      If True then changes to this element are immediately reported as an action. Use this instead of change_submits (Default = False)
         :type enable_events:                       (bool)
-        :param auto_wipe:                       If False then the field will be set to blank after ANY event (button, any event) (Default = True)
+        :param auto_wipe:                       If False then the field will be set to blank after ANY action (button, any action) (Default = True)
         :type auto_wipe:                        (bool)
-        :param event:                                Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:                                 str | int | tuple | object
-        :param k:                                  Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                                Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:                                 str | int | tuple | object
+        :param k:                                  Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                                   str | int | tuple | object
         :param focus:                              Determines if initial focus should go to this element.
         :type focus:                               (bool)
@@ -111,7 +111,7 @@ class Input(Element):
         :type metadata:                            (Any)
         """
 
-        self.DefaultText = default_text if default_text is not None else ''
+        self.DefaultText = value if value is not None else ''
         self.pwd_char = ""
         if pwd == True and pwd_char:
             self.pwd_char = pwd_char
@@ -131,7 +131,7 @@ class Input(Element):
         self.ReadOnly = readonly
         self.BorderWidth = border_width if border_width is not None else hindGui.DEFAULT_BORDER_WIDTH
         self.TKEntry = self.Widget = None  # type: tk.Entry
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -142,15 +142,15 @@ class Input(Element):
             size=sz,
             background_color=bg,
             text_color=fg,
-            event=event,
+            action=action,
             pad=pad,
             font=font,
-            hover=hover,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
 
-    def change(
+    def badlo(
         self,
         text=None,
         value=None,
@@ -170,7 +170,7 @@ class Input(Element):
         Changes some of the settings for the Input Element. Must call `Window.Read` or `Window.Finalize` prior.
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -180,11 +180,11 @@ class Input(Element):
         :type disabled:          (bool)
         :param select:           if True, then the text will be selected
         :type select:            (bool)
-        :param nazar:          change visibility of element
+        :param nazar:          badlo visibility of element
         :type nazar:           (bool)
-        :param text_color:       change color of text being typed
+        :param text_color:       badlo color of text being typed
         :type text_color:        (str)
-        :param background_color: change color of the background
+        :param background_color: badlo color of the background
         :type background_color:  (str)
         :param font:             specifies the font family, size. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:              (str or (str, int[, str]) or None)
@@ -194,14 +194,14 @@ class Input(Element):
         :type pwd_char:     str
         :param paste:            If True "Pastes" the value into the element rather than replacing the entire element. If anything is selected it is replaced. The text is inserted at the current cursor location.
         :type paste:             bool
-        :param readonly:         if True make element readonly (user cannot change any choices). Enables the element if either choice are made.
+        :param readonly:         if True make element readonly (user cannot badlo any choices). Enables the element if either choice are made.
         :type readonly:          (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Input.change - The window was closed')
+            _error_popup_with_traceback('Error in Input.badlo - The window was closed')
             return
 
         if background_color not in (None, COLOR_SYSTEM_DEFAULT):
@@ -287,7 +287,7 @@ class Input(Element):
             except Exception:
                 _error_popup_with_traceback(
                     'Error setting I-Beam color in set_ibeam_color',
-                    'The element has a event:',
+                    'The element has a action:',
                     self.Key,
                     'The color passed in was:',
                     ibeam_color,
@@ -307,4 +307,4 @@ class Input(Element):
         return text
 
     Get = get
-    Change = change
+    Change = badlo

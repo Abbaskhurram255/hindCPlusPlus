@@ -20,7 +20,7 @@ class Combo(Element):
     def __init__(
         self,
         values,
-        default_value=None,
+        chunawa=None,
         size=(None, None),
         s=(None, None),
         auto_size_text=None,
@@ -33,13 +33,13 @@ class Combo(Element):
         enable_events=True,
         enable_per_char_events=None,
         disabled=False,
-        event=None,
+        action=None,
         k=None,
         pad=None,
         p=None,
         expand_x=False,
         expand_y=False,
-        hover=None,
+        ke_upar=None,
         readonly=False,
         font=None,
         nazar=True,
@@ -48,8 +48,8 @@ class Combo(Element):
         """
         :param values:                  values to choose. While displayed as text, the items returned are what the caller supplied, not text
         :type values:                   List[Any] or Tuple[Any]
-        :param default_value:           Choice to be displayed as initial value. Must match one of values variable contents
-        :type default_value:            (Any)
+        :param chunawa:           Choice to be displayed as initial value. Must match one of values variable contents
+        :type chunawa:            (Any)
         :param size:                    width, height. Width = characters-wide, height = NOTE it's the number of entries to show in the list. If an Int is passed rather than a tuple, then height is auto-set to 1 and width is value of the int
         :type size:                     (int, int)  | (None, None) | int
         :param s:                       Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -64,19 +64,19 @@ class Combo(Element):
         :type button_background_color:  (str)
         :param button_arrow_color:      The color of the arrow on the button on the combo box
         :type button_arrow_color:       (str)
-        :param bind_return_key:         If True, then the return event will cause a the Combo to generate an event when return event is pressed
+        :param bind_return_key:         If True, then the return action will cause a the Combo to generate an action when return action is pressed
         :type bind_return_key:          (bool)
         :param change_submits:          DEPRICATED DO NOT USE. Use `enable_events` instead
         :type change_submits:           (bool)
-        :param enable_events:           Turns on the element specific events. Combo event is when a choice is made
+        :param enable_events:           Turns on the element specific events. Combo action is when a choice is made
         :type enable_events:            (bool)
         :param enable_per_char_events:  Enables generation of events for every character that's input. This is like the Input element's events
         :type enable_per_char_events:   (bool)
         :param disabled:                set disable state for element
         :type disabled:                 (bool)
-        :param event:                     Used with window.find_element and with return values to uniquely identify this element
-        :type event:                      str | int | tuple | object
-        :param k:                       Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                     Used with window.find_element and with return values to uniquely identify this element
+        :type action:                      str | int | tuple | object
+        :param k:                       Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                        str | int | tuple | object
         :param pad:                     Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -86,9 +86,9 @@ class Combo(Element):
         :type expand_x:                 (bool)
         :param expand_y:                If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:                 (bool)
-        :param hover:                 text that will appear when mouse hovers over this element
-        :type hover:                  (str)
-        :param readonly:                make element readonly (user can't change). True means user cannot change
+        :param ke_upar:                 text that will appear when mouse hovers over this element
+        :type ke_upar:                  (str)
+        :param readonly:                make element readonly (user can't badlo). True means user cannot badlo
         :type readonly:                 (bool)
         :param font:                    specifies the font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:                     (str or (str, int[, str]) or None)
@@ -99,7 +99,7 @@ class Combo(Element):
         """
 
         self.Values = values
-        self.DefaultValue = default_value
+        self.DefaultValue = chunawa
         self.ChangeSubmits = change_submits or enable_events
         self.Widget = self.TKCombo = None  # type: ttk.Combobox
         self.Disabled = disabled
@@ -107,7 +107,7 @@ class Combo(Element):
         self.BindReturnKey = bind_return_key
         bg = background_color if background_color else hindGui.DEFAULT_INPUT_ELEMENTS_COLOR
         fg = text_color if text_color is not None else hindGui.DEFAULT_INPUT_TEXT_COLOR
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -128,15 +128,15 @@ class Combo(Element):
             auto_size_text=auto_size_text,
             background_color=bg,
             text_color=fg,
-            event=event,
+            action=action,
             pad=pad,
-            hover=hover,
+            ke_upar=ke_upar,
             font=font or hindGui.DEFAULT_FONT,
             nazar=nazar,
             metadata=metadata,
         )
 
-    def change(
+    def badlo(
         self,
         value=None,
         values=None,
@@ -154,23 +154,23 @@ class Combo(Element):
         Changes some of the settings for the Combo Element. Must call `Window.Read` or `Window.Finalize` prior.
         Note that the state can be in 3 states only.... enabled, disabled, readonly even
         though more combinations are available. The easy way to remember is that if you
-        change the readonly parameter then you are enabling the element.
+        badlo the readonly parameter then you are enabling the element.
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
-        :param value:            change which value is current selected based on new list of previous list of choices
+        :param value:            badlo which value is current selected based on new list of previous list of choices
         :type value:             (Any)
-        :param values:           change list of choices
+        :param values:           badlo list of choices
         :type values:            List[Any]
-        :param set_to_index:     change selection to a particular choice starting with index = 0
+        :param set_to_index:     badlo selection to a particular choice starting with index = 0
         :type set_to_index:      (int)
         :param disabled:         disable or enable state of the element
         :type disabled:          (bool)
-        :param readonly:         if True make element readonly (user cannot change any choices). Enables the element if either choice are made.
+        :param readonly:         if True make element readonly (user cannot badlo any choices). Enables the element if either choice are made.
         :type readonly:          (bool)
         :param font:             specifies the font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:              (str or (str, int[, str]) or None)
@@ -196,7 +196,7 @@ class Combo(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Combo.change - The window was closed')
+            _error_popup_with_traceback('Error in Combo.badlo - The window was closed')
             return
 
         if values is not None:
@@ -326,4 +326,4 @@ class Combo(Element):
         return value
 
     Get = get
-    Change = change
+    Change = badlo

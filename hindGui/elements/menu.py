@@ -18,7 +18,7 @@ from hindGui.elements.helpers import AddMenuItem
 class Menu(Element):
     """
     Menu Element is the Element that provides a Menu Bar that goes across the top of the window, just below titlebar.
-    Here is an example layout.  The "&" are shortcut keys ALT+event.
+    Here is an example layout.  The "&" are shortcut keys ALT+action.
     Is a List of -  "Item String" + List
     Where Item String is what will be displayed on the Menubar itself.
     The List that follows the item represents the items that are shown then Menu item is clicked
@@ -29,10 +29,10 @@ class Menu(Element):
                 ['&Toolbar', ['Command &1', 'Command &2', 'Command &3', 'Command &4']],
                 ['&Help', '&About...'], ]
     Important Note!  The colors, font, look of the Menubar itself cannot be changed, only the menus shown AFTER clicking the menubar
-    can be changed.  If you want to change the style/colors the Menubar, then you will have to use the MenubarCustom element.
-    Finally, "keys" can be added to entries so make them unique.  The "Save" entry has a event associated with it. You
-    can see it has a "::" which signifies the beginning of a event.  The user will not see the event portion when the
-    menu is shown.  The event portion is returned as part of the event.
+    can be changed.  If you want to badlo the style/colors the Menubar, then you will have to use the MenubarCustom element.
+    Finally, "keys" can be added to entries so make them unique.  The "Save" entry has a action associated with it. You
+    can see it has a "::" which signifies the beginning of a action.  The user will not see the action portion when the
+    menu is shown.  The action portion is returned as part of the action.
     """
 
     def __init__(
@@ -47,7 +47,7 @@ class Menu(Element):
         font=None,
         pad=None,
         p=None,
-        event=None,
+        action=None,
         k=None,
         nazar=True,
         metadata=None,
@@ -73,9 +73,9 @@ class Menu(Element):
         :type p:                          (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param font:                      specifies the  font family, size, etc. of submenus. Does NOT apply to the Menubar itself. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:                       (str or (str, int[, str]) or None)
-        :param event:                       Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:                        str | int | tuple | object
-        :param k:                         Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                       Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:                        str | int | tuple | object
+        :param k:                         Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                          str | int | tuple | object
         :param nazar:                   set visibility state of the element
         :type nazar:                    (bool)
@@ -90,7 +90,7 @@ class Menu(Element):
         self.MenuDefinition = copy.deepcopy(menu_definition)
         self.Widget = self.TKMenu = None  # type: tk.Menu
         self.MenuItemChosen = None
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
 
@@ -100,12 +100,12 @@ class Menu(Element):
             text_color=self.TextColor,
             size=sz,
             pad=pad,
-            event=event,
+            action=action,
             nazar=nazar,
             font=font,
             metadata=metadata,
         )
-        # super().__init__(ELEM_TYPE_MENUBAR, background_color=COLOR_SYSTEM_DEFAULT, text_color=COLOR_SYSTEM_DEFAULT, size=sz, pad=pad, event=event, nazar=nazar, font=None, metadata=metadata)
+        # super().__init__(ELEM_TYPE_MENUBAR, background_color=COLOR_SYSTEM_DEFAULT, text_color=COLOR_SYSTEM_DEFAULT, size=sz, pad=pad, action=action, nazar=nazar, font=None, metadata=metadata)
 
         self.Tearoff = tearoff
 
@@ -113,7 +113,7 @@ class Menu(Element):
 
     def _MenuItemChosenCallback(self, item_chosen):  # Menu Menu Item Chosen Callback
         """
-        Not user callable.  Called when some end-point on the menu (an item) has been clicked.  Send the information back to the application as an event.  Before event can be sent
+        Not user callable.  Called when some end-point on the menu (an item) has been clicked.  Send the information back to the application as an action.  Before action can be sent
 
         :param item_chosen: the text that was clicked on / chosen from the menu
         :type item_chosen:  (str)
@@ -124,13 +124,13 @@ class Menu(Element):
         self.ParentForm.FormRemainedOpen = True
         _exit_mainloop(self.ParentForm)
 
-    def change(self, menu_definition=None, nazar=None):
+    def badlo(self, menu_definition=None, nazar=None):
         """
-        Change a menubar - can change the menu definition and visibility.  The entire menu has to be specified
+        Change a menubar - can badlo the menu definition and visibility.  The entire menu has to be specified
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -143,7 +143,7 @@ class Menu(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Menu.change - The window was closed')
+            _error_popup_with_traceback('Error in Menu.badlo - The window was closed')
             return
 
         if menu_definition is not None:
@@ -189,4 +189,4 @@ class Menu(Element):
         if nazar is not None:
             self._nazar = nazar
 
-    Change = change
+    Change = badlo

@@ -37,9 +37,9 @@ class Tab(Element):
         p=None,
         disabled=False,
         border_width=None,
-        event=None,
+        action=None,
         k=None,
-        hover=None,
+        ke_upar=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
@@ -69,12 +69,12 @@ class Tab(Element):
         :type disabled:               (bool)
         :param border_width:          NOT USED in tkinter port
         :type border_width:           (int)
-        :param event:                   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:                    str | int | tuple | object
-        :param k:                     Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:                    str | int | tuple | object
+        :param k:                     Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                      str | int | tuple | object
-        :param hover:               text, that will appear when mouse hovers over the element
-        :type hover:                (str)
+        :param ke_upar:               text, that will appear when mouse hovers over the element
+        :type ke_upar:                (str)
         :param right_click_menu:      A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:       List[List[ List[str] | str ]]
         :param expand_x:              If True the element will automatically expand in the X direction to fill available space
@@ -126,7 +126,7 @@ class Tab(Element):
         self.RightClickMenu = right_click_menu
         self.ContainerElemementNumber = Window._GetAContainerNumber()
         self.ElementJustification = element_justification
-        event = event if event is not None else k
+        action = action if action is not None else k
         pad = pad if pad is not None else p
         self.expand_x = expand_x
         self.expand_y = expand_y
@@ -139,8 +139,8 @@ class Tab(Element):
             text_color=title_color,
             font=font,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
@@ -189,7 +189,7 @@ class Tab(Element):
                     'You MUST start witha "clean", unused layout every time you create a window',
                     'The offensive Element = ',
                     element,
-                    'and has a event = ',
+                    'and has a action = ',
                     element.Key,
                     'This item will be stripped from your layout',
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
@@ -224,20 +224,20 @@ class Tab(Element):
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',
-                    keep_on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
             self.AddRow(*row)
         return self
 
-    def change(self, title=None, disabled=None, nazar=None):
+    def badlo(self, title=None, disabled=None, nazar=None):
         """
         Changes some of the settings for the Tab Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -252,7 +252,7 @@ class Tab(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Tab.change - The window was closed')
+            _error_popup_with_traceback('Error in Tab.badlo - The window was closed')
             return
 
         state = 'normal'
@@ -289,7 +289,7 @@ class Tab(Element):
 
     def select(self):
         """
-        Create a tkinter event that mimics user clicking on a tab. Must have called window.Finalize / Read first!
+        Create a tkinter action that mimics user clicking on a tab. Must have called window.Finalize / Read first!
 
         """
         # Use a try in case the window has been destoyed
@@ -301,7 +301,7 @@ class Tab(Element):
     AddRow = add_row
     Layout = layout
     Select = select
-    Change = change
+    Change = badlo
 
 
 class TabGroup(Element):
@@ -327,11 +327,11 @@ class TabGroup(Element):
         border_width=None,
         tab_border_width=None,
         theme=None,
-        event=None,
+        action=None,
         k=None,
         size=(None, None),
         s=(None, None),
-        hover=None,
+        ke_upar=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
@@ -371,16 +371,16 @@ class TabGroup(Element):
         :type tab_border_width:           (int)
         :param theme:                     DEPRICATED - You can only specify themes using set options or when window is created. It's not possible to do it on an element basis
         :type theme:                      (enum)
-        :param event:                       Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:                        str | int | tuple | object
-        :param k:                         Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                       Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:                        str | int | tuple | object
+        :param k:                         Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                          str | int | tuple | object
         :param size:                      (width, height) w=pixels-wide, h=pixels-high. Either item in tuple can be None to indicate use the computed value and set only 1 direction
         :type size:                       (int|None, int|None)
         :param s:                         Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
         :type s:                          (int|None, int|None)
-        :param hover:                   text, that will appear when mouse hovers over the element
-        :type hover:                    (str)
+        :param ke_upar:                   text, that will appear when mouse hovers over the element
+        :type ke_upar:                    (str)
         :param right_click_menu:          A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:           List[List[ List[str] | str ]]
         :param expand_x:                  If True the element will automatically expand in the X direction to fill available space
@@ -406,7 +406,7 @@ class TabGroup(Element):
         self.Rows = []
         self.TKNotebook = None  # type: ttk.Notebook
         self.Widget = None  # type: ttk.Notebook
-        self.tab_index_to_key = {}  # has a list of the tabs in the notebook and their associated event
+        self.tab_index_to_key = {}  # has a list of the tabs in the notebook and their associated action
         self.TabCount = 0
         self.BorderWidth = border_width
         self.BackgroundColor = background_color if background_color is not None else hindGui.DEFAULT_BACKGROUND_COLOR
@@ -417,7 +417,7 @@ class TabGroup(Element):
         self.TabBorderWidth = tab_border_width
         self.FocusColor = focus_color
 
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -432,8 +432,8 @@ class TabGroup(Element):
             text_color=title_color,
             font=font,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
@@ -460,7 +460,7 @@ class TabGroup(Element):
                     'The offensive list is:',
                     element,
                     'This list will be stripped from your layout',
-                    keep_on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -472,7 +472,7 @@ class TabGroup(Element):
                     'The offensive list is:',
                     element,
                     'This item will be stripped from your layout',
-                    keep_on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -487,11 +487,11 @@ class TabGroup(Element):
                     'You MUST start witha "clean", unused layout every time you create a window',
                     'The offensive Element = ',
                     element,
-                    'and has a event = ',
+                    'and has a action = ',
                     element.Key,
                     'This item will be stripped from your layout',
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
-                    keep_on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -523,7 +523,7 @@ class TabGroup(Element):
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',
-                    keep_on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -547,12 +547,12 @@ class TabGroup(Element):
 
     def find_key_from_tab_name(self, tab_name):
         """
-        Searches through the layout to find the event that matches the text on the tab. Implies names should be unique
+        Searches through the layout to find the action that matches the text on the tab. Implies names should be unique
 
         :param tab_name: name of a tab
         :type tab_name:  str
-        :return:         Returns the event or None if no event found
-        :rtype:          event | None
+        :return:         Returns the action or None if no action found
+        :rtype:          action | None
         """
         for row in self.Rows:
             for element in row:
@@ -562,36 +562,36 @@ class TabGroup(Element):
 
     def find_currently_active_tab_key(self):
         """
-        Returns the event for the currently active tab in this TabGroup
-        :return:    Returns the event or None of no event found
-        :rtype:     event | None
+        Returns the action for the currently active tab in this TabGroup
+        :return:    Returns the action or None of no action found
+        :rtype:     action | None
         """
         try:
             current_index = self.TKNotebook.index('current')
-            event = self.tab_index_to_key.get(current_index, None)
+            action = self.tab_index_to_key.get(current_index, None)
         except:
-            event = None
+            action = None
 
-        return event
+        return action
 
     def get(self):
         """
         Returns the current value for the Tab Group, which will be the currently selected tab's KEY or the text on
-        the tab if no event is defined.  Returns None if an error occurs.
+        the tab if no action is defined.  Returns None if an error occurs.
         Note that this is exactly the same data that would be returned from a call to Window.read. Are you sure you
         are using this method correctly?
 
-        :return: The event of the currently selected tab or None if there is an error
+        :return: The action of the currently selected tab or None if there is an error
         :rtype:  Any | None
         """
 
         try:
             current_index = self.TKNotebook.index('current')
-            event = self.tab_index_to_key.get(current_index, None)
+            action = self.tab_index_to_key.get(current_index, None)
         except:
-            event = None
+            action = None
 
-        return event
+        return action
 
     def add_tab(self, tab_element):
         """
@@ -630,7 +630,7 @@ class TabGroup(Element):
             _error_popup_with_traceback(
                 'Your Window has an Tab Element with an IMAGE problem',
                 'The traceback will show you the Window with the problem layout',
-                f'Look in this Window\'s layout for an Image tab_element that has a event of {tab_element.Key}',
+                f'Look in this Window\'s layout for an Image tab_element that has a action of {tab_element.Key}',
                 'The error occuring is:',
                 e,
             )
@@ -669,7 +669,7 @@ class TabGroup(Element):
             tab_element.HoverObject = Hover(tab_element.TKFrame, text=tab_element.Hover, timeout=hindGui.DEFAULT_HOVER_TIME)
         _add_right_click_menu(tab_element, form)
 
-    def change(self, nazar=None):
+    def badlo(self, nazar=None):
         """
         Enables changing the visibility
 
@@ -680,7 +680,7 @@ class TabGroup(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in TabGroup.change - The window was closed')
+            _error_popup_with_traceback('Error in TabGroup.badlo - The window was closed')
             return
 
         if nazar is False:

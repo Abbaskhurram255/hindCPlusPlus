@@ -240,7 +240,7 @@ Str = lafz = jumla = Str = lambda x: str(x).strip() # trim the string after pars
 nr = num = Number
 Infinity = infinity = inf
 IntInfinity = int_infinity = int_inf = intinf = sys.maxsize
-goto = webbrowser.open
+goto = open_link = link_kholo = webbrowser.open
 link = webbrowser
 _dir = os.getcwd()
 # crucial \/
@@ -487,6 +487,17 @@ def barabar(x, y) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return x.lower() == y.lower()
     return x == y
+def he(x, y) -> bool:
+    """
+    stricter he
+    ONLY EXISTS TO BOOST READABILITY
+    IN HINDGUI-ONLY (non-Klang) PROJECTS
+    different from `barabar`
+    which uses case-insensitivity for strings
+    """
+    return x == y
+def yato(x, y) -> bool:
+    return x or y
 def collect(x, *rest) -> list[list[Any], list[Any]]:
     if not x or not rest or len(rest) == 0 or not is_iterable(x) or not all(isinstance(item, Iterable) for item in [x, *rest]):
         return [[], []]
@@ -1360,14 +1371,14 @@ def get_global_declarations() -> obj:
             elif not ismodule(obj):                          # Exclude imported modules
                 variables[name] = obj
     return o(variables=variables, classes=classes, functions=functions)
+Yes = Ha = Han =  true = True
+No = Na = Nahi = false = False
+none: NoneType = None
+null = none
 sort = sorted
 sortMutate = lambda x: x.sort()
-reverseSort = lambda arr: sorted(arr, reverse=Yes)
-reverseSortMutate = lambda arr: arr.sort(reverse=Yes)
-Yes = Ha = true = True
-No = Na = false = False
-none: None = None
-null = none
+reverseSort = lambda arr: sorted(arr, reverse=True)
+reverseSortMutate = lambda arr: arr.sort(reverse=True)
 def reverse(x: str | list[any]):
 	if not isinstance(x, str) and not isinstance(x, list): return None
 	if isinstance(x, list):
@@ -1926,6 +1937,9 @@ class File:
     def exists_folder(self) -> bool:
         return self.is_folder() and self.exists()
     exists_dir = exists_folder
+    mojud_file = exists_file
+    mojud_folder = exists_folder
+    mojud = exists
     @staticmethod
     def create(fname: str, content: str = "") -> bool:
         try:
@@ -2201,8 +2215,14 @@ def fetch(url: str = "") -> dict|list:
 def filepath(to_filename: str) -> str:
     if not to_filename or not isinstance(to_filename, str):
         return ""
+    base_path: str
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
     to_filename = to_filename.strip()
-    return os.path.join(os.getcwd(), to_filename)
+    return os.path.join(base_path, to_filename)
 file_path = get_path = to_path = path_to = filepath
 ## belongs at the bottom of KL_Py.py
 ## a helper function for def= operator

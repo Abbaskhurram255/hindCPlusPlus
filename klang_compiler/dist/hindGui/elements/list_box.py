@@ -30,7 +30,7 @@ class Listbox(Element):
     def __init__(
         self,
         values,
-        default_values=None,
+        chunewe=None,
         select_mode=None,
         change_submits=False,
         enable_events=True,
@@ -54,11 +54,11 @@ class Listbox(Element):
         sbar_arrow_width=None,
         sbar_frame_color=None,
         sbar_relief=None,
-        event=None,
+        action=None,
         k=None,
         pad=None,
         p=None,
-        hover=None,
+        ke_upar=None,
         expand_x=False,
         expand_y=False,
         right_click_menu=None,
@@ -68,15 +68,15 @@ class Listbox(Element):
         """
         :param values:                     list of values to display. Can be any type including mixed types as long as they have __str__ method
         :type values:                      List[Any] or Tuple[Any]
-        :param default_values:             which values should be initially selected
-        :type default_values:              List[Any]
+        :param chunewe:             which values should be initially selected
+        :type chunewe:              List[Any]
         :param select_mode:                Select modes are used to determine if only 1 item can be selected or multiple and how they can be selected.   Valid choices begin with "LISTBOX_SELECT_MODE_" and include: LISTBOX_SELECT_MODE_SINGLE LISTBOX_SELECT_MODE_MULTIPLE LISTBOX_SELECT_MODE_BROWSE LISTBOX_SELECT_MODE_EXTENDED
         :type select_mode:                 [enum]
         :param change_submits:             DO NOT USE. Only listed for backwards compat - Use enable_events instead
         :type change_submits:              (bool)
         :param enable_events:              Turns on the element specific events. Listbox generates events when an item is clicked
         :type enable_events:               (bool)
-        :param bind_return_key:            If True, then the return event will cause a the Listbox to generate an event when return event is pressed
+        :param bind_return_key:            If True, then the return action will cause a the Listbox to generate an action when return action is pressed
         :type bind_return_key:             (bool)
         :param size:                       w=characters-wide, h=rows-high. If an int instead of a tuple is supplied, then height is auto-set to 1
         :type size:                        (int, int) |  (int, None) | int
@@ -116,16 +116,16 @@ class Listbox(Element):
         :type sbar_frame_color:             (str)
         :param sbar_relief:                 Scrollbar relief that will be used for the "thumb" of the scrollbar (the thing you grab that slides). Should be a constant that is defined at starting with "RELIEF_" - RELIEF_RAISED, RELIEF_SUNKEN, RELIEF_FLAT, RELIEF_RIDGE, RELIEF_GROOVE, RELIEF_SOLID
         :type sbar_relief:                  (str)
-        :param event:                        Used with window.find_element and with return values to uniquely identify this element
-        :type event:                         str | int | tuple | object
-        :param k:                          Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                        Used with window.find_element and with return values to uniquely identify this element
+        :type action:                         str | int | tuple | object
+        :param k:                          Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                           str | int | tuple | object
         :param pad:                        Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                         (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                          Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                           (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param hover:                    text, that will appear when mouse hovers over the element
-        :type hover:                     (str)
+        :param ke_upar:                    text, that will appear when mouse hovers over the element
+        :type ke_upar:                     (str)
         :param expand_x:                   If True the element will automatically expand in the X direction to fill available space
         :type expand_x:                    (bool)
         :param expand_y:                   If True the element will automatically expand in the Y direction to fill available space
@@ -145,7 +145,7 @@ class Listbox(Element):
             )
 
         self.Values = values
-        self.DefaultValues = default_values
+        self.DefaultValues = chunewe
         self.TKListbox = None
         self.ChangeSubmits = change_submits or enable_events
         self.BindReturnKey = bind_return_key
@@ -171,7 +171,7 @@ class Listbox(Element):
         self.element_frame = None  # type: tk.Frame
         self.NoScrollbar = no_scrollbar
         self.HorizontalScroll = horizontal_scroll
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -185,9 +185,9 @@ class Listbox(Element):
             font=font,
             background_color=bg,
             text_color=fg,
-            event=event,
+            action=action,
             pad=pad,
-            hover=hover,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
             sbar_trough_color=sbar_trough_color,
@@ -199,12 +199,12 @@ class Listbox(Element):
             sbar_relief=sbar_relief,
         )
 
-    def change(self, values=None, disabled=None, set_to_index=None, scroll_to_index=None, select_mode=None, nazar=None):
+    def badlo(self, values=None, disabled=None, set_to_index=None, scroll_to_index=None, select_mode=None, nazar=None):
         """
         Changes some of the settings for the Listbox Element. Must call `Window.Read` or `Window.Finalize` prior
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -226,7 +226,7 @@ class Listbox(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Listbox.change - The window was closed')
+            _error_popup_with_traceback('Error in Listbox.badlo - The window was closed')
             return
 
         if disabled is True:
@@ -264,7 +264,7 @@ class Listbox(Element):
             try:
                 self.TKListbox.config(selectmode=select_mode)
             except:
-                print('Listbox.change error trying to change mode to: ', select_mode)
+                print('Listbox.badlo error trying to badlo mode to: ', select_mode)
         if nazar is not None:
             self._nazar = nazar
 
@@ -324,7 +324,7 @@ class Listbox(Element):
         """
         Selects an index while providing capability to setting the selected color for the index to specific text/background color
 
-        :param index:                      specifies which item to change. index starts at 0 and goes to length of values list minus one
+        :param index:                      specifies which item to badlo. index starts at 0 and goes to length of values list minus one
         :type  index:                      (int)
         :param highlight_text_color:       color of the text when this item is selected.
         :type  highlight_text_color:        (str)
@@ -354,7 +354,7 @@ class Listbox(Element):
         """
         Sets the color of a specific item without selecting it
 
-        :param index:                      specifies which item to change. index starts at 0 and goes to length of values list minus one
+        :param index:                      specifies which item to badlo. index starts at 0 and goes to length of values list minus one
         :type  index:                      (int)
         :param text_color:                 color of the text for this item
         :type  text_color:                 (str)
@@ -389,4 +389,4 @@ class Listbox(Element):
     GetIndexes = get_indexes
     GetListValues = get_list_values
     SetValue = set_value
-    Change = change
+    Change = badlo

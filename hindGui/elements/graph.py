@@ -36,9 +36,9 @@ class Graph(Element):
         drag_submits=False,
         enable_events=False,
         motion_events=False,
-        event=None,
+        action=None,
         k=None,
-        hover=None,
+        ke_upar=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
@@ -62,18 +62,18 @@ class Graph(Element):
         :type p:                  (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param change_submits:    * DEPRICATED DO NOT USE. Use `enable_events` instead
         :type change_submits:     (bool)
-        :param drag_submits:      if True and Events are enabled for the Graph, will report Events any time the mouse moves while button down.  When the mouse button is released, you'll get an event = graph event + '+UP' (if event is a string.. if not a string, it'll be made into a tuple)
+        :param drag_submits:      if True and Events are enabled for the Graph, will report Events any time the mouse moves while button down.  When the mouse button is released, you'll get an action = graph action + '+UP' (if action is a string.. if not a string, it'll be made into a tuple)
         :type drag_submits:       (bool)
-        :param enable_events:     If True then clicks on the Graph are immediately reported as an event. Use this instead of change_submits
+        :param enable_events:     If True then clicks on the Graph are immediately reported as an action. Use this instead of change_submits
         :type enable_events:      (bool)
-        :param motion_events:     If True then if no button is down and the mouse is moved, an event is generated with event = graph event + '+MOVE' (if event is a string, it not a string then a tuple is returned)
+        :param motion_events:     If True then if no button is down and the mouse is moved, an action is generated with action = graph action + '+MOVE' (if action is a string, it not a string then a tuple is returned)
         :type motion_events:      (bool)
-        :param event:               Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:                str | int | tuple | object
-        :param k:                 Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:               Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:                str | int | tuple | object
+        :param k:                 Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                  str | int | tuple | object
-        :param hover:           text, that will appear when mouse hovers over the element
-        :type hover:            (str)
+        :param ke_upar:           text, that will appear when mouse hovers over the element
+        :type ke_upar:            (str)
         :param right_click_menu:  A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:   List[List[ List[str] | str ]]
         :param expand_x:          If True the element will automatically expand in the X direction to fill available space
@@ -103,7 +103,7 @@ class Graph(Element):
         self.RightClickMenu = right_click_menu
         self.FloatValues = float_values
         self.BorderWidth = border_width
-        event = event if event is not None else k
+        action = action if action is not None else k
         pad = pad if pad is not None else p
         self.expand_x = expand_x
         self.expand_y = expand_y
@@ -114,8 +114,8 @@ class Graph(Element):
             background_color=background_color,
             size=canvas_size,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
@@ -542,13 +542,13 @@ class Graph(Element):
         except:
             pass
 
-    def change(self, background_color=None, nazar=None):
+    def badlo(self, background_color=None, nazar=None):
         """
         Changes some of the settings for the Graph Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -561,7 +561,7 @@ class Graph(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Graph.change - The window was closed')
+            _error_popup_with_traceback('Error in Graph.badlo - The window was closed')
             return
 
         if background_color is not None and background_color != COLOR_SYSTEM_DEFAULT:
@@ -707,16 +707,16 @@ class Graph(Element):
         return self._TKCanvas2
 
     # button release callback
-    def button_release_call_back(self, event):
+    def button_release_call_back(self, action):
         """
         Not a user callable method.  Used to get Graph click events. Called by tkinter when button is released
 
-        :param event: (event) event info from tkinter. Note not used in this method
-        :type event:
+        :param action: (action) action info from tkinter. Note not used in this method
+        :type action:
         """
         if not self.DragSubmits:
             return  # only report mouse up for drag operations
-        self.ClickPosition = self._convert_canvas_xy_to_xy(event.x, event.y)
+        self.ClickPosition = self._convert_canvas_xy_to_xy(action.x, action.y)
         self.ParentForm.LastButtonClickedWasRealtime = False
         if self.Key is not None:
             self.ParentForm.LastButtonClicked = self.Key
@@ -730,15 +730,15 @@ class Graph(Element):
         self.MouseButtonDown = False
 
     # button callback
-    def button_press_call_back(self, event):
+    def button_press_call_back(self, action):
         """
         Not a user callable method.  Used to get Graph click events. Called by tkinter when button is released
 
-        :param event: (event) event info from tkinter. Contains the x and y coordinates of a click
-        :type event:
+        :param action: (action) action info from tkinter. Contains the x and y coordinates of a click
+        :type action:
         """
 
-        self.ClickPosition = self._convert_canvas_xy_to_xy(event.x, event.y)
+        self.ClickPosition = self._convert_canvas_xy_to_xy(action.x, action.y)
         self.ParentForm.LastButtonClickedWasRealtime = self.DragSubmits
         if self.Key is not None:
             self.ParentForm.LastButtonClicked = self.Key
@@ -747,38 +747,38 @@ class Graph(Element):
         _exit_mainloop(self.ParentForm)
         self.MouseButtonDown = True
 
-    def _update_position_for_returned_values(self, event):
+    def _update_position_for_returned_values(self, action):
         """
         Updates the variable that's used when the values dictionary is returned from a window read.
 
         Not called by the user.  It's called from another method/function that tkinter calledback
 
-        :param event: (event) event info from tkinter. Contains the x and y coordinates of a click
-        :type event:
+        :param action: (action) action info from tkinter. Contains the x and y coordinates of a click
+        :type action:
         """
         """
         Updates the variable that's used when the values dictionary is returned from a window read.
 
         Not called by the user.  It's called from another method/function that tkinter calledback
 
-        :param event: (event) event info from tkinter. Contains the x and y coordinates of a click
-        :type event:
+        :param action: (action) action info from tkinter. Contains the x and y coordinates of a click
+        :type action:
         """
 
-        self.ClickPosition = self._convert_canvas_xy_to_xy(event.x, event.y)
+        self.ClickPosition = self._convert_canvas_xy_to_xy(action.x, action.y)
 
     # button callback
-    def motion_call_back(self, event):
+    def motion_call_back(self, action):
         """
         Not a user callable method.  Used to get Graph mouse motion events. Called by tkinter when mouse moved
 
-        :param event: (event) event info from tkinter. Contains the x and y coordinates of a mouse
-        :type event:
+        :param action: (action) action info from tkinter. Contains the x and y coordinates of a mouse
+        :type action:
         """
 
         if not self.MouseButtonDown and not self.motion_events:
             return
-        self.ClickPosition = self._convert_canvas_xy_to_xy(event.x, event.y)
+        self.ClickPosition = self._convert_canvas_xy_to_xy(action.x, action.y)
         self.ParentForm.LastButtonClickedWasRealtime = self.DragSubmits
         if self.Key is not None:
             self.ParentForm.LastButtonClicked = self.Key
@@ -814,4 +814,4 @@ class Graph(Element):
     RelocateFigure = relocate_figure
     SendFigureToBack = send_figure_to_back
     TKCanvas = tk_canvas
-    Change = change
+    Change = badlo

@@ -64,9 +64,9 @@ class Table(Element):
         bind_return_key=False,
         pad=None,
         p=None,
-        event=None,
+        action=None,
         k=None,
-        hover=None,
+        ke_upar=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
@@ -154,18 +154,18 @@ class Table(Element):
         :type enable_click_events:      (bool)
         :param right_click_selects:     If True, then right clicking a row will select that row if multiple rows are not currently selected
         :type right_click_selects:      (bool)
-        :param bind_return_key:         if True, pressing return event will cause event coming from Table, ALSO a left button double click will generate an event if this parameter is True
+        :param bind_return_key:         if True, pressing return action will cause action coming from Table, ALSO a left button double click will generate an action if this parameter is True
         :type bind_return_key:          (bool)
         :param pad:                     Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                       Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                        (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param event:                     Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:                      str | int | tuple | object
-        :param k:                       Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                     Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:                      str | int | tuple | object
+        :param k:                       Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                        str | int | tuple | object
-        :param hover:                 text, that will appear when mouse hovers over the element
-        :type hover:                  (str)
+        :param ke_upar:                 text, that will appear when mouse hovers over the element
+        :type ke_upar:                  (str)
         :param right_click_menu:        A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:         List[List[ List[str] | str ]]
         :param expand_x:                If True the element will automatically expand in the X direction to fill available space
@@ -227,7 +227,7 @@ class Table(Element):
         self.RightClickMenu = right_click_menu
         self.RowColors = row_colors
         self.tree_ids = []  # ids returned when inserting items into table - will use to delete colors
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -240,8 +240,8 @@ class Table(Element):
             font=font,
             size=sz,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
             sbar_trough_color=sbar_trough_color,
@@ -254,13 +254,13 @@ class Table(Element):
         )
         return
 
-    def change(self, values=None, num_rows=None, nazar=None, select_rows=None, alternating_row_color=None, row_colors=None):
+    def badlo(self, values=None, num_rows=None, nazar=None, select_rows=None, alternating_row_color=None, row_colors=None):
         """
         Changes some of the settings for the Table Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -281,7 +281,7 @@ class Table(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Table.change - The window was closed')
+            _error_popup_with_traceback('Error in Table.badlo - The window was closed')
             return
 
         if values is not None:
@@ -341,13 +341,13 @@ class Table(Element):
         if nazar is not None:
             self._nazar = nazar
 
-    def _treeview_selected(self, event):
+    def _treeview_selected(self, action):
         """
         Not user callable.  Callback function that is called when something is selected from Table.
         Stores the selected rows in Element as they are being selected. If events enabled, then returns from Read
 
-        :param event: event information from tkinter
-        :type event:  (unknown)
+        :param action: action information from tkinter
+        :type action:  (unknown)
         """
         # print('**-- in treeview selected --**')
         selections = self.TKTreeview.selection()
@@ -360,17 +360,17 @@ class Table(Element):
             self.ParentForm.FormRemainedOpen = True
             _exit_mainloop(self.ParentForm)
 
-    def _treeview_double_click(self, event):
+    def _treeview_double_click(self, action):
         """
         Not user callable.  Callback function that is called when something is selected from Table.
         Stores the selected rows in Element as they are being selected. If events enabled, then returns from Read
 
-        :param event: event information from tkinter
-        :type event:  (unknown)
+        :param action: action information from tkinter
+        :type action:  (unknown)
         """
         selections = self.TKTreeview.selection()
         self.SelectedRows = [int(x) - 1 for x in selections]
-        if self.BindReturnKey:  # Signifies BOTH a return event AND a double click
+        if self.BindReturnKey:  # Signifies BOTH a return action AND a double click
             if self.Key is not None:
                 self.ParentForm.LastButtonClicked = self.Key
             else:
@@ -378,52 +378,52 @@ class Table(Element):
             self.ParentForm.FormRemainedOpen = True
             _exit_mainloop(self.ParentForm)
 
-    def _table_clicked(self, event):
+    def _table_clicked(self, action):
         """
         Not user callable.  Callback function that is called a click happens on a table.
         Stores the selected rows in Element as they are being selected. If events enabled, then returns from Read
 
-        :param event: event information from tkinter
-        :type event:  (unknown)
+        :param action: action information from tkinter
+        :type action:  (unknown)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
-        # popup(obj_to_string_single_obj(event))
+        # popup(obj_to_string_single_obj(action))
         try:
-            region = self.Widget.identify('region', event.x, event.y)
+            region = self.Widget.identify('region', action.x, action.y)
             if region == 'heading':
                 row = -1
             elif region == 'cell':
-                row = int(self.Widget.identify_row(event.y)) - 1
+                row = int(self.Widget.identify_row(action.y)) - 1
             elif region == 'separator':
                 row = None
             else:
                 row = None
-            col_identified = self.Widget.identify_column(event.x)
+            col_identified = self.Widget.identify_column(action.x)
             if col_identified:  # Sometimes tkinter returns a value of '' which would cause an error if cast to an int
-                column = int(self.Widget.identify_column(event.x)[1:]) - 1 - int(self.DisplayRowNumbers is True)
+                column = int(self.Widget.identify_column(action.x)[1:]) - 1 - int(self.DisplayRowNumbers is True)
             else:
                 column = None
         except Exception as e:
-            warnings.warn(f'Error getting table click data for table with event= {self.Key}\nError: {e}', UserWarning)
+            warnings.warn(f'Error getting table click data for table with action= {self.Key}\nError: {e}', UserWarning)
             if not hindGui.SUPPRESS_ERROR_POPUPS:
                 _error_popup_with_traceback(
-                    f'Unable to complete operation getting the clicked event for table with event {self.Key}',
+                    f'Unable to complete operation getting the clicked action for table with action {self.Key}',
                     _create_error_message(),
                     e,
                     'Event data:',
-                    obj_to_string_single_obj(event),
+                    obj_to_string_single_obj(action),
                 )
             row = column = None
 
         self.last_clicked_position = (row, column)
 
-        # change the rows being selected if appropriate
-        self.ParentForm.TKroot.change()
+        # badlo the rows being selected if appropriate
+        self.ParentForm.TKroot.badlo()
         # self.TKTreeview.()
         selections = self.TKTreeview.selection()
         if self.right_click_selects and len(selections) <= 1:
-            if (event.num == 3 and not running_mac()) or (event.num == 2 and running_mac()):
+            if (action.num == 3 and not running_mac()) or (action.num == 2 and running_mac()):
                 if row != -1 and row is not None:
                     selections = [row + 1]
                     self.TKTreeview.selection_set(selections)
@@ -459,5 +459,5 @@ class Table(Element):
         """
         return self.last_clicked_position
 
-    Change = change
+    Change = badlo
     Get = get

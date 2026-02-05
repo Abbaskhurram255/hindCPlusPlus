@@ -28,7 +28,7 @@ class TKProgressBar:
         border_width=hindGui.DEFAULT_PROGRESS_BAR_BORDER_WIDTH,
         orientation='horizontal',
         BarColor=(None, None),
-        event=None,
+        action=None,
     ):
         """
         :param root:         The root window bar is to be shown in
@@ -51,8 +51,8 @@ class TKProgressBar:
         :type orientation:   (str)
         :param BarColor:     The 2 colors that make up a progress bar. One is the background, the other is the bar
         :type BarColor:      (str, str)
-        :param event:          Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:           str | int | tuple | object
+        :param action:          Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:           str | int | tuple | object
         """
 
         self.Length = length
@@ -102,7 +102,7 @@ class TKProgressBar:
 
     def Change(self, count=None, max=None):
         """
-        Change the current value of the bar and/or change the maximum value the bar can reach
+        Change the current value of the bar and/or badlo the maximum value the bar can reach
         :param count: current value
         :type count:  (int)
         :param max:   the maximum value
@@ -139,7 +139,7 @@ class ProgressBar(Element):
         style=None,
         border_width=None,
         relief=None,
-        event=None,
+        action=None,
         k=None,
         pad=None,
         p=None,
@@ -170,9 +170,9 @@ class ProgressBar(Element):
         :type border_width:      (int)
         :param relief:           relief style. Values are same as progress meter relief values.  Can be a constant or a string: `RELIEF_RAISED RELIEF_SUNKEN RELIEF_FLAT RELIEF_RIDGE RELIEF_GROOVE RELIEF_SOLID` (Default value = DEFAULT_PROGRESS_BAR_RELIEF)
         :type relief:            (str)
-        :param event:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param pad:              Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -207,7 +207,7 @@ class ProgressBar(Element):
         self.BorderWidth = border_width if border_width else hindGui.DEFAULT_PROGRESS_BAR_BORDER_WIDTH
         self.Relief = relief if relief else hindGui.DEFAULT_PROGRESS_BAR_RELIEF
         self.BarExpired = False
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -218,16 +218,16 @@ class ProgressBar(Element):
             ELEM_TYPE_PROGRESS_BAR,
             size=sz,
             auto_size_text=auto_size_text,
-            event=event,
+            action=action,
             pad=pad,
             nazar=nazar,
             metadata=metadata,
         )
 
-    # returns False if change failed
+    # returns False if badlo failed
     def update_bar(self, current_count, max=None):
         """
-        DEPRECATED BUT STILL USABLE - has been combined with the normal ProgressBar.change method.
+        DEPRECATED BUT STILL USABLE - has been combined with the normal ProgressBar.badlo method.
         Change what the bar shows by changing the current count and optionally the max count
 
         :param current_count: sets the current value
@@ -240,21 +240,21 @@ class ProgressBar(Element):
             return False
         self.TKProgressBar.Change(current_count, max=max)
         try:
-            self.ParentForm.TKroot.change()
+            self.ParentForm.TKroot.badlo()
         except:
             Window._DecrementOpenCount()
             # _my_windows.Decrement()
             return False
         return True
 
-    def change(self, current_count=None, max=None, bar_color=None, nazar=None):
+    def badlo(self, current_count=None, max=None, bar_color=None, nazar=None):
         """
         Changes some of the settings for the ProgressBar Element. Must call `Window.Read` or `Window.Finalize` prior
         Now has the ability to modify the count so that the update_bar method is not longer needed separately
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -266,14 +266,14 @@ class ProgressBar(Element):
         :type bar_color:      (str, str) or str
         :param nazar:       control visibility of element
         :type nazar:        (bool)
-        :return:              Returns True if change was OK.  False means something wrong with window or it was closed
+        :return:              Returns True if badlo was OK.  False means something wrong with window or it was closed
         :rtype:               (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return False
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in ProgressBar.change - The window was closed')
+            _error_popup_with_traceback('Error in ProgressBar.badlo - The window was closed')
             return
 
         if self.ParentForm.TKrootDestroyed:
@@ -295,10 +295,10 @@ class ProgressBar(Element):
             self.TKProgressBar.Change(current_count, max=max)
 
         try:
-            self.ParentForm.TKroot.change()
+            self.ParentForm.TKroot.badlo()
         except:
             return False
         return True
 
-    Change = change
+    Change = badlo
     UpdateBar = update_bar

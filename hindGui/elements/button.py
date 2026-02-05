@@ -43,7 +43,7 @@ class Button(Element):
         text='',
         button_type=BUTTON_TYPE_READ_FORM,
         target=(None, None),
-        hover=None,
+        ke_upar=None,
         allowed_types=FILE_TYPES_ALL_FILES,
         initial_folder=None,
         default_extension='',
@@ -69,7 +69,7 @@ class Button(Element):
         color_when_disabled=None,
         highlight_colors=None,
         mouseover_colors=None,
-        hover_color=None,
+        ko_click_pe_color=None,
         use_ttk_buttons=None,
         use_ttk=None,
         font=None,
@@ -79,7 +79,7 @@ class Button(Element):
         focus=False,
         pad=None,
         p=None,
-        event=None,
+        action=None,
         k=None,
         right_click_menu=None,
         expand_x=False,
@@ -92,10 +92,10 @@ class Button(Element):
         :type text:            (str)
         :param button_type:           You  should NOT be setting this directly. ONLY the shortcut functions set this
         :type button_type:            (int)
-        :param target:                event or (row,col) target for the button. Note that -1 for column means 1 element to the left of this one. The constant ThisRow is used to indicate the current row. The Button itself is a valid target for some types of button
+        :param target:                action or (row,col) target for the button. Note that -1 for column means 1 element to the left of this one. The constant ThisRow is used to indicate the current row. The Button itself is a valid target for some types of button
         :type target:                 str | (int, int)
-        :param hover:               text, that will appear when mouse hovers over the element
-        :type hover:                (str)
+        :param ke_upar:               text, that will appear when mouse hovers over the element
+        :type ke_upar:                (str)
         :param allowed_types:            the filetypes that will be used to match files. To indicate all files: (("ALL Files", "*.* *"),).
         :type allowed_types:             Tuple[(str, str), ...]
         :param initial_folder:        starting path for folders and files
@@ -106,7 +106,7 @@ class Button(Element):
         :type disabled:               (bool | str)
         :param change_submits:        DO NOT USE. Only listed for backwards compat - Use enable_events instead
         :type change_submits:         (bool)
-        :param enable_events:         Turns on the element specific events. If this button is a target, should it generate an event when filled in
+        :param enable_events:         Turns on the element specific events. If this button is a target, should it generate an action when filled in
         :type enable_events:          (bool)
         :param image_source:          Image to place on button. Use INSTEAD of the image_filename and image_data. Unifies these into 1 easier to use parm
         :type image_source:           (str | bytes)
@@ -130,7 +130,7 @@ class Button(Element):
         :type auto_size_button:       (bool)
         :param button_color:          Color of button. default is from theme or the window. Easy to remember which is which if you say "ON" between colors. "red" on "green". Normally a tuple, but can be a simplified-button-color-string "foreground on background". Can be a single color if want to set only the background.
         :type button_color:           (str, str) | str
-        :param disabled_button_color: colors to use when button is disabled (text, background). Use None for a color if don't want to change. Only ttk buttons support both text and background colors. tk buttons only support changing text color
+        :param disabled_button_color: colors to use when button is disabled (text, background). Use None for a color if don't want to badlo. Only ttk buttons support both text and background colors. tk buttons only support changing text color
         :type disabled_button_color:  (str, str) | str
         :param highlight_colors:      colors to use when button has focus (has focus, does not have focus). None will use colors based on theme. Only used by Linux and only for non-TTK button
         :type highlight_colors:       (str, str)
@@ -140,7 +140,7 @@ class Button(Element):
         :type use_ttk_buttons:        (bool)
         :param font:                  specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:                   (str or (str, int[, str]) or None)
-        :param bind_return_key:       If True then pressing the return event in an Input or Multiline Element will cause this button to appear to be clicked (generates event with this button's event
+        :param bind_return_key:       If True then pressing the return action in an Input or Multiline Element will cause this button to appear to be clicked (generates action with this button's action
         :type bind_return_key:        (bool)
         :param focus:                 if True, initial focus will be put on this button
         :type focus:                  (bool)
@@ -148,9 +148,9 @@ class Button(Element):
         :type pad:                    (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                     Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param event:                   Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:                    str | int | tuple | object
-        :param k:                     Same as the Event. You can use either k or event. Which ever is set will be used.
+        :param action:                   Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:                    str | int | tuple | object
+        :param k:                     Same as the Event. You can use either k or action. Which ever is set will be used.
         :type k:                      str | int | tuple | object
         :param right_click_menu:      A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:       List[List[ List[str] | str ]]
@@ -217,7 +217,7 @@ class Button(Element):
         if running_mac() and self.UseTtkButtons is None:
             self.UseTtkButtons = True
 
-        if event is None and k is None:
+        if action is None and k is None:
             _key = self.text
             if hindGui.DEFAULT_USE_BUTTON_SHORTCUTS is True:
                 pos = _key.find(MENU_SHORTCUT_CHARACTER)
@@ -227,13 +227,13 @@ class Button(Element):
                     else:
                         _key = _key.replace('\\' + MENU_SHORTCUT_CHARACTER, MENU_SHORTCUT_CHARACTER)
         else:
-            _key = event if event is not None else k
+            _key = action if action is not None else k
         if highlight_colors is not None:
             self.HighlightColors = highlight_colors
         else:
             self.HighlightColors = self._compute_highlight_colors()
 
-        mouseover_colors = mouseover_colors or hover_color
+        mouseover_colors = mouseover_colors or ko_click_pe_color
         button_color = color or button_color
         if mouseover_colors != (None, None):
             self.MouseOverColors = button_color_to_tuple(mouseover_colors)
@@ -246,7 +246,7 @@ class Button(Element):
         self.expand_y = expand_y
 
         sz = size if size != (None, None) else s
-        super().__init__(ELEM_TYPE_BUTTON, size=sz, font=font, pad=pad, event=_key, hover=hover, nazar=nazar, metadata=metadata)
+        super().__init__(ELEM_TYPE_BUTTON, size=sz, font=font, pad=pad, action=_key, ke_upar=ke_upar, nazar=nazar, metadata=metadata)
         return
 
     def _compute_highlight_colors(self):
@@ -271,7 +271,7 @@ class Button(Element):
         """
         Not a user callable function.  Called by tkinter when a "realtime" button is released
 
-        :param parm: the event info from tkinter
+        :param parm: the action info from tkinter
         :type parm:
 
         """
@@ -355,7 +355,7 @@ class Button(Element):
                     self.TKStringVar.set(folder_name)
                 except:
                     pass
-            else:  # if "cancel" button clicked, don't generate an event
+            else:  # if "cancel" button clicked, don't generate an action
                 should_submit_window = False
         elif self.BType == BUTTON_TYPE_BROWSE_FILE:
             if running_mac():
@@ -371,7 +371,7 @@ class Button(Element):
             if file_name:
                 strvar.set(file_name)
                 self.TKStringVar.set(file_name)
-            else:  # if "cancel" button clicked, don't generate an event
+            else:  # if "cancel" button clicked, don't generate an action
                 should_submit_window = False
         elif self.BType == BUTTON_TYPE_COLOR_CHOOSER:
             color = tk.colorchooser.askcolor(parent=self.ParentForm.TKroot, color=self.default_color)  # show the 'get file' dialog box
@@ -394,7 +394,7 @@ class Button(Element):
                 file_name = self._files_delimiter.join(file_name)  # normally a ';'
                 strvar.set(file_name)
                 self.TKStringVar.set(file_name)
-            else:  # if "cancel" button clicked, don't generate an event
+            else:  # if "cancel" button clicked, don't generate an action
                 should_submit_window = False
         elif self.BType == BUTTON_TYPE_SAVEAS_FILE:
             # show the 'get file' dialog box
@@ -416,7 +416,7 @@ class Button(Element):
             if file_name:
                 strvar.set(file_name)
                 self.TKStringVar.set(file_name)
-            else:  # if "cancel" button clicked, don't generate an event
+            else:  # if "cancel" button clicked, don't generate an action
                 should_submit_window = False
         elif self.BType == BUTTON_TYPE_CLOSES_WIN:  # this is a return type button so GET RESULTS and destroy window
             # first, get the results table built
@@ -448,7 +448,7 @@ class Button(Element):
             Window._DecrementOpenCount()
         elif self.BType == BUTTON_TYPE_CALENDAR_CHOOSER:  # this is a return type button so GET RESULTS and destroy window
             # ------------ new chooser code -------------
-            self.ParentForm.LastButtonClicked = self.Event  # event should have been generated already if not set by user
+            self.ParentForm.LastButtonClicked = self.Event  # action should have been generated already if not set by user
             self.ParentForm.FormRemainedOpen = True
             should_submit_window = False
             _exit_mainloop(self.ParentForm)
@@ -464,7 +464,7 @@ class Button(Element):
 
         return
 
-    def change(
+    def badlo(
         self,
         text=None,
         button_color=(None, None),
@@ -486,7 +486,7 @@ class Button(Element):
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -494,7 +494,7 @@ class Button(Element):
         :type text:                   (str)
         :param button_color:          Color of button. default is from theme or the window. Easy to remember which is which if you say "ON" between colors. "red" on "green". Normally a tuple, but can be a simplified-button-color-string "foreground on background". Can be a single color if want to set only the background.
         :type button_color:           (str, str) | str
-        :param disabled:              True/False to enable/disable at the GUI level. Use BUTTON_DISABLED_MEANS_IGNORE to ignore clicks (won't change colors)
+        :param disabled:              True/False to enable/disable at the GUI level. Use BUTTON_DISABLED_MEANS_IGNORE to ignore clicks (won't badlo colors)
         :type disabled:               (bool | str)
         :param image_source:          Image to place on button. Use INSTEAD of the image_filename and image_data. Unifies these into 1 easier to use parm
         :type image_source:           (str | bytes)
@@ -502,7 +502,7 @@ class Button(Element):
         :type image_data:             bytes | str
         :param image_filename:        image filename if there is a button image. GIFs and PNGs only.
         :type image_filename:         (str)
-        :param disabled_button_color: colors to use when button is disabled (text, background). Use None for a color if don't want to change. Only ttk buttons support both text and background colors. tk buttons only support changing text color
+        :param disabled_button_color: colors to use when button is disabled (text, background). Use None for a color if don't want to badlo. Only ttk buttons support both text and background colors. tk buttons only support changing text color
         :type disabled_button_color:  (str, str)
         :param nazar:               control visibility of element
         :type nazar:                (bool)
@@ -518,7 +518,7 @@ class Button(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Button.change - The window was closed')
+            _error_popup_with_traceback('Error in Button.badlo - The window was closed')
             return
 
         if image_source is not None:
@@ -639,7 +639,7 @@ class Button(Element):
 
     Click = click
     GetText = get_text
-    Change = change
+    Change = badlo
 
 
 class ButtonMenu(Element):
@@ -651,7 +651,7 @@ class ButtonMenu(Element):
         self,
         text,
         menu_def,
-        hover=None,
+        ke_upar=None,
         disabled=False,
         image_source=None,
         image_filename=None,
@@ -678,7 +678,7 @@ class ButtonMenu(Element):
         p=None,
         expand_x=False,
         expand_y=False,
-        event=None,
+        action=None,
         k=None,
         tearoff=False,
         nazar=True,
@@ -689,8 +689,8 @@ class ButtonMenu(Element):
         :type text:                (str)
         :param menu_def:                  A list of lists of Menu items to show when this element is clicked. See docs for format as they are the same for all menu types
         :type menu_def:                   List[List[str]]
-        :param hover:                   text, that will appear when mouse hovers over the element
-        :type hover:                    (str)
+        :param ke_upar:                   text, that will appear when mouse hovers over the element
+        :type ke_upar:                    (str)
         :param disabled:                  If True button will be created disabled
         :type disabled:                   (bool)
         :param image_source:              Image to place on button. Use INSTEAD of the image_filename and image_data. Unifies these into 1 easier to use parm
@@ -733,9 +733,9 @@ class ButtonMenu(Element):
         :type expand_x:                   (bool)
         :param expand_y:                  If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:                   (bool)
-        :param event:                       Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:                        str | int | tuple | object
-        :param k:                         Same as the Event. You can use either k or event. Which ever is set will be used.
+        :param action:                       Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:                        str | int | tuple | object
+        :param k:                         Same as the Event. You can use either k or action. Which ever is set will be used.
         :type k:                          str | int | tuple | object
         :param tearoff:                   Determines if menus should allow them to be torn off
         :type tearoff:                    (bool)
@@ -776,7 +776,7 @@ class ButtonMenu(Element):
         self.part_of_custom_menubar = False
         self.custom_menubar_key = None
         # self.temp_size = size if size != (NONE, NONE) else
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -787,8 +787,8 @@ class ButtonMenu(Element):
             size=sz,
             font=font,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             text_color=self.TextColor,
             background_color=self.BackgroundColor,
             nazar=nazar,
@@ -809,7 +809,7 @@ class ButtonMenu(Element):
         self.ParentForm.FormRemainedOpen = True
         _exit_mainloop(self.ParentForm)
 
-    def change(
+    def badlo(
         self,
         menu_definition=None,
         nazar=None,
@@ -826,7 +826,7 @@ class ButtonMenu(Element):
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -852,7 +852,7 @@ class ButtonMenu(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in ButtonMenu.change - The window was closed')
+            _error_popup_with_traceback('Error in ButtonMenu.badlo - The window was closed')
             return
 
         if menu_definition is not None:
@@ -939,7 +939,7 @@ class ButtonMenu(Element):
             print('Exception clicking button')
             
             
-    Change = change
+    Change = badlo
     Click = click
 
 

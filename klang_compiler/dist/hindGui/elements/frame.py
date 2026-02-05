@@ -31,9 +31,9 @@ class Frame(Element):
         pad=None,
         p=None,
         border_width=None,
-        event=None,
+        action=None,
         k=None,
-        hover=None,
+        ke_upar=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
@@ -68,12 +68,12 @@ class Frame(Element):
         :type p:                      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param border_width:          width of border around element in pixels
         :type border_width:           (int)
-        :param event:                   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:                    str | int | tuple | object
-        :param k:                     Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:                   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:                    str | int | tuple | object
+        :param k:                     Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                      str | int | tuple | object
-        :param hover:               text, that will appear when mouse hovers over the element
-        :type hover:                (str)
+        :param ke_upar:               text, that will appear when mouse hovers over the element
+        :type ke_upar:                (str)
         :param right_click_menu:      A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:       List[List[ List[str] | str ]]
         :param expand_x:              If True the element will automatically expand in the X direction to fill available space
@@ -113,7 +113,7 @@ class Frame(Element):
         self.Widget = None  # type: tk.LabelFrame
         self.Grab = grab
         self.Layout(layout)
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -126,8 +126,8 @@ class Frame(Element):
             size=sz,
             font=font,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
@@ -153,7 +153,7 @@ class Frame(Element):
                     'The offensive list is:',
                     element,
                     'This list will be stripped from your layout',
-                    keep_on_top=True,
+                    ehem=True,
                 )
                 continue
             elif callable(element) and not isinstance(element, Element):
@@ -164,7 +164,7 @@ class Frame(Element):
                     'The offensive list is:',
                     element,
                     'This item will be stripped from your layout',
-                    keep_on_top=True,
+                    ehem=True,
                 )
                 continue
             if element.ParentContainer is not None:
@@ -178,7 +178,7 @@ class Frame(Element):
                     'You MUST start witha "clean", unused layout every time you create a window',
                     'The offensive Element = ',
                     element,
-                    'and has a event = ',
+                    'and has a action = ',
                     element.Event,
                     'This item will be stripped from your layout',
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
@@ -213,7 +213,7 @@ class Frame(Element):
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',
-                    keep_on_top=True,
+                    ehem=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -235,13 +235,13 @@ class Frame(Element):
         element = row[col_num]
         return element
 
-    def change(self, value=None, nazar=None):
+    def badlo(self, value=None, nazar=None):
         """
         Changes some of the settings for the Frame Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be visible in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made visible.
 
@@ -254,7 +254,7 @@ class Frame(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Frame.change - The window was closed')
+            _error_popup_with_traceback('Error in Frame.badlo - The window was closed')
             return
 
         if nazar is False:
@@ -270,4 +270,4 @@ class Frame(Element):
 
     AddRow = add_row
     Layout = layout
-    Change = change
+    Change = badlo

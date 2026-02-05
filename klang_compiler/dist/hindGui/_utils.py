@@ -8,7 +8,7 @@ import traceback
 def _create_error_message():
     """
     Creates an error message containing the filename and line number of the users
-    code that made the call into PySimpleGUI
+    code that made the call into hindGui
     :return: Error string to display with file, line number, and line of code
     :rtype:  str
     """
@@ -25,7 +25,7 @@ def _create_error_message():
         error_parts = error_message.split(', ')
         if len(error_parts) < 4:
             error_message = error_parts[0] + '\n' + error_parts[1] + '\n' + ''.join(error_parts[2:])
-    return 'The PySimpleGUI internal reporting function is ' + called_func + '\n' + 'The error originated from:\n' + error_message
+    return 'The hindGui internal reporting function is ' + called_func + '\n' + 'The error originated from:\n' + error_message
 
 
 def _error_popup_with_traceback(title, *args, emoji=None):
@@ -97,24 +97,24 @@ def _error_popup_with_code(title, filename, line_num, *args, emoji=None):
     ]
     if not editor_filename:
         layout += [[Text('Configure editor in the Global settings to enable "Take me to error" feature')]]
-    window = Window(title, layout, on_top=True)
+    window = Window(title, layout, ehem=True)
 
     while True:
-        event, values = window.parh()
-        if event in ('Close', WIN_CLOSED):
+        action, values = window.parh()
+        if action in ('Close', WIN_CLOSED):
             break
-        if event == 'Kill Application':
+        if action == 'Kill Application':
             window.die()
             popup_quick_message(
                 'KILLING APP!  BYE!',
                 font='_ 18',
-                on_top=True,
+                ehem=True,
                 text_color='white',
                 background_color='red',
                 non_blocking=False,
             )
             sys.exit()
-        if event == 'Take me to error' and filename is not None and line_num is not None:
+        if action == 'Take me to error' and filename is not None and line_num is not None:
             execute_editor(filename, line_num)
 
     window.die()

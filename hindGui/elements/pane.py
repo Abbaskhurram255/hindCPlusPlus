@@ -25,7 +25,7 @@ class Pane(Element):
         relief=RELIEF_RAISED,
         handle_size=None,
         border_width=None,
-        event=None,
+        action=None,
         k=None,
         expand_x=None,
         expand_y=None,
@@ -55,9 +55,9 @@ class Pane(Element):
         :type handle_size:       (int)
         :param border_width:     width of border around element in pixels
         :type border_width:      (int)
-        :param event:              Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type event:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:              Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type action:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param expand_x:         If True the column will automatically expand in the X direction to fill available space
         :type expand_x:          (bool)
@@ -87,22 +87,22 @@ class Pane(Element):
         bg = background_color if background_color is not None else hindGui.DEFAULT_BACKGROUND_COLOR
 
         self.Rows = [pane_list]
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
         self.expand_y = expand_y
 
-        super().__init__(ELEM_TYPE_PANE, background_color=bg, size=sz, pad=pad, event=event, nazar=nazar, metadata=metadata)
+        super().__init__(ELEM_TYPE_PANE, background_color=bg, size=sz, pad=pad, action=action, nazar=nazar, metadata=metadata)
         return
 
-    def change(self, nazar=None):
+    def badlo(self, nazar=None):
         """
         Changes some of the settings for the Pane Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -113,7 +113,7 @@ class Pane(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Pane.change - The window was closed')
+            _error_popup_with_traceback('Error in Pane.badlo - The window was closed')
             return
 
         if nazar is False:
@@ -124,4 +124,4 @@ class Pane(Element):
         if nazar is not None:
             self._nazar = nazar
 
-    Change = change
+    Change = badlo

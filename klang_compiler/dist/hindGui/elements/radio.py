@@ -23,7 +23,7 @@ class Radio(Element):
         self,
         text,
         group_id,
-        selected=False,
+        chuniwi=False,
         disabled=False,
         size=(None, None),
         s=(None, None),
@@ -32,11 +32,11 @@ class Radio(Element):
         text_color=None,
         circle_color=None,
         font=None,
-        event=None,
+        action=None,
         k=None,
         pad=None,
         p=None,
-        hover=None,
+        ke_upar=None,
         change_submits=False,
         enable_events=True,
         right_click_menu=None,
@@ -50,8 +50,8 @@ class Radio(Element):
         :type text:              (str)
         :param group_id:         Groups together multiple Radio Buttons. Any type works
         :type group_id:          (Any)
-        :param selected:          Set to True for the one element of the group you want initially selected
-        :type selected:           (bool)
+        :param chuniwi:          Set to True for the one element of the group you want initially chuniwi
+        :type chuniwi:           (bool)
         :param disabled:         set disable state
         :type disabled:          (bool)
         :param size:             (w, h) w=characters-wide, h=rows-high. If an int instead of a tuple is supplied, then height is auto-set to 1
@@ -68,19 +68,19 @@ class Radio(Element):
         :type circle_color:      (str)
         :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:              (str or (str, int[, str]) or None)
-        :param event:              Used with window.find_element and with return values to uniquely identify this element
-        :type event:               str | int | tuple | object
-        :param k:                Same as the event. You can use either k or event. Which ever is set will be used.
+        :param action:              Used with window.find_element and with return values to uniquely identify this element
+        :type action:               str | int | tuple | object
+        :param k:                Same as the action. You can use either k or action. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param pad:              Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param hover:          text, that will appear when mouse hovers over the element
-        :type hover:           (str)
+        :param ke_upar:          text, that will appear when mouse hovers over the element
+        :type ke_upar:           (str)
         :param change_submits:   DO NOT USE. Only listed for backwards compat - Use enable_events instead
         :type change_submits:    (bool)
-        :param enable_events:    Turns on the element specific events. Radio Button events happen when an item is selected
+        :param enable_events:    Turns on the element specific events. Radio Button events happen when an item is chuniwi
         :type enable_events:     (bool)
         :param right_click_menu: A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:  List[List[ List[str] | str ]]
@@ -94,7 +94,7 @@ class Radio(Element):
         :type metadata:          (Any)
         """
 
-        self.InitialState = selected
+        self.InitialState = chuniwi
         self.Text = text
         self.Widget = self.TKRadio = None  # type: tk.Radiobutton
         self.GroupID = group_id
@@ -120,7 +120,7 @@ class Radio(Element):
             self.CircleBackgroundColor = circle_color
         self.ChangeSubmits = change_submits or enable_events
         self.EncodedRadioValue = None
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -133,14 +133,14 @@ class Radio(Element):
             font=font,
             background_color=background_color,
             text_color=self.TextColor,
-            event=event,
+            action=action,
             pad=pad,
-            hover=hover,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
 
-    def change(
+    def badlo(
         self,
         value=None,
         text=None,
@@ -155,11 +155,11 @@ class Radio(Element):
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
-        :param value:            if True change to selected and set others in group to unselected
+        :param value:            if True badlo to chuniwi and set others in group to unchuniwi
         :type value:             (bool)
         :param text:             Text to display next to radio button
         :type text:              (str)
@@ -179,7 +179,7 @@ class Radio(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Radio.change - The window was closed')
+            _error_popup_with_traceback('Error in Radio.badlo - The window was closed')
             return
 
         if value is not None:
@@ -233,7 +233,7 @@ class Radio(Element):
 
     def reset_group(self):
         """
-        Sets all Radio Buttons in the group to not selected
+        Sets all Radio Buttons in the group to not chuniwi
         """
         self.TKIntVar.set(0)
 
@@ -242,11 +242,11 @@ class Radio(Element):
         """
         A snapshot of the value of Radio Button -> (bool)
 
-        :return: True if this radio button is selected
+        :return: True if this radio button is chuniwi
         :rtype:  (bool)
         """
         return self.TKIntVar.get() == self.EncodedRadioValue
 
     Get = get
     ResetGroup = reset_group
-    Change = change
+    Change = badlo

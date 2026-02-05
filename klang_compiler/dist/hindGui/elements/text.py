@@ -31,13 +31,13 @@ class Text(Element):
         justification=None,
         pad=None,
         p=None,
-        event=None,
+        action=None,
         k=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
         grab=None,
-        hover=None,
+        ke_upar=None,
         nazar=True,
         metadata=None,
     ):
@@ -70,9 +70,9 @@ class Text(Element):
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param event:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:               str or int or tuple or object
-        :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
+        :param action:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:               str or int or tuple or object
+        :param k:                Same as the Event. You can use either k or action. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param right_click_menu: A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:  List[List[ List[str] | str ]]
@@ -82,8 +82,8 @@ class Text(Element):
         :type expand_y:          (bool)
         :param grab:             If True can grab this element and move the window around. Default is False
         :type grab:              (bool)
-        :param hover:          text, that will appear when mouse hovers over the element
-        :type hover:           (str)
+        :param ke_upar:          text, that will appear when mouse hovers over the element
+        :type ke_upar:           (str)
         :param nazar:          set visibility state of the element
         :type nazar:           (bool)
         :param metadata:         User metadata that can be set to ANYTHING
@@ -103,7 +103,7 @@ class Text(Element):
         self.TKRightClickMenu = None
         self.BorderWidth = border_width
         self.Grab = grab
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -117,19 +117,19 @@ class Text(Element):
             font=font if font else hindGui.DEFAULT_FONT,
             text_color=self.TextColor,
             pad=pad,
-            event=event,
-            hover=hover,
+            action=action,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
 
-    def change(self, value=None, background_color=None, text_color=None, font=None, nazar=None):
+    def badlo(self, value=None, background_color=None, text_color=None, font=None, nazar=None):
         """
         Changes some of the settings for the Text Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -149,7 +149,7 @@ class Text(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Text.change - The window was closed')
+            _error_popup_with_traceback('Error in Text.badlo - The window was closed')
             return
 
         if value is not None:
@@ -314,7 +314,7 @@ class Text(Element):
         if append:
             outstring = self.get() + outstring
 
-        self.change(outstring, text_color=text_color, background_color=background_color, font=font)
+        self.badlo(outstring, text_color=text_color, background_color=background_color, font=font)
 
         try:  # if the element is set to autorefresh, then refresh the parent window
             if self.AutoRefresh:
@@ -410,4 +410,4 @@ class Text(Element):
         )
 
     Get = get
-    Change = change
+    Change = badlo

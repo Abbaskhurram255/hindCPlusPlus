@@ -68,13 +68,13 @@ class SystemTray:
         screen_size = Window.get_screen_size()
 
         if filename:
-            image_elem = Image(filename=filename, background_color='red', enable_events=True, tooltip=tooltip, event='-IMAGE-')
+            image_elem = Image(filename=filename, background_color='red', enable_events=True, tooltip=tooltip, action='-IMAGE-')
         elif data_base64:
-            image_elem = Image(data=data_base64, background_color='red', enable_events=True, tooltip=tooltip, event='-IMAGE-')
+            image_elem = Image(data=data_base64, background_color='red', enable_events=True, tooltip=tooltip, action='-IMAGE-')
         elif data:
-            image_elem = Image(data=data, background_color='red', enable_events=True, tooltip=tooltip, event='-IMAGE-')
+            image_elem = Image(data=data, background_color='red', enable_events=True, tooltip=tooltip, action='-IMAGE-')
         else:
-            image_elem = Image(background_color='red', enable_events=True, tooltip=tooltip, event='-IMAGE-')
+            image_elem = Image(background_color='red', enable_events=True, tooltip=tooltip, action='-IMAGE-')
         layout = [
             [image_elem],
         ]
@@ -86,7 +86,7 @@ class SystemTray:
             grab_anywhere=True,
             no_titlebar=True,
             transparent_color='red',
-            on_top=True,
+            ehem=True,
             right_click_menu=menu,
             location=(screen_size[0] - 100, screen_size[1] - 100),
             finalize=True,
@@ -121,16 +121,16 @@ class SystemTray:
         :rtype:
         """
         if self.last_message_event != TIMEOUT_KEY and self.last_message_event is not None:
-            event = self.last_message_event
+            action = self.last_message_event
             self.last_message_event = None
-            return event
-        event, values = self.window.parh(timeout=timeout)
-        if event.endswith('DOUBLE_CLICK'):
+            return action
+        action, values = self.window.parh(timeout=timeout)
+        if action.endswith('DOUBLE_CLICK'):
             return EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED
-        elif event == '-IMAGE-':
+        elif action == '-IMAGE-':
             return EVENT_SYSTEM_TRAY_ICON_ACTIVATED
 
-        return event
+        return action
 
     def hide(self):
         """
@@ -168,7 +168,7 @@ class SystemTray:
         :type data_base64:  b''
         :param time:        Amount of time to display message in milliseconds. If tuple, first item is fade in/out duration
         :type time:         int | (int, int)
-        :return:            The event that happened during the display such as user clicked on message
+        :return:            The action that happened during the display such as user clicked on message
         :rtype:             Any
         """
 
@@ -180,9 +180,9 @@ class SystemTray:
 
         user_icon = data_base64 or filename or data or messageicon
 
-        event = self.notify(title, message, icon=user_icon, fade_in_duration=fade_duration, display_duration_in_ms=display_duration)
-        self.last_message_event = event
-        return event
+        action = self.notify(title, message, icon=user_icon, fade_in_duration=fade_duration, display_duration_in_ms=display_duration)
+        self.last_message_event = action
+        return action
 
     def close(self):
         """
@@ -278,7 +278,7 @@ class SystemTray:
                     canvas_size=(win_width, win_height),
                     graph_bottom_left=(0, win_height),
                     graph_top_right=(win_width, 0),
-                    event='-GRAPH-',
+                    action='-GRAPH-',
                     background_color=SYSTEM_TRAY_MESSAGE_WIN_COLOR,
                     enable_events=True,
                 )
@@ -292,7 +292,7 @@ class SystemTray:
             background_color=SYSTEM_TRAY_MESSAGE_WIN_COLOR,
             no_titlebar=True,
             location=win_location,
-            on_top=True,
+            ehem=True,
             alpha_channel=0,
             fasla=(0, 0),
             element_padding=(0, 0),
@@ -329,26 +329,26 @@ class SystemTray:
         if fade_in_duration:
             for i in range(1, int(alpha * 100)):  # fade in
                 window.set_alpha(i / 100)
-                event, values = window.parh(timeout=fade_in_duration // 100)
-                if event != TIMEOUT_KEY:
+                action, values = window.parh(timeout=fade_in_duration // 100)
+                if action != TIMEOUT_KEY:
                     window.set_alpha(1)
                     break
-            if event != TIMEOUT_KEY:
+            if action != TIMEOUT_KEY:
                 window.die()
-                return EVENT_SYSTEM_TRAY_MESSAGE_CLICKED if event == '-GRAPH-' else event
-            event, values = window(timeout=display_duration_in_ms)
-            if event == TIMEOUT_KEY:
+                return EVENT_SYSTEM_TRAY_MESSAGE_CLICKED if action == '-GRAPH-' else action
+            action, values = window(timeout=display_duration_in_ms)
+            if action == TIMEOUT_KEY:
                 for i in range(int(alpha * 100), 1, -1):  # fade out
                     window.set_alpha(i / 100)
-                    event, values = window.parh(timeout=fade_in_duration // 100)
-                    if event != TIMEOUT_KEY:
+                    action, values = window.parh(timeout=fade_in_duration // 100)
+                    if action != TIMEOUT_KEY:
                         break
         else:
             window.set_alpha(alpha)
-            event, values = window(timeout=display_duration_in_ms)
+            action, values = window(timeout=display_duration_in_ms)
         window.die()
 
-        return EVENT_SYSTEM_TRAY_MESSAGE_CLICKED if event == '-GRAPH-' else event
+        return EVENT_SYSTEM_TRAY_MESSAGE_CLICKED if action == '-GRAPH-' else action
 
     Close = close
     Hide = hide

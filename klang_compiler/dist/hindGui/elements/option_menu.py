@@ -19,7 +19,7 @@ class OptionMenu(Element):
     def __init__(
         self,
         values,
-        default_value=None,
+        chunawa=None,
         size=(None, None),
         s=(None, None),
         disabled=False,
@@ -28,19 +28,19 @@ class OptionMenu(Element):
         expand_y=False,
         background_color=None,
         text_color=None,
-        event=None,
+        action=None,
         k=None,
         pad=None,
         p=None,
-        hover=None,
+        ke_upar=None,
         nazar=True,
         metadata=None,
     ):
         """
         :param values:           Values to be displayed
         :type values:            List[Any] or Tuple[Any]
-        :param default_value:    the value to choose by default
-        :type default_value:     (Any)
+        :param chunawa:    the value to choose by default
+        :type chunawa:     (Any)
         :param size:             (width, height) size in characters (wide), height is ignored and present to be consistent with other elements
         :type size:              (int, int) (width, UNUSED)
         :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -57,16 +57,16 @@ class OptionMenu(Element):
         :type background_color:  (str)
         :param text_color:       color of the text
         :type text_color:        (str)
-        :param event:              Used with window.find_element and with return values to uniquely identify this element
-        :type event:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
+        :param action:              Used with window.find_element and with return values to uniquely identify this element
+        :type action:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or action. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param pad:              Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param hover:          text that will appear when mouse hovers over this element
-        :type hover:           (str)
+        :param ke_upar:          text that will appear when mouse hovers over this element
+        :type ke_upar:           (str)
         :param nazar:          set visibility state of the element
         :type nazar:           (bool)
         :param metadata:         User metadata that can be set to ANYTHING
@@ -74,12 +74,12 @@ class OptionMenu(Element):
         """
 
         self.Values = values
-        self.DefaultValue = default_value
+        self.DefaultValue = chunawa
         self.Widget = self.TKOptionMenu = None  # type: tk.OptionMenu
         self.Disabled = disabled
         bg = background_color if background_color else hindGui.DEFAULT_INPUT_ELEMENTS_COLOR
         fg = text_color if text_color is not None else hindGui.DEFAULT_INPUT_TEXT_COLOR
-        event = event if event is not None else k
+        action = action if action is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -91,20 +91,20 @@ class OptionMenu(Element):
             auto_size_text=auto_size_text,
             background_color=bg,
             text_color=fg,
-            event=event,
+            action=action,
             pad=pad,
-            hover=hover,
+            ke_upar=ke_upar,
             nazar=nazar,
             metadata=metadata,
         )
 
-    def change(self, value=None, values=None, disabled=None, nazar=None, size=(None, None)):
+    def badlo(self, value=None, values=None, disabled=None, nazar=None, size=(None, None)):
         """
         Changes some of the settings for the OptionMenu Element. Must call `Window.Read` or `Window.Finalize` prior
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -123,7 +123,7 @@ class OptionMenu(Element):
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in OptionMenu.change - The window was closed')
+            _error_popup_with_traceback('Error in OptionMenu.badlo - The window was closed')
             return
 
         if values is not None:
@@ -165,4 +165,4 @@ class OptionMenu(Element):
         if nazar is not None:
             self._nazar = nazar
 
-    Change = change
+    Change = badlo

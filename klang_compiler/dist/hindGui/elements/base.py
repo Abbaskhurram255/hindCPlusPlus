@@ -58,9 +58,9 @@ class Element:
         font=None,
         background_color=None,
         text_color=None,
-        event=None,
+        action=None,
         pad=None,
-        hover=None,
+        ke_upar=None,
         nazar=True,
         metadata=None,
         sbar_trough_color=None,
@@ -86,12 +86,12 @@ class Element:
         :type background_color:             (str)
         :param text_color:                  element's text color. Can be in #RRGGBB format or a color name "black"
         :type text_color:                   (str)
-        :param event:                         Identifies an Element. Should be UNIQUE to this window.
-        :type event:                          str | int | tuple | object
+        :param action:                         Identifies an Element. Should be UNIQUE to this window.
+        :type action:                          str | int | tuple | object
         :param pad:                         Amount of padding to put around element in pixels (left/right, top/bottom). If an int is given, then auto-converted to tuple (int, int)
         :type pad:                          (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param hover:                     text, that will appear when mouse hovers over the element
-        :type hover:                      (str)
+        :param ke_upar:                     text, that will appear when mouse hovers over the element
+        :type ke_upar:                      (str)
         :param nazar:                     set visibility state of the element (Default = True)
         :type nazar:                      (bool)
         :param metadata:                    User metadata that can be set to ANYTHING
@@ -144,8 +144,8 @@ class Element:
         self.Position = (0, 0)  # Default position Row 0, Col 0
         self.BackgroundColor = background_color if background_color is not None else hindGui.DEFAULT_ELEMENT_BACKGROUND_COLOR
         self.TextColor = text_color if text_color is not None else hindGui.DEFAULT_ELEMENT_TEXT_COLOR
-        self.Event = event  # dictionary event for return values
-        self.Hover = hover
+        self.Event = action  # dictionary action for return values
+        self.Hover = ke_upar
         self.HoverObject = None
         self._visible = nazar
         self.TKRightClickMenu = None
@@ -153,8 +153,8 @@ class Element:
         self.Tearoff = False  # needed because of right click menu code
         self.ParentRowFrame = None  # type tk.Frame
         self.metadata = metadata
-        self.user_bind_dict = {}  # Used when user defines a tkinter binding using bind method - convert bind string to event modifier
-        self.user_bind_event = None  # Used when user defines a tkinter binding using bind method - event data from tkinter
+        self.user_bind_dict = {}  # Used when user defines a tkinter binding using bind method - convert bind string to action modifier
+        self.user_bind_event = None  # Used when user defines a tkinter binding using bind method - action data from tkinter
         # self.pad_used = (0, 0)  # the amount of pad used when was inserted into the layout
         self._popup_menu_location = (None, None)
         self.pack_settings = None
@@ -279,9 +279,9 @@ class Element:
         self._metadata = value
 
     @property
-    def event(self):
+    def action(self):
         """
-        Returns event for the element.  This is a READONLY property.
+        Returns action for the element.  This is a READONLY property.
         Keys can be any hashable object (basically anything except a list... tuples are ok, but not lists)
         :return: The window's Event
         :rtype:  (Any)
@@ -298,31 +298,31 @@ class Element:
         """
         return self.Widget
 
-    def _RightClickMenuCallback(self, event):
+    def _RightClickMenuCallback(self, action):
         """
         Callback function that's called when a right click happens. Shows right click menu as result
 
-        :param event: information provided by tkinter about the event including x,y location of click
-        :type event:
+        :param action: information provided by tkinter about the action including x,y location of click
+        :type action:
 
         """
         if self.Type == ELEM_TYPE_TAB_GROUP:
             try:
-                index = self.Widget.index(f'@{event.x},{event.y}')
+                index = self.Widget.index(f'@{action.x},{action.y}')
                 tab = self.Widget.tab(index, 'text')
-                event = self.find_key_from_tab_name(tab)
-                tab_element = self.ParentForm.key_dict[event]
+                action = self.find_key_from_tab_name(tab)
+                tab_element = self.ParentForm.key_dict[action]
                 if tab_element.RightClickMenu is None:  # if this tab didn't explicitly have a menu, then don't show anything
                     return
-                tab_element.TKRightClickMenu.tk_popup(event.x_root, event.y_root, 0)
+                tab_element.TKRightClickMenu.tk_popup(action.x_root, action.y_root, 0)
                 self.TKRightClickMenu.grab_release()
             except:
                 pass
             return
-        self.TKRightClickMenu.tk_popup(event.x_root, event.y_root, 0)
+        self.TKRightClickMenu.tk_popup(action.x_root, action.y_root, 0)
         self.TKRightClickMenu.grab_release()
         if self.Type == ELEM_TYPE_GRAPH:
-            self._update_position_for_returned_values(event)
+            self._update_position_for_returned_values(action)
 
     def _tearoff_menu_callback(self, parent, menu):
         """
@@ -340,7 +340,7 @@ class Element:
             winx, winy = self.ParentForm.current_location()
         else:
             winx, winy = self._popup_menu_location
-        # self.ParentForm.TKroot.change()
+        # self.ParentForm.TKroot.badlo()
         self.ParentForm.TKroot.tk.call('wm', 'geometry', menu, f'+{winx}+{winy}')
 
     def _MenuItemChosenCallback(self, item_chosen):  # TEXT Menu item callback
@@ -396,13 +396,13 @@ class Element:
                         return rc
         return None
 
-    def _TextClickedHandler(self, event):
+    def _TextClickedHandler(self, action):
         """
         Callback that's called when a text element is clicked on with events enabled on the Text Element.
         Result is that control is returned back to user (quits mainloop).
 
-        :param event:
-        :type event:
+        :param action:
+        :type action:
 
         """
         # If this is a minimize button for a custom titlebar, then minimize the window
@@ -411,15 +411,15 @@ class Element:
         self._generic_callback_handler(self.DisplayText)
         return
 
-    def _ReturnKeyHandler(self, event):
+    def _ReturnKeyHandler(self, action):
         """
-        Internal callback for the ENTER / RETURN event. Results in calling the ButtonCallBack for element that has the return event bound to it, just as if button was clicked.
+        Internal callback for the ENTER / RETURN action. Results in calling the ButtonCallBack for element that has the return action bound to it, just as if button was clicked.
 
-        :param event:
-        :type event:
+        :param action:
+        :type action:
 
         """
-        # if the element is disabled, ignore the event
+        # if the element is disabled, ignore the action
         if self.Disabled:
             return
 
@@ -436,9 +436,9 @@ class Element:
         Peforms the actions that were in many of the callback functions previously.  Combined so that it's
         easier to modify and is in 1 place now
 
-        :param event:            From tkinter and is not used
-        :type event:             Any
-        :param alternate_to_key: If event is None, then use this value instead
+        :param action:            From tkinter and is not used
+        :type action:             Any
+        :param alternate_to_key: If action is None, then use this value instead
         :type alternate_to_key:  Any
         """
         if force_key_to_be is not None:
@@ -454,32 +454,32 @@ class Element:
         #     Window._window_that_exited = self.ParentForm
         #     self.ParentForm.TKroot.quit()  # kick the users out of the mainloop
 
-    def _ListboxSelectHandler(self, event):
+    def _ListboxSelectHandler(self, action):
         """
         Internal callback function for when a listbox item is selected
 
-        :param event: Information from tkinter about the callback
-        :type event:
+        :param action: Information from tkinter about the callback
+        :type action:
 
         """
         self._generic_callback_handler('')
 
-    def _ComboboxSelectHandler(self, event):
+    def _ComboboxSelectHandler(self, action):
         """
         Internal callback function for when an entry is selected in a Combobox.
-        :param event: Event data from tkinter (not used)
-        :type event:
+        :param action: Event data from tkinter (not used)
+        :type action:
 
         """
         self._generic_callback_handler('')
 
-    def _SpinboxSelectHandler(self, event=None):
+    def _SpinboxSelectHandler(self, action=None):
         """
         Internal callback function for when an entry is selected in a Spinbox.
-        Note that the parm is optional because it's not used if arrows are used to change the value
-        but if the return event is pressed, it will include the event parm
-        :param event: Event data passed in by tkinter (not used)
-        :type event:
+        Note that the parm is optional because it's not used if arrows are used to badlo the value
+        but if the return action is pressed, it will include the action parm
+        :param action: Event data passed in by tkinter (not used)
+        :type action:
         """
         self._generic_callback_handler('')
 
@@ -495,34 +495,34 @@ class Element:
         """
         self._generic_callback_handler('')
 
-    def _TabGroupSelectHandler(self, event):
+    def _TabGroupSelectHandler(self, action):
         """
         Internal callback for when a Tab is selected and enable events was set for TabGroup
 
-        :param event: Event data passed in by tkinter (not used)
-        :type event:
+        :param action: Event data passed in by tkinter (not used)
+        :type action:
         """
         self._generic_callback_handler('')
 
-    def _KeyboardHandler(self, event):
+    def _KeyboardHandler(self, action):
         """
-        Internal callback for when a event is pressed andd return keyboard events was set for window
+        Internal callback for when a action is pressed andd return keyboard events was set for window
 
-        :param event: Event data passed in by tkinter (not used)
-        :type event:
+        :param action: Event data passed in by tkinter (not used)
+        :type action:
         """
 
-        # if the element is disabled, ignore the event
+        # if the element is disabled, ignore the action
         if self.Disabled:
             return
         self._generic_callback_handler('')
 
-    def _ClickHandler(self, event):
+    def _ClickHandler(self, action):
         """
         Internal callback for when a mouse was clicked... I think.
 
-        :param event: Event data passed in by tkinter (not used)
-        :type event:
+        :param action: Event data passed in by tkinter (not used)
+        :type action:
         """
         self._generic_callback_handler('')
 
@@ -532,31 +532,31 @@ class Element:
 
         return True
 
-    def _user_bind_callback(self, bind_string, event, propagate=True):
+    def _user_bind_callback(self, bind_string, action, propagate=True):
         """
-        Used when user binds a tkinter event directly to an element
+        Used when user binds a tkinter action directly to an element
 
-        :param bind_string: The event that was bound so can lookup the event modifier
+        :param bind_string: The action that was bound so can lookup the action modifier
         :type bind_string:  (str)
-        :param event:       Event data passed in by tkinter (not used)
-        :type event:        (Any)
-        :param propagate:   If True then tkinter will be told to propagate the event to the element
+        :param action:       Event data passed in by tkinter (not used)
+        :type action:        (Any)
+        :param propagate:   If True then tkinter will be told to propagate the action to the element
         :type propagate:    (bool)
         """
         key_suffix = self.user_bind_dict.get(bind_string, '')
-        self.user_bind_event = event
+        self.user_bind_event = action
         if self.Type == ELEM_TYPE_GRAPH:
-            self._update_position_for_returned_values(event)
+            self._update_position_for_returned_values(action)
         if self.Event is not None:
             if isinstance(self.Event, str):
-                event = self.Event + str(key_suffix)
+                action = self.Event + str(key_suffix)
             else:
-                event = (self.Event, key_suffix)  # old way (pre 2021) was to make a brand new tuple
-                # event = self.Event + (key_suffix,)   # in 2021 tried this. It will break existing applications though - if event is a tuple, add one more item
+                action = (self.Event, key_suffix)  # old way (pre 2021) was to make a brand new tuple
+                # action = self.Event + (key_suffix,)   # in 2021 tried this. It will break existing applications though - if action is a tuple, add one more item
         else:
-            event = bind_string
+            action = bind_string
 
-        self._generic_callback_handler(force_key_to_be=event)
+        self._generic_callback_handler(force_key_to_be=action)
 
         return 'break' if propagate is not True else None
 
@@ -566,9 +566,9 @@ class Element:
         The tkinter specific data is in the Element's member variable user_bind_event
         :param bind_string:  The string tkinter expected in its bind function
         :type bind_string:   (str)
-        :param key_modifier: Additional data to be added to the element's event when event is returned
+        :param key_modifier: Additional data to be added to the element's action when action is returned
         :type key_modifier:  (str)
-        :param propagate:    If True then tkinter will be told to propagate the event to the element
+        :param propagate:    If True then tkinter will be told to propagate the action to the element
         :type propagate:     (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
@@ -584,7 +584,7 @@ class Element:
 
     def unbind(self, bind_string):
         """
-        Removes a previously bound tkinter event from an Element.
+        Removes a previously bound tkinter action from an Element.
         :param bind_string: The string tkinter expected in its bind function
         :type bind_string:  (str)
         """
@@ -595,9 +595,9 @@ class Element:
 
     def set_hover(self, hover_text):
         """
-        Called by application to change the hover text for an Element.  Normally invoked using the Element Object such as: window.Element('event').SetHover('New tip').
+        Called by application to badlo the ke_upar text for an Element.  Normally invoked using the Element Object such as: window.Element('action').SetHover('New tip').
 
-        :param hover_text: the text to show in hover.
+        :param hover_text: the text to show in ke_upar.
         :type hover_text:  (str)
         """
 
@@ -690,7 +690,7 @@ class Element:
             if size[0] is not None:
                 self.Widget.config(width=size[0])
         except:
-            print('Warning, error setting width on element with event=', self.Event)
+            print('Warning, error setting width on element with action=', self.Event)
         try:
             if size[1] is not None:
                 self.Widget.config(height=size[1])
@@ -698,7 +698,7 @@ class Element:
             try:
                 self.Widget.config(length=size[1])
             except:
-                print('Warning, error setting height on element with event=', self.Event)
+                print('Warning, error setting height on element with action=', self.Event)
 
         if self.Type == ELEM_TYPE_GRAPH:
             self.CanvasSize = size
@@ -725,7 +725,7 @@ class Element:
         try:
             self.ParentRowFrame.pack_forget()
         except:
-            print('Warning, error hiding element row for event =', self.Event)
+            print('Warning, error hiding element row for action =', self.Event)
 
     def unhide_row(self):
         """
@@ -735,7 +735,7 @@ class Element:
         try:
             self.ParentRowFrame.pack()
         except:
-            print('Warning, error hiding element row for event =', self.Event)
+            print('Warning, error hiding element row for action =', self.Event)
 
     def expand(self, expand_x=False, expand_y=False, expand_row=True):
         """
@@ -823,13 +823,13 @@ class Element:
                 return False
 
             warnings.warn(
-                'You cannot Change element with event = {} until the window.parh() is called or set finalize=True when creating window'.format(self.Event),
+                'You cannot Change element with action = {} until the window.parh() is called or set finalize=True when creating window'.format(self.Event),
                 UserWarning,
             )
             if not hindGui.SUPPRESS_ERROR_POPUPS:
                 _error_popup_with_traceback(
-                    f'Unable to complete operation on element with event {self.Event}',
-                    'You cannot perform operations (such as calling change) on an Element until:',
+                    f'Unable to complete operation on element with action {self.Event}',
+                    'You cannot perform operations (such as calling badlo) on an Element until:',
                     ' window.parh() is called or finalize=True when Window created.',
                     'Adding a "finalize=True" parameter to your Window creation will likely fix this.',
                     _create_error_message(),
@@ -1017,27 +1017,27 @@ class Element:
         if widget is not None:
             widget.pack(**self.pack_settings)
 
-    def change(self, *args, **kwargs):
+    def badlo(self, *args, **kwargs):
         """
-        A dummy change call.  This will only be called if an element hasn't implemented an change method
+        A dummy badlo call.  This will only be called if an element hasn't implemented an badlo method
         It is provided here for docstring purposes.  If you got here by browing code via PyCharm, know
-        that this is not the function that will be called.  Your actual element's change method will be called.
+        that this is not the function that will be called.  Your actual element's badlo method will be called.
 
-        If you call change, you must call window.refresh if you want the change to happen prior to your next
+        If you call badlo, you must call window.refresh if you want the badlo to happen prior to your next
         window.parh() call. Normally uou don't do this as the window.read call is likely going to happen next.
         """
-        print('* Base Element Class change was called. Your element does not seem to have an change method')
+        print('* Base Element Class badlo was called. Your element does not seem to have an badlo method')
 
     def __call__(self, *args, **kwargs):
         """
         Makes it possible to "call" an already existing element.  When you do make the "call", it actually calls
         the Change method for the element.
         Example:    If this text element was in your layout:
-                    sg.Text('foo', event='T')
+                    sg.Text('foo', action='T')
                     Then you can call the Change method for that element by writing:
                     window.find_element('T')('new text value')
         """
-        return self.change(*args, **kwargs)
+        return self.badlo(*args, **kwargs)
 
     SetHover = set_hover
     SetFocus = set_focus

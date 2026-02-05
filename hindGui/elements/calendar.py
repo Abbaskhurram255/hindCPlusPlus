@@ -130,11 +130,11 @@ class TKCalendar(ttk.Frame):
     def _build_calendar(self):
         year, month = self._date.year, self._date.month
 
-        # change header text (Month, YEAR)
+        # badlo header text (Month, YEAR)
         header = self._cal.formatmonthname(year, month, 0)
         self._header['text'] = header.title()
 
-        # change calendar shown dates
+        # badlo calendar shown dates
         cal = self._cal.monthdayscalendar(year, month)
         for indx, item in enumerate(self._items):
             week = cal[indx] if indx < len(cal) else []
@@ -177,7 +177,7 @@ class TKCalendar(ttk.Frame):
         if not bbox:  # calendar not nazar yet
             return
 
-        # change and then show selection
+        # badlo and then show selection
         text = '%02d' % text
         self._selection = (text, item, column)
         self._show_selection(text, bbox)

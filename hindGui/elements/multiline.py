@@ -21,7 +21,7 @@ class Multiline(Element):
 
     def __init__(
         self,
-        default_text='',
+        value='',
         enter_submits=False,
         disabled=False,
         autoscroll=False,
@@ -38,7 +38,7 @@ class Multiline(Element):
         change_submits=False,
         enable_events=True,
         auto_wipe=False,
-        event=None,
+        action=None,
         k=None,
         write_only=False,
         auto_refresh=False,
@@ -50,7 +50,7 @@ class Multiline(Element):
         font=None,
         pad=None,
         p=None,
-        hover=None,
+        ke_upar=None,
         justification=None,
         no_scrollbar=False,
         wrap_lines=None,
@@ -69,9 +69,9 @@ class Multiline(Element):
         metadata=None,
     ):
         """
-        :param default_text:                 Initial text to show
-        :type default_text:                  (Any)
-        :param enter_submits:                if True, the Window.read call will return is enter event is pressed in this element
+        :param value:                 Initial text to show
+        :type value:                  (Any)
+        :param enter_submits:                if True, the Window.read call will return is enter action is pressed in this element
         :type enter_submits:                 (bool)
         :param disabled:                     set disable state
         :type disabled:                      (bool)
@@ -99,17 +99,17 @@ class Multiline(Element):
         :type horizontal_scroll:             (bool)
         :param change_submits:               DO NOT USE. Only listed for backwards compat - Use enable_events instead
         :type change_submits:                (bool)
-        :param enable_events:                If True then any event press that happens when the element has focus will generate an event.
+        :param enable_events:                If True then any action press that happens when the element has focus will generate an action.
         :type enable_events:                 (bool)
         :param auto_wipe:                 if False the element will be cleared any time the Window.read call returns
         :type auto_wipe:                  (bool)
-        :param event:                          Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:                           str | int | tuple | object
-        :param k:                            Same as the Event. You can use either k or event. Which ever is set will be used.
+        :param action:                          Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:                           str | int | tuple | object
+        :param k:                            Same as the Event. You can use either k or action. Which ever is set will be used.
         :type k:                             str | int | tuple | object
         :param write_only:                   If True then no entry will be added to the values dictionary when the window is read
         :type write_only:                    bool
-        :param auto_refresh:                 If True then anytime the element is updated, the window will be refreshed so that the change is immediately displayed
+        :param auto_refresh:                 If True then anytime the element is updated, the window will be refreshed so that the badlo is immediately displayed
         :type auto_refresh:                  (bool)
         :param reroute_stdout:               If True then all output to stdout will be output to this element
         :type reroute_stdout:                (bool)
@@ -127,8 +127,8 @@ class Multiline(Element):
         :type pad:                           (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                            Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                             (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param hover:                      text, that will appear when mouse hovers over the element
-        :type hover:                       (str)
+        :param ke_upar:                      text, that will appear when mouse hovers over the element
+        :type ke_upar:                       (str)
         :param justification:                text justification. left, right, center. Can use single characters l, r, c.
         :type justification:                 (str)
         :param no_scrollbar:                 If False then a vertical scrollbar will be shown (the default)
@@ -163,7 +163,7 @@ class Multiline(Element):
         :type metadata:                      (Any)
         """
 
-        self.DefaultText = str(default_text)
+        self.DefaultText = str(value)
         self.EnterSubmits = enter_submits
         bg = background_color if background_color else hindGui.DEFAULT_INPUT_ELEMENTS_COLOR
         self.Focus = focus
@@ -183,7 +183,7 @@ class Multiline(Element):
         self.tags = set()
         self.WriteOnly = write_only
         self.AutoRefresh = auto_refresh
-        event = event if event is not None else k
+        action = action if action is not None else k
         self.reroute_cprint = reroute_cprint
         self.echo_stdout_stderr = echo_stdout_stderr
         self.Justification = 'left' if justification is None else justification
@@ -206,9 +206,9 @@ class Multiline(Element):
             auto_size_text=auto_size_text,
             background_color=bg,
             text_color=fg,
-            event=event,
+            action=action,
             pad=pad,
-            hover=hover,
+            ke_upar=ke_upar,
             font=font or hindGui.DEFAULT_FONT,
             nazar=nazar,
             metadata=metadata,
@@ -222,7 +222,7 @@ class Multiline(Element):
         )
         return
 
-    def change(
+    def badlo(
         self,
         value=None,
         disabled=None,
@@ -242,7 +242,7 @@ class Multiline(Element):
 
         Changes will not be nazar in your window until you call window.read or window.refresh.
 
-        If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
+        If you badlo visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
         when made nazar.
 
@@ -276,7 +276,7 @@ class Multiline(Element):
             return
 
         if self._this_elements_window_closed():
-            # _error_popup_with_traceback('Error in Multiline.change - The window was closed')
+            # _error_popup_with_traceback('Error in Multiline.badlo - The window was closed')
             return
 
         if autoscroll is not None:
@@ -308,7 +308,7 @@ class Multiline(Element):
                     if font_for_value is not None:
                         self.TKText.tag_configure(tag, font=font_for_value)
                 except Exception as e:
-                    print('* Multiline.change - bad color likely specified:', e)
+                    print('* Multiline.badlo - bad color likely specified:', e)
             if self.Disabled:
                 self.TKText.configure(state='normal')
             try:
@@ -490,7 +490,7 @@ class Multiline(Element):
         :type txt:  (str)
         """
         try:
-            self.change(txt, append=True)
+            self.badlo(txt, append=True)
             # if need to echo, then send the same text to the destinatoin that isn't thesame as this one
             if self.echo_stdout_stderr:
                 if sys.stdout != self:
@@ -528,7 +528,7 @@ class Multiline(Element):
             except Exception:
                 _error_popup_with_traceback(
                     'Error setting I-Beam color in set_ibeam_color',
-                    'The element has a event:',
+                    'The element has a action:',
                     self.Event,
                     'The color passed in was:',
                     ibeam_color,
@@ -545,7 +545,7 @@ class Multiline(Element):
         return
 
     Get = get
-    Change = change
+    Change = badlo
 
 
 class Output(Multiline):
@@ -576,8 +576,8 @@ class Output(Multiline):
         autoscroll_only_at_bottom=False,
         echo_stdout_stderr=False,
         font=None,
-        hover=None,
-        event=None,
+        ke_upar=None,
+        action=None,
         k=None,
         right_click_menu=None,
         expand_x=False,
@@ -613,11 +613,11 @@ class Output(Multiline):
         :type echo_stdout_stderr:           (bool)
         :param font:                        specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:                         (str or (str, int[, str]) or None)
-        :param hover:                     text, that will appear when mouse hovers over the element
-        :type hover:                      (str)
-        :param event:                         Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type event:                          str | int | tuple | object
-        :param k:                           Same as the Event. You can use either k or event. Which ever is set will be used.
+        :param ke_upar:                     text, that will appear when mouse hovers over the element
+        :type ke_upar:                      (str)
+        :param action:                         Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type action:                          str | int | tuple | object
+        :param k:                           Same as the Event. You can use either k or action. Which ever is set will be used.
         :type k:                            str | int | tuple | object
         :param right_click_menu:            A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:             List[List[ List[str] | str ]]
@@ -659,10 +659,10 @@ class Output(Multiline):
             p=p,
             echo_stdout_stderr=echo_stdout_stderr,
             font=font,
-            hover=hover,
+            ke_upar=ke_upar,
             wrap_lines=wrap_lines,
             horizontal_scroll=horizontal_scroll,
-            event=event,
+            action=action,
             k=k,
             right_click_menu=right_click_menu,
             write_only=True,
