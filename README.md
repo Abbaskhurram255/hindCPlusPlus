@@ -24,7 +24,7 @@ A Hindi to GCC translation engine
 `}`<br/>
 <br/>
 `co`<br/>
-`    farz i barabar x() pagli`<br/>
+`    farz i barabar x() re`<br/>
     <br/>
 `    karo ye`<br/>
 `        kahie "Ginti:" aur i aage_bas meri_jan`<br/>
