@@ -74,7 +74,7 @@ jobs:
             
             if (Test-Path $assetFolder) {
                 Write-Host "Found local assets folder at $assetFolder, bundling into EXE..."
-                pyinstaller --onefile --noconsole --add-data "$assetFolder;assets" $file
+                pyinstaller --windowed --onefile --add-data "$assetFolder;assets" $file
             } else {
                 pyinstaller --windowed --onefile $file
             }
