@@ -1,0 +1,78 @@
+name: Compile GUI Python Files to EXE
+
+on:
+  push:
+    branches:
+      - main  # Change to your default branch if it is not main
+
+jobs:
+  build-exes:
+    runs-on: windows-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        # If your scripts require specific libraries, install them here:
+        # pip install -r requirements.txt
+
+    - name: Detect and Compile GUI Scripts
+      shell: powershell
+      run: |
+        # Create an output directory for successful EXEs
+        New-Item -ItemType Directory -Force -Path .\compiled_exes
+
+        # Find all Python files in the repository
+        $pyFiles = Get-ChildItem -Path . -Filter *.py -Recurse | Where-Object { $_.FullName -notlike "*\.*" }
+
+        foreach ($file in $pyFiles) {
+            Write-Host "--------------------------------------------------"
+            Write-Host "Testing file: $($file.Name)"
+            
+            # Start the script in the background
+            $process = Start-Process python -ArgumentList $file.FullName -PassThru -NoNewWindow
+
+            # Wait 5 seconds to let GUI initialize or non-GUI exit
+            Start-Sleep -Seconds 5
+
+            # Check if the script is still running (typical for a GUI app waiting for user input)
+            if (-not $process.HasExited) {
+                Write-Host "Success: $($file.Name) is running actively. Assuming it is a GUI application."
+                
+                # Terminate the running background process safely
+                Stop-Process -Id $process.Id -Force
+                
+                Write-Host "Compiling $($file.Name) with PyInstaller..."
+                # --noconsole hides the command prompt window for GUI apps
+                # --onefile packages everything into a single .exe
+                pyinstaller --windowed --onefile $file.FullName
+
+                # If compilation succeeded, move the EXE to the outputs folder
+                $exeName = $file.BaseName + ".exe"
+                if (Test-Path "dist\$exeName") {
+                    Move-Item -Path "dist\$exeName" -Destination ".\compiled_exes\" -Force
+                    Write-Host "Successfully packaged: $exeName"
+                }
+            } else {
+                # If it exited quickly, it either crashed or ran to completion (like a CLI script)
+                $exitCode = $process.ExitCode
+                Write-Host "Skipped: $($file.Name) closed or crashed instantly (Exit Code: $exitCode). Not a persistent GUI app."
+            }
+        }
+
+    - name: Upload Compiled EXEs
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-gui-executables
+        path: ./compiled_exes/*.exe
+        if-no-files-found: warn
