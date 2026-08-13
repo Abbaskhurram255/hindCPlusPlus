@@ -1,16 +1,19 @@
-name: Compile GUI Python Files to EXE
+name: Auto Build and Release PyInstaller EXEs
 
 on:
   push:
     branches:
-      - main  # Change to your default branch if it is not main
+      - main  # Adjust this to your primary branch (e.g., master)
+
+permissions:
+  contents: write
 
 jobs:
-  build-exes:
+  build-and-release:
     runs-on: windows-latest
 
     steps:
-    - name: Check out repository
+    - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Set up Python
@@ -23,56 +26,83 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pyinstaller
-        # If your scripts require specific libraries, install them here:
-        # pip install -r requirements.txt
+        if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
-    - name: Detect and Compile GUI Scripts
+    - name: Scan and Build All Inclusive Python Files
       shell: powershell
       run: |
-        # Create an output directory for successful EXEs
-        New-Item -ItemType Directory -Force -Path .\compiled_exes
+        # Change 1: Scan the ENTIRE repository recursively for all .py files, ignoring the hidden .github folder
+        $allPythonFiles = Get-ChildItem -Path . -Filter *.py -Recurse | 
+                          Where-Object { $_.FullName -notlike "*\.github\*" -and $_.FullName -notlike "*\dist\*" -and $_.FullName -notlike "*\build\*" }
 
-        # Find all Python files in the repository
-        $pyFiles = Get-ChildItem -Path . -Filter *.py -Recurse | Where-Object { $_.FullName -notlike "*\.*" }
+        if (-not $allPythonFiles) {
+            Write-Host "No Python files found in the repository."
+            exit 0
+        }
 
-        foreach ($file in $pyFiles) {
-            Write-Host "--------------------------------------------------"
-            Write-Host "Testing file: $($file.Name)"
-            
-            # Start the script in the background
-            $process = Start-Process python -ArgumentList $file.FullName -PassThru -NoNewWindow
+        New-Item -ItemType Directory -Force -Path .\dist_exes
 
-            # Wait 5 seconds to let GUI initialize or non-GUI exit
-            Start-Sleep -Seconds 5
+        foreach ($fileItem in $allPythonFiles) {
+            $file = $fileItem.FullName
+            Write-Host "Processing file: $file"
 
-            # Check if the script is still running (typical for a GUI app waiting for user input)
-            if (-not $process.HasExited) {
-                Write-Host "Success: $($file.Name) is running actively. Assuming it is a GUI application."
+            try {
+                $process = Start-Process python -ArgumentList $file -NoNewWindow -PassThru
+                Start-Sleep -Seconds 5
                 
-                # Terminate the running background process safely
-                Stop-Process -Id $process.Id -Force
-                
-                Write-Host "Compiling $($file.Name) with PyInstaller..."
-                # --noconsole hides the command prompt window for GUI apps
-                # --onefile packages everything into a single .exe
-                pyinstaller --windowed --onefile $file.FullName
-
-                # If compilation succeeded, move the EXE to the outputs folder
-                $exeName = $file.BaseName + ".exe"
-                if (Test-Path "dist\$exeName") {
-                    Move-Item -Path "dist\$exeName" -Destination ".\compiled_exes\" -Force
-                    Write-Host "Successfully packaged: $exeName"
+                if (-not $process.HasExited) {
+                    Stop-Process $process.Id -Force
+                    Write-Host "$file passed the execution check."
+                } else {
+                    if ($process.ExitCode -ne 0) {
+                        Write-Warning "Skipping $file: Script crashed during test execution."
+                        continue
+                    }
+                    Write-Warning "Skipping $file: Script exited immediately (likely non-GUI)."
+                    continue
                 }
+            } catch {
+                Write-Warning "Skipping $file: Failed to run pre-compilation check."
+                continue
+            }
+
+            Write-Host "Compiling $file with PyInstaller..."
+            
+            # Change 2: Dynamically look for an 'assets' folder in the same folder as the script
+            $scriptDir = Split-Path -Parent $file
+            $assetFolder = Join-Path $scriptDir "assets"
+            
+            if (Test-Path $assetFolder) {
+                Write-Host "Found local assets folder at $assetFolder, bundling into EXE..."
+                pyinstaller --onefile --noconsole --add-data "$assetFolder;assets" $file
             } else {
-                # If it exited quickly, it either crashed or ran to completion (like a CLI script)
-                $exitCode = $process.ExitCode
-                Write-Host "Skipped: $($file.Name) closed or crashed instantly (Exit Code: $exitCode). Not a persistent GUI app."
+                pyinstaller --windowed --onefile $file
+            }
+
+            $exeName = [System.IO.Path]::GetFileNameWithoutExtension($file) + ".exe"
+            $exePath = ".\dist\$exeName"
+
+            if (Test-Path $exePath) {
+                Write-Host "Successfully compiled $exeName"
+                Move-Item -Path $exePath -Destination .\dist_exes\ -Force
+            } else {
+                Write-Warning "Skipping $file: PyInstaller failed."
             }
         }
 
-    - name: Upload Compiled EXEs
-      uses: actions/upload-artifact@v4
+        $exeCount = (Get-ChildItem .\dist_exes\ -Filter *.exe).Count
+        echo "EXE_COUNT=$exeCount" >> $env:GITHUB_ENV
+
+    - name: Create Release and Upload Assets
+      if: env.EXE_COUNT != '0'
+      uses: softprops/action-gh-release@v2
       with:
-        name: python-gui-executables
-        path: ./compiled_exes/*.exe
-        if-no-files-found: warn
+        tag_name: build-${{ github.sha }}
+        name: Automated Release - Build ${{ github.sha }}
+        body: |
+          Automated release generated from commit ${{ github.sha }}.
+          This release contains ALL successfully built GUI executables found across the repository.
+        draft: false
+        prerelease: false
+        files: .\dist_exes\*.exe
+
