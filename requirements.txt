@@ -1,1 +1,3 @@
-pip.exe install freesimplegui
+FreeSimpleGUI
+psgdnd
+psgtray
